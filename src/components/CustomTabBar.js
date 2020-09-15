@@ -1,15 +1,17 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import HomeIcon from '../assets/svg/home.svg';
+import HomeEmptyIcon from '../assets/svg/home_empty.svg';
+import HomeFullIcon from '../assets/svg/home_full.svg';
 import SearchIcon from '../assets/svg/search.svg';
 import CartIcon from '../assets/svg/carrinho.svg';
-import FavoriteIcon from '../assets/svg/coracao.svg';
-import UserIcon from '../assets/svg/user.svg';
-
+import FavoriteEmptyIcon from '../assets/svg/favorite_empty.svg';
+import FavoriteFullIcon from '../assets/svg/favorite_full.svg';
+import UserFullIcon from '../assets/svg/user_full.svg';
+import UserEmptyIcon from '../assets/svg/user_empty.svg';
 
 const Div = styled.View `
     flex-direction: row;
-    background-color: #809BCE;
+    background-color: #FE654F;
 `;
 
 const Texto = styled.Text`
@@ -32,7 +34,7 @@ const TouchCenter = styled.TouchableHighlight `
     align-items: center;
     margin-top: -20px;
     border-radius: 35px;
-    border: 3px solid #0096C7;
+    border: 3px solid #FE654F;
 `;
 
 export default ({state, descriptors, navigation, index}) => {          /** Props que vem para facilitar a customização */
@@ -44,23 +46,35 @@ export default ({state, descriptors, navigation, index}) => {          /** Props
     return (
         <Div>
             <Touch key={index} onPress={() => goTo('home')}>
-                <HomeIcon style={{opacity: state.index === 0 ? 1 : 0.5}} width="28" height="28" fill="#fff" />
+                {state.index === 0 ?
+                    <HomeFullIcon width="28" height="28" fill="#fff" />
+                :
+                    <HomeEmptyIcon style={{opacity: 0.7}} width="28" height="28" fill="#fff" />
+                }
             </Touch>
 
             <Touch key={index} onPress={() => goTo('search')}>
-                <SearchIcon style={{opacity: state.index === 1 ? 1 : 0.5}} width="28" height="28" fill="#fff" />
+                <SearchIcon style={{opacity: state.index === 1 ? 1 : 0.7}} width="28" height="28" fill="#fff" />
             </Touch>
 
             <TouchCenter underlayColor="rgba(255, 255, 255, 0.9)" key={index} onPress={() => goTo('cart')}>
-                <CartIcon width="32" height="32" fill="#0096C7" />
+                <CartIcon width="32" height="32" fill="#FE654F" />
             </TouchCenter>
 
             <Touch key={index} onPress={() => goTo('favorites')}>
-                <FavoriteIcon style={{opacity: state.index === 3 ? 1 : 0.5}} width="28" height="28" fill="#fff" />
+                {state.index === 3 ?
+                    <FavoriteFullIcon width="28" height="28" fill="#fff" />
+                :
+                    <FavoriteEmptyIcon style={{opacity: 0.7}} width="28" height="28" fill="#fff" />
+                }
             </Touch>
 
             <Touch key={index} onPress={() => goTo('user')}>
-                <UserIcon style={{opacity: state.index === 4 ? 1 : 0.5}} width="28" height="28" fill="#fff" />
+                {state.index === 4 ?
+                    <UserFullIcon width="28" height="28" fill="#fff" />
+                :
+                    <UserEmptyIcon style={{opacity: 0.7}} width="28" height="28" fill="#fff" />
+                }            
             </Touch>
         </Div>
     );
