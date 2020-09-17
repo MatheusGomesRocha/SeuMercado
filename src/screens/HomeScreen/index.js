@@ -1,6 +1,7 @@
 import React from 'react';
 import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {useNavigation} from '@react-navigation/native';
 
 import {
     Container,
@@ -43,6 +44,12 @@ let comments = [
 ];
 
 export default () => {
+    const navigation = useNavigation();
+
+    const goToFilter = (title) => {
+        navigation.navigate('filter');
+    }
+    
     return(
         <Container>
             <ScrollContainer>
@@ -50,7 +57,7 @@ export default () => {
                 <Scroll decelerationRate="fast" horizontal={true} showsHorizontalScrollIndicator={false}>
                     <FilterView>
                         {array.map((item, k) => (
-                            <ItemFilterBtn key={k}>
+                            <ItemFilterBtn onPress={() => navigation.navigate('filter')} key={k}>
                                 <ImgFilter source={item.img} />
                                 <Texto>{item.title}</Texto> 
                             </ItemFilterBtn>
