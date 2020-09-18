@@ -46,8 +46,8 @@ let comments = [
 export default () => {
     const navigation = useNavigation();
 
-    const goToFilter = (title) => {
-        navigation.navigate('filter');
+    const goToFilter = (type) => {
+        navigation.navigate('filter', {type});
     }
     
     return(
@@ -57,7 +57,7 @@ export default () => {
                 <Scroll decelerationRate="fast" horizontal={true} showsHorizontalScrollIndicator={false}>
                     <FilterView>
                         {array.map((item, k) => (
-                            <ItemFilterBtn onPress={() => navigation.navigate('filter')} key={k}>
+                            <ItemFilterBtn onPress={() => goToFilter(item.title)} key={k}>
                                 <ImgFilter source={item.img} />
                                 <Texto>{item.title}</Texto> 
                             </ItemFilterBtn>
