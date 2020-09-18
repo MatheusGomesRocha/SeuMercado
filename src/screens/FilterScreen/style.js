@@ -5,4 +5,11 @@ export const Container = styled.SafeAreaView`
     background-color: #fff;
 `;
 
+export const Scroll = styled.ScrollView``;
+export const ImgView = styled.View`
+`;
+export const FilterImg = styled.Image`
+    height: 250px;
+    width: 100%;
+`;
 export const Texto = styled.Text``;

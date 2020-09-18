@@ -25,14 +25,14 @@ import {
 } from './style';
 
 let array = [
-    {img: require('../../assets/img/geral_filter.jpg'), title: 'Geral'},
-    {img: require('../../assets/img/carne_filter.jpg'), title: 'Carnes'},
-    {img: require('../../assets/img/legume_filter.jpg'), title: 'Legumes'},
-    {img: require('../../assets/img/vegetal_filter.jpg'), title: 'Vegetais'},
-    {img: require('../../assets/img/bebida.jpg'), title: 'Bebidas'},
-    {img: require('../../assets/img/higiene_filter.jpg'), title: 'Higiene pessoal'},
-    {img: require('../../assets/img/lanchonete_filter.jpg'), title: 'Lanchonete'},
-    {img: require('../../assets/img/sorvete.jpg'), title: 'Sorvetes'},
+    {img: require('../../assets/img/geral_filter.jpg'), type: 'Geral'},
+    {img: require('../../assets/img/carne_filter.jpg'), type: 'Carnes'},
+    {img: require('../../assets/img/legume_filter.jpg'), type: 'Legumes'},
+    {img: require('../../assets/img/vegetal_filter.jpg'), type: 'Vegetais'},
+    {img: require('../../assets/img/bebida.jpg'), type: 'Bebidas'},
+    {img: require('../../assets/img/higiene_filter.jpg'), type: 'Higiene pessoal'},
+    {img: require('../../assets/img/lanchonete_filter.jpg'), type: 'Lanchonete'},
+    {img: require('../../assets/img/sorvete.jpg'), type: 'Sorvetes'},
 ];
 
 let comments = [
@@ -46,8 +46,8 @@ let comments = [
 export default () => {
     const navigation = useNavigation();
 
-    const goToFilter = (type) => {
-        navigation.navigate('filter', {type});
+    const goToFilter = (type, img) => {
+        navigation.navigate('filter', {type, img});
     }
     
     return(
@@ -57,9 +57,9 @@ export default () => {
                 <Scroll decelerationRate="fast" horizontal={true} showsHorizontalScrollIndicator={false}>
                     <FilterView>
                         {array.map((item, k) => (
-                            <ItemFilterBtn onPress={() => goToFilter(item.title)} key={k}>
+                            <ItemFilterBtn onPress={() => goToFilter(item.type, item.img)} key={k}>
                                 <ImgFilter source={item.img} />
-                                <Texto>{item.title}</Texto> 
+                                <Texto>{item.type}</Texto> 
                             </ItemFilterBtn>
                         ))}
                     </FilterView>

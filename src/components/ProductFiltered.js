@@ -3,6 +3,9 @@ import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Div = styled.View`
+    background-color: #fff;
+    borderTopLeftRadius: 50px;
+    margin-top: -50px;
 `;
 
 const ItemBtn = styled.TouchableHighlight`
@@ -33,45 +36,53 @@ const Name = styled.Text`
 `;
 const Price = styled.Text`
     font-size: 16px;
+    color: #5CAB7D;
 `;
-const Rate = styled.Text`
-    font-size: 16px;
-`;
-
 
 let array = [
-    {avatar: require('../assets/img/geral_filter.jpg'), name: 'Teste', rate: '8.7', price: '10,00'},
-    {avatar: require('../assets/img/geral_filter.jpg'), name: 'Teste', rate: '8.7', price: '10,00'},
-    {avatar: require('../assets/img/geral_filter.jpg'), name: 'Teste', rate: '8.7', price: '10,00'},
-    {avatar: require('../assets/img/geral_filter.jpg'), name: 'Teste', rate: '8.7', price: '10,00'},
-    {avatar: require('../assets/img/geral_filter.jpg'), name: 'Teste', rate: '8.7', price: '10,00'},
+    {avatar: require('../assets/img/geral_filter.jpg'), name: 'Teste', price: '10,00'},
+    {avatar: require('../assets/img/geral_filter.jpg'), name: 'Teste', price: '10,00'},
+    {avatar: require('../assets/img/geral_filter.jpg'), name: 'Teste', price: '10,00'},
+    {avatar: require('../assets/img/geral_filter.jpg'), name: 'Teste', price: '10,00'},
+    {avatar: require('../assets/img/geral_filter.jpg'), name: 'Teste', price: '10,00'},
 ];
 
-export default ({data}) => {
+export default (props) => {
     return(
-        <Div>
+            <Div>
             {array.map((item, k) => (
                 <ItemBtn key={k} underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => alert('hello world')}>
                     <ItemRow>
+
                         <ItemHeader>
+
                             <ItemColumn>
                                 <Name>{item.name}</Name>
                                 <Price>R$ {item.price}</Price>
-                                <ItemRow style={{marginTop: 5}}>
-                                    <Icon style={{marginLeft: 2}} name="star-o" size={14}/>
-                                    <Icon style={{marginLeft: 2}} name="star-o" size={14}/>
-                                    <Icon style={{marginLeft: 2}} name="star-o" size={14}/>
-                                    <Icon style={{marginLeft: 2}} name="star-o" size={14}/>
-                                    <Icon style={{marginLeft: 2}} name="star-o" size={14}/>
-                                </ItemRow>
-                            </ItemColumn>
-                        </ItemHeader>
-                        <Avatar source={item.avatar} />
 
+                                <ItemRow style={{marginTop: 5}}>
+                                    <Icon style={{marginLeft: 2}} name="star-o" size={14} color="#E09F3E" />
+                                    <Icon style={{marginLeft: 2}} name="star-o" size={14} color="#E09F3E" />
+                                    <Icon style={{marginLeft: 2}} name="star-o" size={14} color="#E09F3E" />
+                                    <Icon style={{marginLeft: 2}} name="star-o" size={14} color="#E09F3E" />
+                                    <Icon style={{marginLeft: 2}} name="star-o" size={14} color="#E09F3E" />
+                                </ItemRow>
+
+                            </ItemColumn>
+
+                        </ItemHeader>
+
+                        {props.img ?
+                            <Avatar source={props.img} />
+                        : 
+                            <Avatar source={array.img} />
+
+                        }
                     </ItemRow>
                     
                 </ItemBtn>
             ))}
         </Div>
+
     );
 }

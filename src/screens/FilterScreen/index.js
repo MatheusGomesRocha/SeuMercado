@@ -1,21 +1,32 @@
 import React from 'react';
-import ProductDefault from '../../components/ProductDefault';
+import ProductFiltered from '../../components/ProductFiltered';
 import {useRoute} from '@react-navigation/native';
 
 import {
     Container,
 
-    Texto
+    Scroll, 
+
+    ImgView,
+    FilterImg,
 } from './style';
 
 export default () => {
     const route = useRoute();
 
     const type = route.params.type;
+    const img = route.params.img;
 
     return(
         <Container>
-            <ProductDefault data={type} />
+            <Scroll>
+
+            <ImgView>
+                <FilterImg source={img} />
+            </ImgView>
+            <ProductFiltered type={type} img={img} />
+            </Scroll>
+
         </Container>
     );
 }
