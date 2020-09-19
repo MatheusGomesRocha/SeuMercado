@@ -2,6 +2,7 @@ import React from 'react';
 import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
+import ProductHome from '../../components/ProductHome';
 
 import {
     Container,
@@ -22,6 +23,9 @@ import {
     CommentsRate,
     CommentsDate,
     CommentsText,
+
+    PopView,
+    PopText,
 } from './style';
 
 let array = [
@@ -104,6 +108,11 @@ export default () => {
                         
                     </Swiper>
                 </CommentsView>
+
+                <PopView>
+                    <PopText>Mais populares</PopText>
+                    <ProductHome/>
+                </PopView>
 
             </ScrollContainer>
         </Container>

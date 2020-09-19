@@ -4,16 +4,14 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Div = styled.View`
     background-color: #fff;
-    borderTopLeftRadius: 50px;
-    margin-top: -50px;
 `;
 
 const ItemBtn = styled.TouchableHighlight`
     min-height: 100px;
     borderBottomWidth: 1px;
     borderBottomColor: rgba(0, 0, 0, 0.1);
-    padding: 20px;
     width: 100%;
+    padding: 20px 10px 20px 10px;
 `;
 
 const ItemRow = styled.View`

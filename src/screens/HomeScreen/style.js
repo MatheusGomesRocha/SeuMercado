@@ -32,6 +32,7 @@ export const Texto = styled.Text`
 `;
 
 
+
 export const CommentsView = styled.View`
     padding: 10px;
     margin: 30px 10px 10px 10px;
@@ -70,4 +71,15 @@ export const CommentsDate = styled.Text`
 export const CommentsText = styled.Text`
     color: #fff;
     padding: 10px;
+`;
+
+
+
+export const PopView = styled.View`
+    margin-top: 30px;
+`;
+export const PopText = styled.Text`
+    font-weight: bold;
+    font-size: 22px;
+    padding: 20px 10px 20px 10px;
 `;
