@@ -26,8 +26,8 @@ const ItemHeader = styled.View`
 const ItemColumn = styled.View`
 `;
 const Avatar = styled.Image`
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
     border-radius: 10px;
 `;
 const Name = styled.Text`
