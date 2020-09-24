@@ -1,4 +1,5 @@
 import React from 'react';
+import ProductCart from '../../components/ProductCart';
 
 import {
     Container,
@@ -8,7 +9,7 @@ import {
 export default () => {
     return(
         <Container>
-            <Texto> Olá mundo Cart </Texto>
+            <ProductCart />
         </Container>
     );
 }
