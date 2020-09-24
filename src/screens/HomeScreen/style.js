@@ -83,3 +83,21 @@ export const PopText = styled.Text`
     font-size: 22px;
     padding: 20px 10px 20px 10px;
 `;
+
+export const NoUserLoginBtn = styled.TouchableHighlight`
+    position: absolute;
+    z-index: 999;
+    background-color: #fff;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    height: 80px;
+    bottom: 40px;
+    left: 10%;
+    border-radius: 10px;
+    elevation: 15;
+    shadowRadius: 12px;
+`;
+export const NoUserLoginText = styled.Text`
+    font-size: 16px;
+`;

@@ -26,6 +26,9 @@ import {
 
     PopView,
     PopText,
+
+    NoUserLoginBtn,
+    NoUserLoginText,
 } from './style';
 
 let array = [
@@ -115,6 +118,13 @@ export default () => {
                 </PopView>
 
             </ScrollContainer>
+
+            <NoUserLoginBtn onPress={() => alert('cadastro')} underlayColor="#dfdfdf">
+                <>
+                    <NoUserLoginText>Para fazer pedidos no SeuMercado</NoUserLoginText>
+                    <NoUserLoginText style={{color: '#FE654F', fontWeight: 'bold'}}>Entrar ou cadastrar-se</NoUserLoginText>
+                </>
+            </NoUserLoginBtn>
         </Container>
     );
 }
