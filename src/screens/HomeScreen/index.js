@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef, useEffect} from 'react';
 import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
@@ -56,7 +56,7 @@ export default () => {
     const goToFilter = (type, img) => {
         navigation.navigate('filter', {type, img});
     }
-    
+
     return(
         <Container>
             <ScrollContainer>
@@ -119,12 +119,13 @@ export default () => {
 
             </ScrollContainer>
 
-            <NoUserLoginBtn onPress={() => alert('cadastro')} underlayColor="#dfdfdf">
+            <NoUserLoginBtn onPress={() => navigation.navigate('prevlogin')} underlayColor="#dfdfdf"> 
                 <>
                     <NoUserLoginText>Para fazer pedidos no SeuMercado</NoUserLoginText>
                     <NoUserLoginText style={{color: '#FE654F', fontWeight: 'bold'}}>Entrar ou cadastrar-se</NoUserLoginText>
                 </>
-            </NoUserLoginBtn>
+            </NoUserLoginBtn>      
+            
         </Container>
     );
 }

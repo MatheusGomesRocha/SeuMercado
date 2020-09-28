@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Div = styled.View`
     background-color: #fff;
+    margin-bottom: 20px;
 `;
 
 const ItemBtn = styled.TouchableHighlight`

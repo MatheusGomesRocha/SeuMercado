@@ -76,13 +76,14 @@ export const CommentsText = styled.Text`
 
 
 export const PopView = styled.View`
-    margin-top: 30px;
+    margin-top: 20px;
 `;
 export const PopText = styled.Text`
     font-weight: bold;
     font-size: 22px;
-    padding: 20px 10px 20px 10px;
+    padding: 20px 10px 10px 10px;
 `;
+
 
 export const NoUserLoginBtn = styled.TouchableHighlight`
     position: absolute;
