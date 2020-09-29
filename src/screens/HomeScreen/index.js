@@ -132,10 +132,10 @@ export default () => {
             </ScrollContainer>
 
         <Animated.View style={{bottom: bot}}>
-            <NoUserLoginBtn onPress={() => navigation.navigate('prevlogin')} underlayColor="#dfdfdf"> 
+            <NoUserLoginBtn onPress={() => navigation.navigate('login')} underlayColor="#dfdfdf"> 
                 <>
                     <NoUserLoginText>Para fazer pedidos no SeuMercado</NoUserLoginText>
-                    <NoUserLoginText style={{color: '#FE654F', fontWeight: 'bold'}}>Entrar ou cadastrar-se</NoUserLoginText>
+                    <NoUserLoginText style={{color: '#ea1d2c', fontWeight: 'bold'}}>Entrar ou cadastrar-se</NoUserLoginText>
                 </>
             </NoUserLoginBtn>      
         </Animated.View>   

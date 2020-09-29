@@ -11,7 +11,8 @@ import UserEmptyIcon from '../assets/svg/user_empty.svg';
 
 const Div = styled.View `
     flex-direction: row;
-    background-color: #FE654F;
+    background-color: #fff;
+    elevation: 15;
 `;
 
 const Texto = styled.Text`
@@ -47,33 +48,33 @@ export default ({state, descriptors, navigation, index}) => {          /** Props
         <Div>
             <Touch key={index} onPress={() => goTo('home')}>
                 {state.index === 0 ?
-                    <HomeFullIcon width="28" height="28" fill="#fff" />
+                    <HomeFullIcon width="28" height="28" fill="#000" />
                 :
-                    <HomeEmptyIcon style={{opacity: 0.7}} width="28" height="28" fill="#fff" />
+                    <HomeEmptyIcon style={{opacity: 0.7}} width="28" height="28" fill="#000" />
                 }
             </Touch>
 
             <Touch key={index} onPress={() => goTo('search')}>
-                <SearchIcon style={{opacity: state.index === 1 ? 1 : 0.7}} width="28" height="28" fill="#fff" />
+                <SearchIcon style={{opacity: state.index === 1 ? 1 : 0.7}} width="28" height="28" fill="#000" />
             </Touch>
 
-            <TouchCenter underlayColor="rgba(255, 255, 255, 0.9)" key={index} onPress={() => goTo('cart')}>
-                <CartIcon width="32" height="32" fill="#FE654F" />
-            </TouchCenter>
+            <Touch underlayColor="rgba(255, 255, 255, 0.9)" key={index} onPress={() => goTo('cart')}>
+                <CartIcon style={{opacity: state.index === 2 ? 1 : 0.7}} width="32" height="32" fill="#000" />
+            </Touch>
 
             <Touch key={index} onPress={() => goTo('favorites')}>
                 {state.index === 3 ?
-                    <FavoriteFullIcon width="28" height="28" fill="#fff" />
+                    <FavoriteFullIcon width="28" height="28" fill="#000" />
                 :
-                    <FavoriteEmptyIcon style={{opacity: 0.7}} width="28" height="28" fill="#fff" />
+                    <FavoriteEmptyIcon style={{opacity: 0.7}} width="28" height="28" fill="#000" />
                 }
             </Touch>
 
             <Touch key={index} onPress={() => goTo('user')}>
                 {state.index === 4 ?
-                    <UserFullIcon width="28" height="28" fill="#fff" />
+                    <UserFullIcon width="28" height="28" fill="#000" />
                 :
-                    <UserEmptyIcon style={{opacity: 0.7}} width="28" height="28" fill="#fff" />
+                    <UserEmptyIcon style={{opacity: 0.7}} width="28" height="28" fill="#000" />
                 }            
             </Touch>
         </Div>

@@ -18,23 +18,58 @@ export const IconBtn = styled.TouchableHighlight`
     justify-content: center;
 `;
 
-export const Input = styled.TextInput`
-    border: 1px solid #000;
+export const InputView = styled.View`
+    flex-direction: row;
+    borderBottomWidth: 1px;
+    borderBottomColor: #000;
     width: 70%;
     height: 50px;
     border-radius: 10px;
-    padding: 10px;
     margin-bottom: 15px;
+    align-items: center;
 `;
+export const Input = styled.TextInput`
+    flex: 1;  
+    margin-left: 10px;
+`;
+
 export const Btn = styled.TouchableHighlight`
-    background-color: #FE654F;
+    background-color: #ea1d2c;
     width: 70%;
-    height: 50px;
+    height: 60px;
     align-items: center;
     justify-content: center;
     border-radius: 10px;
+    margin-top: 15px;
 `;
 export const BtnText = styled.Text`
     color: #fff;
     font-size: 18px;
 `;
+
+
+export const ForgotBtn = styled.TouchableOpacity`
+    margin-top: 10px;
+`;
+export const ForgotText = styled.Text`
+    color: #aaa;
+    font-size: 16px;
+    text-decoration-line: underline;
+    font-weight: bold;
+`;
+
+
+export const OtherLoginView = styled.View`
+    flex-direction: row;
+    margin-top: 50px;
+`;
+
+
+export const RegisterView = styled.View`
+    flex-direction: row;
+    margin-top: 30px;
+`;
+export const RegisterText = styled.Text`
+    color: #aaa;
+`;
+export const RegisterBtn = styled.TouchableOpacity``;

@@ -29,6 +29,7 @@ export const ImgFilter = styled.Image`
 export const Texto = styled.Text`
     font-size: 16px;
     margin-top: 5px;
+    color: #000;
 `;
 
 
@@ -36,7 +37,7 @@ export const Texto = styled.Text`
 export const CommentsView = styled.View`
     padding: 10px;
     margin: 30px 10px 10px 10px;
-    background-color: #FE654F;
+    background-color: #ea1d2c;
     border-radius: 10px;
     height: 300px;
 `;
