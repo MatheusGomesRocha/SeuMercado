@@ -1,8 +1,9 @@
-import React, {useRef, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
 import ProductHome from '../../components/ProductHome';
+import {Animated} from 'react-native';
 
 import {
     Container,
@@ -56,6 +57,17 @@ export default () => {
     const goToFilter = (type, img) => {
         navigation.navigate('filter', {type, img});
     }
+
+    const [bot, setBot] = useState(new Animated.Value(-50));
+
+    useEffect(() => {
+        Animated.timing(bot, {
+            toValue: 120,
+            duration: 500,
+            useNativeDriver: false,
+        }).start();
+    }, [])
+    
 
     return(
         <Container>
@@ -119,13 +131,14 @@ export default () => {
 
             </ScrollContainer>
 
+        <Animated.View style={{bottom: bot}}>
             <NoUserLoginBtn onPress={() => navigation.navigate('prevlogin')} underlayColor="#dfdfdf"> 
                 <>
                     <NoUserLoginText>Para fazer pedidos no SeuMercado</NoUserLoginText>
                     <NoUserLoginText style={{color: '#FE654F', fontWeight: 'bold'}}>Entrar ou cadastrar-se</NoUserLoginText>
                 </>
             </NoUserLoginBtn>      
-            
+        </Animated.View>   
         </Container>
     );
 }

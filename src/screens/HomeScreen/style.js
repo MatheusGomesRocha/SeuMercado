@@ -93,7 +93,6 @@ export const NoUserLoginBtn = styled.TouchableHighlight`
     justify-content: center;
     width: 80%;
     height: 80px;
-    bottom: 40px;
     left: 10%;
     border-radius: 10px;
     elevation: 15;
