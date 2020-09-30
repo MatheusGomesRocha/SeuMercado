@@ -8,7 +8,7 @@ export const Container = styled.SafeAreaView`
 export const Scroll = styled.ScrollView``;
 export const ImgView = styled.View`
 `;
-export const FilterImg = styled.Image`
+export const FilterImg = styled.ImageBackground`
     height: 250px;
     width: 100%;
 `;

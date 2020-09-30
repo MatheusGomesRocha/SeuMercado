@@ -21,7 +21,7 @@ export default () => {
     return(
         <Container>
 
-	    {/*<StatusBar translucent={true} backgroundColor={'transparent'} barStyle="default"/> */}
+	    <StatusBar translucent={true} backgroundColor='transparent' barStyle="default"/>
             <Scroll>
 
             <ImgView>

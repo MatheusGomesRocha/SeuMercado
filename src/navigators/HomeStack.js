@@ -9,11 +9,11 @@ const HomeStack = createStackNavigator();
 export default () => {
     return(
         <HomeStack.Navigator
-            screenOptions={{headerTitle: null, headerTintColor: '#333', headerTransparent: true}}
+            screenOptions={{headerTitle: null, headerTransparent: true}}
         >
-            <HomeStack.Screen name="apptab" component={AppTab} />
-            <HomeStack.Screen name="filter" component={FilterScreen}/>
-            <HomeStack.Screen name="login" component={LoginScreen} />
+            <HomeStack.Screen name="apptab" component={AppTab}/>
+            <HomeStack.Screen name="filter" component={FilterScreen} options={{headerTintColor: '#fff'}} />
+            <HomeStack.Screen name="login" component={LoginScreen} options={{headerTintColor: '#000'}}/>
         </HomeStack.Navigator>
     );
 }

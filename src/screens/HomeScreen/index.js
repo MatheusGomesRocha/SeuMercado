@@ -89,8 +89,8 @@ export default () => {
                     <Swiper
                         showsPagination={false}
                         showsButtons={true}
-                        prevButton={<Icon name="angle-left" size={35} color="#000" />}
-                        nextButton={<Icon name="angle-right" size={35} color="#000" />}
+                        prevButton={<Icon name="angle-left" size={35} color="#fff" />}
+                        nextButton={<Icon name="angle-right" size={35} color="#fff" />}
                     >
 
                         {comments.map((item, k) => (
