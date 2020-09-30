@@ -26,18 +26,7 @@ export const BtnEye = styled.TouchableOpacity``;
 
 
 
-export const ForgotBtn = styled.TouchableOpacity`
-    margin-top: 10px;
-`;
-export const ForgotText = styled.Text`
-    color: #aaa;
-    font-size: 16px;
-    text-decoration-line: underline;
-    font-weight: bold;
-`;
-
-
-export const OtherLoginView = styled.View`
+export const OtherSignUpView = styled.View`
     margin-top: 50px;
 `;
 export const AllLineView = styled.View`
@@ -53,25 +42,25 @@ export const LineView = styled.View`
 export const LineText = styled.Text`
     color: #aaa;
 `;
-export const OptionLoginView = styled.View`
+export const OptionSignUpView = styled.View`
     flex-direction: row;
     justify-content: center;
     margin-top: 25px;
 `;
 
 
-export const SignUpView = styled.View`
+export const LoginView = styled.View`
     flex-direction: row;
     margin-top: 30px;
 `;
-export const SignUpText = styled.Text`
+export const LoginText = styled.Text`
     color: #aaa;
 `;
-export const SignUpBtn = styled.TouchableOpacity``;
+export const LoginBtn = styled.TouchableOpacity``;
 
 
 
-export const BtnLogin = styled.TouchableHighlight`
+export const BtnSignUp = styled.TouchableHighlight`
     background-color: ${props=>props.bgColor};
     width: 100%;
     height: 60px;
@@ -80,7 +69,7 @@ export const BtnLogin = styled.TouchableHighlight`
     position: absolute;
     bottom: 0;
 `;
-export const BtnLoginText = styled.Text`
+export const BtnSignUpText = styled.Text`
     color: #fff;
     font-size: 18px;
 `;

@@ -11,8 +11,6 @@ import Whatsapp from '../../assets/svg/whatsapp.svg';
 import {
     Container,
     
-    IconBtn,
-
     InputView,
     Input,
     BtnEye,
@@ -29,9 +27,9 @@ import {
     LineText,
     OptionLoginView,
 
-    RegisterView,
-    RegisterText,        
-    RegisterBtn,       
+    SignUpView,
+    SignUpText,        
+    SignUpBtn,       
 } from './style';
 
 export default () => {
@@ -83,12 +81,12 @@ export default () => {
                 </OptionLoginView>
             </OtherLoginView>
 
-            <RegisterView>
-                <RegisterText>Não tem uma conta?</RegisterText>
-                <RegisterBtn onPress={() => alert('Sign Up')}>
-                    <RegisterText style={{textDecorationLine: 'underline', fontWeight: 'bold'}}> Cadastre-se</RegisterText>
-                </RegisterBtn>
-            </RegisterView>
+            <SignUpView>
+                <SignUpText>Não tem uma conta?</SignUpText>
+                <SignUpBtn onPress={() => navigation.navigate('signup')}>
+                    <SignUpText style={{textDecorationLine: 'underline', fontWeight: 'bold'}}> Cadastre-se</SignUpText>
+                </SignUpBtn>
+            </SignUpView>
 
             <BtnLogin bgColor={pass && pass.length >= 6 && email ? '#ea1d2c' : '#aaa'} onPress={() => alert('log in')} disabled={pass && pass.length >= 6 && email ? false : true}>
                 <BtnLoginText>Login</BtnLoginText>
