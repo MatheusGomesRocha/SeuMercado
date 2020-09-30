@@ -3,7 +3,7 @@ import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
 import ProductHome from '../../components/ProductHome';
-import {Animated} from 'react-native';
+import {Animated, StatusBar} from 'react-native';
 
 import {
     Container,
@@ -71,6 +71,7 @@ export default () => {
 
     return(
         <Container>
+	    <StatusBar backgroundColor="#fff" barStyle="dark-content"/>
             <ScrollContainer>
 
                 <Scroll decelerationRate="fast" horizontal={true} showsHorizontalScrollIndicator={false}>

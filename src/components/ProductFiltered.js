@@ -4,7 +4,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Div = styled.View`
     background-color: #fff;
-    borderTopLeftRadius: 50px;
     margin-top: -50px;
 `;
 
@@ -14,6 +13,7 @@ const ItemBtn = styled.TouchableHighlight`
     borderBottomColor: rgba(0, 0, 0, 0.1);
     padding: 20px;
     width: 100%;
+    margin: 10px;
 `;
 
 const ItemRow = styled.View`
@@ -58,7 +58,6 @@ export default (props) => {
 
                             <ItemColumn>
                                 <Name>{item.name}</Name>
-                                <Price>R$ {item.price}</Price>
 
                                 <ItemRow style={{marginTop: 5}}>
                                     <Icon style={{marginLeft: 2}} name="star-o" size={14} color="#E09F3E" />
@@ -67,6 +66,8 @@ export default (props) => {
                                     <Icon style={{marginLeft: 2}} name="star-o" size={14} color="#E09F3E" />
                                     <Icon style={{marginLeft: 2}} name="star-o" size={14} color="#E09F3E" />
                                 </ItemRow>
+
+                                <Price>R$ {item.price}</Price>
 
                             </ItemColumn>
 

@@ -33,20 +33,6 @@ export const Input = styled.TextInput`
     margin-left: 10px;
 `;
 
-export const Btn = styled.TouchableHighlight`
-    background-color: #ea1d2c;
-    width: 70%;
-    height: 60px;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
-    margin-top: 15px;
-`;
-export const BtnText = styled.Text`
-    color: #fff;
-    font-size: 18px;
-`;
-
 
 export const ForgotBtn = styled.TouchableOpacity`
     margin-top: 10px;
@@ -73,3 +59,19 @@ export const RegisterText = styled.Text`
     color: #aaa;
 `;
 export const RegisterBtn = styled.TouchableOpacity``;
+
+
+
+export const BtnLogin = styled.TouchableHighlight`
+    background-color: ${props=>props.bgColor};
+    width: 100%;
+    height: 60px;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+`;
+export const BtnLoginText = styled.Text`
+    color: #fff;
+    font-size: 18px;
+`;

@@ -1,6 +1,7 @@
 import React from 'react';
 import ProductFiltered from '../../components/ProductFiltered';
 import {useRoute} from '@react-navigation/native';
+import {StatusBar} from 'react-native';
 
 import {
     Container,
@@ -19,6 +20,8 @@ export default () => {
 
     return(
         <Container>
+
+	    {/*<StatusBar translucent={true} backgroundColor={'transparent'} barStyle="default"/> */}
             <Scroll>
 
             <ImgView>

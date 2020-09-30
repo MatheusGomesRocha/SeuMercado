@@ -13,8 +13,8 @@ import {
     InputView,
     Input,
 
-    Btn,
-    BtnText,
+    BtnLogin,
+    BtnLoginText,
 
     ForgotBtn,
     ForgotText,
@@ -34,9 +34,6 @@ export default () => {
 
     return(
         <Container>
-            <IconBtn onPress={() => navigation.goBack()} underlayColor="rgba(0, 0, 0, 0.2)">
-                <ArrowLeft width={25} height={25} fill="#000"/>
-            </IconBtn>
 
             <InputView>
                 <Icon style={{marginLeft: 10}} name="user" size={25} />
@@ -45,17 +42,13 @@ export default () => {
 
             <InputView>
                 <Icon style={{marginLeft: 10}} name="lock" size={25} />
-                <Input placeholder="Senha" onChangeText={p=>setPass(p)} />
+                <Input secureTextEntry={true} placeholder="Senha" onChangeText={p=>setPass(p)} />
                 {pass ?
                 <EyeOff fill="#000" width={30} height={30} style={{marginRight: 10}}/>
                 :
                 <EyeOn fill="#000" width={30} height={30} style={{marginRight: 10}}/>
                 }
             </InputView>
-
-            <Btn>
-                <BtnText>Login</BtnText>
-            </Btn>
 
             <ForgotBtn onPress={() => alert('forgot password')}>
                 <ForgotText>Esqueceu a senha?</ForgotText>
@@ -71,6 +64,11 @@ export default () => {
                     <RegisterText style={{textDecorationLine: 'underline', fontWeight: 'bold'}}> Cadastre-se</RegisterText>
                 </RegisterBtn>
             </RegisterView>
+
+            <BtnLogin bgColor={pass ? '#ea1d2c' : '#aaa'} onPress={() => alert('log in')} disabled={pass ? false : true}>
+                <BtnLoginText>Login</BtnLoginText>
+            </BtnLogin>
+
         </Container>
     );
 }
