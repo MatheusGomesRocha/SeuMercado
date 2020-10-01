@@ -7,6 +7,8 @@ export const Container = styled.SafeAreaView`
 
 export const Scroll = styled.ScrollView``;
 export const ImgView = styled.View`
+    flex: 1;
+    background-color: rgba(0, 0, 0, 0.2);
 `;
 export const FilterImg = styled.ImageBackground`
     height: 250px;

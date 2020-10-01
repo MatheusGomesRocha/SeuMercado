@@ -12,6 +12,8 @@ import UserEmptyIcon from '../assets/svg/user_empty.svg';
 const Div = styled.View `
     flex-direction: row;
     background-color: #fff;
+    borderTopWidth: 1px;
+    borderTopColor: #dfdfdf;
     elevation: 15;
 `;
 

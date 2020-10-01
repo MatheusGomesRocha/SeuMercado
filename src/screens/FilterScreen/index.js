@@ -21,13 +21,16 @@ export default () => {
     return(
         <Container>
 
-	    <StatusBar translucent={true} backgroundColor='transparent' barStyle="default"/>
+	        <StatusBar translucent={true} backgroundColor='transparent' barStyle="default"/>
             <Scroll>
 
-            <ImgView>
-                <FilterImg source={img} />
-            </ImgView>
+            <FilterImg source={img}>
+                <ImgView>
+                </ImgView>
+            </FilterImg>
+
             <ProductFiltered type={type} img={img} />
+
             </Scroll>
 
         </Container>

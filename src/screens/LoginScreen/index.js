@@ -4,6 +4,7 @@ import {useNavigation} from '@react-navigation/native';
 import ArrowLeft from '../../assets/svg/arrow_left.svg';
 import EyeOff from '../../assets/svg/eye_off.svg';
 import EyeOn from '../../assets/svg/eye_on.svg';
+import Google from '../../assets/svg/google.svg';
 import Facebook from '../../assets/svg/facebook.svg';
 import Whatsapp from '../../assets/svg/whatsapp.svg';
 
@@ -76,15 +77,16 @@ export default () => {
                     <LineView></LineView>
                 </AllLineView>
                 <OptionLoginView>
-                    <Facebook width={35} height={35} fill="#000" />
-                    <Whatsapp style={{marginLeft: 20}} width={35} height={35} fill="#000" />
+                    <Google width={35} height={35} fill="#000" />
+                    <Facebook style={{marginLeft: 25}} width={35} height={35} fill="#000" />
+                    <Whatsapp style={{marginLeft: 25}} width={35} height={35} fill="#000" />
                 </OptionLoginView>
             </OtherLoginView>
 
             <SignUpView>
-                <SignUpText>Não tem uma conta?</SignUpText>
+                <SignUpText>Não tem uma conta? </SignUpText>
                 <SignUpBtn onPress={() => navigation.navigate('signup')}>
-                    <SignUpText style={{textDecorationLine: 'underline', fontWeight: 'bold'}}> Cadastre-se</SignUpText>
+                    <SignUpText style={{textDecorationLine: 'underline', fontWeight: 'bold'}}>Cadastre-se</SignUpText>
                 </SignUpBtn>
             </SignUpView>
 

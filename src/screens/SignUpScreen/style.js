@@ -2,11 +2,19 @@ import styled from 'styled-components/native';
 
 export const Container = styled.SafeAreaView`
     flex: 1;
-    align-items: center;
-    justify-content: center;
     background-color: #fff;
 `;
 
+export const Scroll = styled.ScrollView`
+    flex: 1;
+    width: 100%;
+    padding-top: 100px;
+`;
+
+export const AllView = styled.View`
+    align-items: center;
+
+`
 
 export const InputView = styled.View`
     flex-direction: row;
