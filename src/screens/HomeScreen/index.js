@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
-import ProductHome from '../../components/ProductHome';
+import ProductDefault from '../../components/ProductDefault';
 import {Animated, StatusBar} from 'react-native';
 
 import {
@@ -127,19 +127,20 @@ export default () => {
 
                 <PopView>
                     <PopText>Mais populares</PopText>
-                    <ProductHome/>
+                    <ProductDefault home={true}/>
                 </PopView>
 
             </ScrollContainer>
 
-        <Animated.View style={{bottom: bot}}>
-            <NoUserLoginBtn onPress={() => navigation.navigate('login')} underlayColor="#dfdfdf"> 
-                <>
-                    <NoUserLoginText>Para fazer pedidos no SeuMercado</NoUserLoginText>
-                    <NoUserLoginText style={{color: '#ea1d2c', fontWeight: 'bold'}}>Entrar ou cadastrar-se</NoUserLoginText>
-                </>
-            </NoUserLoginBtn>      
-        </Animated.View>   
+            <Animated.View style={{bottom: bot}}>
+                <NoUserLoginBtn onPress={() => navigation.navigate('login')} underlayColor="#dfdfdf"> 
+                    <>
+                        <NoUserLoginText>Para fazer pedidos no SeuMercado</NoUserLoginText>
+                        <NoUserLoginText style={{color: '#ea1d2c', fontWeight: 'bold'}}>Entrar ou cadastrar-se</NoUserLoginText>
+                    </>
+                </NoUserLoginBtn>      
+            </Animated.View>  
+
         </Container>
     );
 }

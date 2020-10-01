@@ -82,7 +82,7 @@ export const PopView = styled.View`
 export const PopText = styled.Text`
     font-weight: bold;
     font-size: 22px;
-    padding: 20px 10px 10px 10px;
+    padding: 20px 10px 10px 20px;
 `;
 
 

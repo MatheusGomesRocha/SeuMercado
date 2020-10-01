@@ -1,5 +1,5 @@
 import React from 'react';
-import ProductCart from '../../components/ProductCart';
+import ProductDefault from '../../components/ProductDefault';
 
 import {
     Container,
@@ -9,7 +9,7 @@ import {
 export default () => {
     return(
         <Container>
-            <ProductCart />
+            <ProductDefault cart={true}/>
         </Container>
     );
 }

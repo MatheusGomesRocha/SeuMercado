@@ -29,7 +29,11 @@ export default () => {
     const [array1, setArray] = useState([]);
    
     const filterData = array.filter((item) => {              // Array que será mostrado, pegando o valor digitado do usuário e filtrando para mostrar os que tem
-        return item.name.indexOf(userSearch) >=0
+        if(userSearch) {
+            return item.name.indexOf(userSearch) >=0
+        } else {
+            return array;
+        }
     }) 
 
     useEffect(() => {
@@ -56,7 +60,6 @@ export default () => {
     }
 
     useEffect(() => {
-
         let arrayShuffle = function(arr) {
 			let newPos;
 			let temp;
@@ -89,7 +92,7 @@ export default () => {
                         </InputView>
                     </>
                 }
-                data={userSearch ? filterData : array1}
+                data={filterData}
                 renderItem={({item}) => <SearchList data={item} />}
                 keyExtractor={(item) => item.id}
             />        

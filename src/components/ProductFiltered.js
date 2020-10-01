@@ -25,8 +25,6 @@ const ItemHeader = styled.View`
     justify-content: center;
     margin-left: 10px;
 `;
-const ItemColumn = styled.View`
-`;
 const Avatar = styled.Image`
     width: 120px;
     height: 120px;
@@ -65,12 +63,9 @@ export default (props) => {
 
                         <ItemHeader>
 
-                                <Name>{item.name}</Name>
-
-                                <Description numberOfLines={2}>{item.description}</Description>
-
-                                <Price>R$ {item.price}</Price>
-
+                            <Name>{item.name}</Name>
+                            <Description numberOfLines={2}>{item.description}</Description>
+                            <Price>R$ {item.price}</Price>
 
                         </ItemHeader>
 
