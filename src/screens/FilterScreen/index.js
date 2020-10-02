@@ -20,19 +20,8 @@ export default () => {
 
     return(
         <Container>
-
 	        <StatusBar translucent={true} backgroundColor='transparent' barStyle="default"/>
-            <Scroll>
-
-            <FilterImg source={img}>
-                <ImgView>
-                </ImgView>
-            </FilterImg>
-
             <ProductFiltered type={type} img={img} />
-
-            </Scroll>
-
         </Container>
     );
 }
