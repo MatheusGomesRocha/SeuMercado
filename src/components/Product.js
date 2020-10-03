@@ -1,6 +1,7 @@
-import React, { useRef } from 'react';
+import React, {useState, useRef, useEffect } from 'react';
 import ProductDefault from './ProductDefault';
 import styled from 'styled-components/native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import {
   SafeAreaView,
@@ -13,19 +14,75 @@ import {
 
 const Container = styled.SafeAreaView`
     flex: 1;
-    background-color: #ff0000;
-    justify-content: flex-start;
+    background-color: #fff;
 `;
 
 const Title = styled.Text`
-    color: #000;
+    color: #fff;
     font-size: 22px;
 `;
 
-const ArrayView = styled.View`
+
+
+const InfosView = styled.View`
+    flex: 1;
     width: 100%;
-    align-items: center;
     margin-top: 50px;
+    padding: 15px;
+`;
+const ProductName = styled.Text`
+    font-size: 22px;
+    font-weight: bold;
+`;
+const ProductDescription = styled.Text`
+    color: #888;
+    font-size: 16px;
+    margin-top: 15px;
+`;
+const ProductPrice = styled.Text`
+    color: #ea1d2c;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+`;
+
+
+
+const BtnAddView = styled.View`
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 90px;
+    borderTopWidth: 1px;
+    borderTopColor: #eee;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    padding: 10px;
+`;
+const QtdView = styled.View`
+    width: 35%;
+    height: 50px;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+`;
+const QtdText = styled.Text`
+    font-size: 18px;
+`;
+const BtnAdd = styled.TouchableHighlight`
+    background-color: #ea1d2c;
+    height: 50px;
+    width: 60%;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+`;
+const BtnAddText = styled.Text`
+    color: #fff;
+    font-size: 18px;
 `;
 
 const HEADER_MAX_HEIGHT = 250;
@@ -78,10 +135,20 @@ export default (props) => {
         outputRange: [0, 0, -8],
         extrapolate: 'clamp',
     });
-    
 
+    const [bot, setBot] = useState(new Animated.Value(-200));
+    useEffect(() => {
+        Animated.timing(bot, {
+            toValue: 0,
+            duration: 1000,
+            useNativeDriver: false,
+        }).start();
+    }, [])
+    
     return (
         <Container>
+            
+            
             <Animated.ScrollView
                 contentContainerStyle={{ paddingTop: HEADER_MAX_HEIGHT - 32, alignItems: 'center' }}
                 scrollEventThrottle={16}
@@ -89,6 +156,13 @@ export default (props) => {
                 [{ nativeEvent: { contentOffset: { y: scrollY } } }],
                 { useNativeDriver: true },
                 )}>
+
+            <InfosView>
+                <ProductName>{props.name}</ProductName>
+                <ProductDescription>{props.description}</ProductDescription>
+                <ProductPrice>R$ {props.price}</ProductPrice>
+                
+            </InfosView>
 
 
             </Animated.ScrollView>
@@ -102,7 +176,18 @@ export default (props) => {
                 <Title>{props.name}</Title>
             </Animated.View>
 
-                    <Title> Olá</Title>
+            <Animated.View style={[styles.BottomView, {bottom: bot}]}>
+                <QtdView>
+                    <Icon name="minus" size={25} color="#ea1d2c" />
+                    <QtdText>1</QtdText>
+                    <Icon name="plus" size={25} color="#ea1d2c" />
+
+                </QtdView>
+                <BtnAdd>
+                    <BtnAddText>Adicionar</BtnAddText>
+                </BtnAdd>
+            </Animated.View>
+            
         </Container>
     );
     }
@@ -148,7 +233,15 @@ export default (props) => {
             top: 0,
             left: 0,
             right: 0,
-
         },
+
+        BottomView: {
+            flexDirection: 'row', 
+            alignItems: 'center', 
+            justifyContent: 'space-around', 
+            height: 90,
+            borderTopWidth: 1,
+            borderTopColor: '#eee'
+        }
     });
 

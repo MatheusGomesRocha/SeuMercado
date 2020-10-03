@@ -72,22 +72,23 @@ const HEADER_MIN_HEIGHT = 84;
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
 let array = [
-    {avatar: require('../assets/img/carnes/bife.jpg'), name: 'Teste', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: '10,00'},
-    {avatar: require('../assets/img/carnes/asa_frango.jpg'), name: 'Teste', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: '10,00'},
-    {avatar: require('../assets/img/carnes/contra_file.jpg'), name: 'Teste', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: '10,00'},
-    {avatar: require('../assets/img/carnes/frango_assado.jpg'), name: 'Teste', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: '10,00'},
-    {avatar: require('../assets/img/carnes/peixe.jpg'), name: 'Teste', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: '10,00'},
-    {avatar: require('../assets/img/carnes/peixe.jpg'), name: 'Teste', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: '10,00'},
-    {avatar: require('../assets/img/carnes/peixe.jpg'), name: 'Teste', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: '10,00'},
+    {avatar: require('../assets/img/carnes/bife.jpg'), name: 'Bife', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: '10,00'},
+    {avatar: require('../assets/img/carnes/asa_frango.jpg'), name: 'Asa de Frango', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: '10,00'},
+    {avatar: require('../assets/img/carnes/contra_file.jpg'), name: 'Contra filé', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: '10,00'},
+    {avatar: require('../assets/img/carnes/frango_assado.jpg'), name: 'Frango Assado', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: '10,00'},
+    {avatar: require('../assets/img/carnes/peixe.jpg'), name: 'Peixe Cozido', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: '10,00'},
+    {avatar: require('../assets/img/carnes/peixe.jpg'), name: 'Peixe Assado', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: '10,00'},
+    {avatar: require('../assets/img/carnes/peixe.jpg'), name: 'Peixe na grelha', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: '10,00'},
 ];
 
 
 export default (props) => {
   const navigation = useNavigation();
+  
   const scrollY = useRef(new Animated.Value(0)).current;
 
-  const GoToProduct = (name, img) => {
-    navigation.navigate('product', {name, img})
+  const GoToProduct = (name, img, description, price) => {
+    navigation.navigate('product', {name, img, description, price})
   } 
 
   // O Input seria o tamanho do scroll a ser realizado para aplicar as mudanças
@@ -147,7 +148,7 @@ export default (props) => {
 
         <ArrayView>
             {array.map((item, k) => (
-                    <ItemBtn key={k} underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => GoToProduct(item.name, item.avatar)}>
+                    <ItemBtn key={k} underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => GoToProduct(item.name, item.avatar, item.description, item.price)}>
                         <ItemRow>
 
                             <ItemHeader>

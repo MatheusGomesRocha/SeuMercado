@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SearchIcon from '../assets/svg/search.svg';
+import {useNavigation} from '@react-navigation/native';
 
 const Div = styled.View`
     background-color: #fff;
@@ -81,10 +82,12 @@ let array = [
 ];
 
 export default (props) => {
+    const navigation = useNavigation();
+
     const [quantidade, setQuantidade] = useState(1);
     const [userSearch, setUserSearch] = useState();
     const [arraySearch, setArraySearch] = useState(array);
-    
+
     const filterData = array.filter((item) => {              // Array que será mostrado, pegando o valor digitado do usuário e filtrando para mostrar os que tem
         if(userSearch) {
             return item.name.indexOf(userSearch) >=0
@@ -98,11 +101,15 @@ export default (props) => {
             setArraySearch(filterData)
         }
     }, [])
+
+    const GoToProduct = (name, img, description, price) => {
+        navigation.navigate('product', {name, img, description, price})
+      } 
     
+
 
     return(
         <Div>
-
             {props.cart &&
             <InputView>
                 <Input placeholder="Saiba se o produto já está no carrinho" onChangeText={f=>setUserSearch(f)} />
@@ -113,8 +120,8 @@ export default (props) => {
             }
 
             {filterData.map((item, k) => (
-                <ItemView key={k} underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => alert('hello world')}>
-                    <ItemRow jContent={props.home ? 'flex-start':'space-between'}>
+                <ItemView key={k} underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => GoToProduct(item.name, item.avatar, item.description, item.price)}>
+                    <ItemRow jContent={props.home || props.search ? 'flex-start':'space-between'}>
 
                         <Avatar source={item.avatar} />
 

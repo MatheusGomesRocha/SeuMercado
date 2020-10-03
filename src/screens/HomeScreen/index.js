@@ -62,7 +62,7 @@ export default () => {
 
     useEffect(() => {
         Animated.timing(bot, {
-            toValue: 120,
+            toValue: 100,
             duration: 500,
             useNativeDriver: false,
         }).start();
@@ -71,7 +71,7 @@ export default () => {
 
     return(
         <Container>
-	    <StatusBar backgroundColor="#fff" barStyle="dark-content"/>
+	        <StatusBar backgroundColor="#fff" barStyle="dark-content"/>
             <ScrollContainer>
 
                 <Scroll decelerationRate="fast" horizontal={true} showsHorizontalScrollIndicator={false}>

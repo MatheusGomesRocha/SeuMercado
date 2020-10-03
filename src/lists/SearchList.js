@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import ProductSearch from '../components/ProductSearch';
+import ProductDefault from '../components/ProductDefault';
 
 const Div = styled.View`
 `;
@@ -8,7 +8,7 @@ const Div = styled.View`
 export default ({data}) => {
     return(
             <Div>
-                <ProductSearch data={data} />
+                <ProductDefault search={true} />
             </Div>        
     );
 }
