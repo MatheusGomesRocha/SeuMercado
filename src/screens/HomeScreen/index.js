@@ -85,7 +85,7 @@ export default () => {
                     </FilterView>
                 </Scroll>
 
-                <CommentsView>
+                {/* <CommentsView>
                     <Swiper
                         showsPagination={false}
                         showsButtons={true}
@@ -123,7 +123,7 @@ export default () => {
                         ))}
                         
                     </Swiper>
-                </CommentsView>
+                </CommentsView> */}
 
                 <PopView>
                     <PopText>Mais populares</PopText>
