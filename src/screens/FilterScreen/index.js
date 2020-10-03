@@ -6,10 +6,6 @@ import {StatusBar} from 'react-native';
 import {
     Container,
 
-    Scroll, 
-
-    ImgView,
-    FilterImg,
 } from './style';
 
 export default () => {

@@ -1,5 +1,7 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components/native';
+import {useNavigation} from '@react-navigation/native';
+
 import {
   SafeAreaView,
   StyleSheet,
@@ -9,7 +11,7 @@ import {
   Animated,
 } from 'react-native';
 
-const Div = styled.View`
+const Container = styled.View`
     flex: 1;
     background-color: #fff;
 `;
@@ -81,14 +83,12 @@ let array = [
 
 
 export default (props) => {
+  const navigation = useNavigation();
   const scrollY = useRef(new Animated.Value(0)).current;
 
-  const headerTranslateY = scrollY.interpolate({
-    inputRange: [0, HEADER_SCROLL_DISTANCE],
-    outputRange: [0, -HEADER_SCROLL_DISTANCE],
-    extrapolate: 'clamp',
-  });
-
+  const GoToProduct = (name, img) => {
+    navigation.navigate('product', {name, img})
+  } 
 
   // O Input seria o tamanho do scroll a ser realizado para aplicar as mudanças
 
@@ -127,9 +127,16 @@ export default (props) => {
     extrapolate: 'clamp',
   });
  
+  // Pegando o valor do scroll
+  const headerTranslateY = scrollY.interpolate({
+    inputRange: [0, HEADER_SCROLL_DISTANCE],
+    outputRange: [0, -HEADER_SCROLL_DISTANCE],
+    extrapolate: 'clamp',
+  });
+
 
   return (
-    <Div style={styles.saveArea}>
+    <Container>
       <Animated.ScrollView
         contentContainerStyle={{ paddingTop: HEADER_MAX_HEIGHT - 32, alignItems: 'center' }}
         scrollEventThrottle={16}
@@ -140,7 +147,7 @@ export default (props) => {
 
         <ArrayView>
             {array.map((item, k) => (
-                    <ItemBtn key={k} underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => alert('hello world')}>
+                    <ItemBtn key={k} underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => GoToProduct(item.name, item.avatar)}>
                         <ItemRow>
 
                             <ItemHeader>
@@ -167,7 +174,7 @@ export default (props) => {
         <Title>{props.type}</Title>
       </Animated.View>
 
-    </Div>
+    </Container>
   );
 }
 
