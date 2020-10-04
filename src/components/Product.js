@@ -2,6 +2,8 @@ import React, {useState, useRef, useEffect } from 'react';
 import ProductDefault from './ProductDefault';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Less from '../assets/svg/less.svg';
+import Plus from '../assets/svg/plus.svg';
 
 import {
   SafeAreaView,
@@ -69,6 +71,7 @@ const QtdView = styled.View`
     justify-content: space-around;
     align-items: center;
 `;
+const QtdBtn = styled.TouchableOpacity``;
 const QtdText = styled.Text`
     font-size: 18px;
 `;
@@ -77,12 +80,13 @@ const BtnAdd = styled.TouchableHighlight`
     height: 50px;
     width: 60%;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
+    flex-direction: row;
     border-radius: 10px;
 `;
 const BtnAddText = styled.Text`
     color: #fff;
-    font-size: 18px;
+    font-size: 16px;
 `;
 
 const HEADER_MAX_HEIGHT = 250;
@@ -90,6 +94,8 @@ const HEADER_MIN_HEIGHT = 84;
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
 export default (props) => {
+    const [qtd, setQtd] = useState(1);
+    const [price, setPrice] = useState(props.price);
     const scrollY = useRef(new Animated.Value(0)).current;
 
     const headerTranslateY = scrollY.interpolate({
@@ -145,6 +151,10 @@ export default (props) => {
         }).start();
     }, [])
     
+    useEffect(() => {
+        setPrice(parseFloat(props.price*qtd).toFixed(2));
+    }, [qtd])
+    
     return (
         <Container>
             
@@ -160,7 +170,7 @@ export default (props) => {
             <InfosView>
                 <ProductName>{props.name}</ProductName>
                 <ProductDescription>{props.description}</ProductDescription>
-                <ProductPrice>R$ {props.price}</ProductPrice>
+                <ProductPrice>R$ {parseFloat(props.price).toFixed(2)}</ProductPrice>
                 
             </InfosView>
 
@@ -178,13 +188,24 @@ export default (props) => {
 
             <Animated.View style={[styles.BottomView, {bottom: bot}]}>
                 <QtdView>
-                    <Icon name="minus" size={25} color="#ea1d2c" />
-                    <QtdText>1</QtdText>
-                    <Icon name="plus" size={25} color="#ea1d2c" />
 
+                    <QtdBtn disabled={qtd == 1 ? true : false} onPress={() => setQtd(qtd - 1)}>
+                        <Less width="20" height="20" fill={qtd == 1 ? '#ccc' : '#ea1d2c'}/>
+                    </QtdBtn>
+
+                    <QtdText>{qtd}</QtdText>
+                    
+                    <QtdBtn onPress={() => setQtd(qtd + 1)}>
+                        <Plus width="20" height="20" fill="#ea1d2c"/>
+                    </QtdBtn>
+                    
                 </QtdView>
+
                 <BtnAdd>
-                    <BtnAddText>Adicionar</BtnAddText>
+                    <>
+                        <BtnAddText>Adicionar</BtnAddText>
+                        <BtnAddText style={{fontWeight: 'bold'}}>R${price}</BtnAddText>
+                    </>
                 </BtnAdd>
             </Animated.View>
             

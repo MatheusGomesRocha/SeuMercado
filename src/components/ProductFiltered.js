@@ -72,13 +72,13 @@ const HEADER_MIN_HEIGHT = 84;
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
 let array = [
-    {avatar: require('../assets/img/carnes/bife.jpg'), name: 'Bife', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: '10,00'},
-    {avatar: require('../assets/img/carnes/asa_frango.jpg'), name: 'Asa de Frango', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: '10,00'},
-    {avatar: require('../assets/img/carnes/contra_file.jpg'), name: 'Contra filé', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: '10,00'},
-    {avatar: require('../assets/img/carnes/frango_assado.jpg'), name: 'Frango Assado', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: '10,00'},
-    {avatar: require('../assets/img/carnes/peixe.jpg'), name: 'Peixe Cozido', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: '10,00'},
-    {avatar: require('../assets/img/carnes/peixe.jpg'), name: 'Peixe Assado', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: '10,00'},
-    {avatar: require('../assets/img/carnes/peixe.jpg'), name: 'Peixe na grelha', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: '10,00'},
+    {avatar: require('../assets/img/carnes/bife.jpg'), name: 'Bife', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: 10.00},
+    {avatar: require('../assets/img/carnes/asa_frango.jpg'), name: 'Asa de Frango', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: 10.40},
+    {avatar: require('../assets/img/carnes/contra_file.jpg'), name: 'Contra filé', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: 10.20},
+    {avatar: require('../assets/img/carnes/frango_assado.jpg'), name: 'Frango Assado', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: 10.00},
+    {avatar: require('../assets/img/carnes/peixe.jpg'), name: 'Peixe Cozido', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: 10.00},
+    {avatar: require('../assets/img/carnes/peixe.jpg'), name: 'Peixe Assado', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: 10.00},
+    {avatar: require('../assets/img/carnes/peixe.jpg'), name: 'Peixe na grelha', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: 10.00},
 ];
 
 
@@ -154,7 +154,7 @@ export default (props) => {
                             <ItemHeader>
                                 <Name>{item.name}</Name>
                                 <Description numberOfLines={2}>{item.description}</Description>
-                                <Price>R$ {item.price}</Price>
+                                <Price>R$ {parseFloat(item.price).toFixed(2)}</Price>
                             </ItemHeader>
 
                         <Avatar resizeMode="cover" source={item.avatar} />

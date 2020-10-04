@@ -75,10 +75,10 @@ const ItemQntdValue = styled.Text`
 
 
 let array = [
-    {avatar: require('../assets/img/carnes/bife.jpg'), name: 'Fulano', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: '10,00'},
-    {avatar: require('../assets/img/carnes/asa_frango.jpg'), name: 'Cicrano', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: '10,00'},
-    {avatar: require('../assets/img/carnes/contra_file.jpg'), name: 'Beltrano', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: '10,00'},
-    {avatar: require('../assets/img/carnes/frango_assado.jpg'), name: 'Teste', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: '10,00'},
+    {avatar: require('../assets/img/carnes/bife.jpg'), name: 'Fulano', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: 10.00},
+    {avatar: require('../assets/img/carnes/asa_frango.jpg'), name: 'Cicrano', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: 10.35},
+    {avatar: require('../assets/img/carnes/contra_file.jpg'), name: 'Beltrano', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: 10.20},
+    {avatar: require('../assets/img/carnes/frango_assado.jpg'), name: 'Teste', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: 10.58},
 ];
 
 export default (props) => {
@@ -128,7 +128,7 @@ export default (props) => {
                         <ItemHeader>
                             <Name>{item.name}</Name>
                             <Description numberOfLines={2}>{item.description}</Description>
-                            <Price>R$ {item.price}</Price>
+                            <Price>R$ {parseFloat(item.price).toFixed(2)}</Price>
                         </ItemHeader>
 
                         {props.cart &&
