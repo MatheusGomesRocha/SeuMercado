@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "829582213867",
+    "firebase_url": "https://seumercado-cb9e6.firebaseio.com",
+    "project_id": "seumercado-cb9e6",
+    "storage_bucket": "seumercado-cb9e6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:829582213867:android:28de92cab19dcf3b3af4ae",
+        "android_client_info": {
+          "package_name": "com.seumercado"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "829582213867-v2couq4je0h43rddsdnjs2hch23spvla.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4N56QygKy2jDRWhnZaSrZs6qKxdlubBg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "829582213867-v2couq4je0h43rddsdnjs2hch23spvla.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

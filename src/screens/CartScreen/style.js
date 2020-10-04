@@ -5,4 +5,4 @@ export const Container = styled.SafeAreaView`
     background-color: #fff;
 `;
 
-export const Texto = styled.Text``;
+export const Flat = styled.FlatList``;

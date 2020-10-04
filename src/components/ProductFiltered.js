@@ -20,7 +20,7 @@ const ArrayView = styled.View`
     flex: 1;
     width: 100%;
     align-items: center;
-    margin-top: 50px;
+    margin: 50px 0 15px 0;
 `;
 const ItemBtn = styled.TouchableHighlight`
     height: 121px;

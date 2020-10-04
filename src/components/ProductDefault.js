@@ -7,6 +7,7 @@ import {useNavigation} from '@react-navigation/native';
 const Div = styled.View`
     background-color: #fff;
     align-items: center;
+    margin-bottom: 15px;
 `;
 
 const InputView = styled.View`
@@ -38,7 +39,6 @@ const ItemView = styled.TouchableHighlight`
 
 const ItemRow = styled.View`
     flex-direction: row;
-    justify-content: ${props=>props.jContent};
 `;
 const ItemHeader = styled.View`
     width: 55%;
@@ -121,7 +121,7 @@ export default (props) => {
 
             {filterData.map((item, k) => (
                 <ItemView key={k} underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => GoToProduct(item.name, item.avatar, item.description, item.price)}>
-                    <ItemRow jContent={props.home || props.search ? 'flex-start':'space-between'}>
+                    <ItemRow>
 
                         <Avatar source={item.avatar} />
 
@@ -131,20 +131,6 @@ export default (props) => {
                             <Price>R$ {parseFloat(item.price).toFixed(2)}</Price>
                         </ItemHeader>
 
-                        {props.cart &&
-                            <ItemQntd>
-                                <ItemBtnQntd>
-                                    <Icon name="angle-up" size={30} onPress={() => setQuantidade(quantidade + 1)}/>
-                                </ItemBtnQntd>
-
-                                <ItemQntdValue>{quantidade}</ItemQntdValue>
-
-                                <ItemBtnQntd>
-                                    <Icon name="angle-down" size={30} onPress={() => setQuantidade(quantidade - 1)}/>
-                                </ItemBtnQntd>
-                            </ItemQntd>
-                        }
-                        
                     </ItemRow>
                 </ItemView>
             ))}
