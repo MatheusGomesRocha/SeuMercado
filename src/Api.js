@@ -4,7 +4,7 @@ import {Alert} from 'react-native';
 
 export default {
 
-    signUp: async(name, email, password, navigation) => {
+    signUp: async(name, email, cpf, password, navigation) => {
         const res =
             auth()      // Cria um usuário com email e senha no firebase Auth
             .createUserWithEmailAndPassword(email, password)   
@@ -18,25 +18,32 @@ export default {
                 .set({
                     id: user.uid,
                     name: name,
+                    cpf: cpf,
                     email: email,
                     password: password,
                 })
                 .then(() => {
-                    Alert.alert(
-                        "Login",
-                        "Conta criada com sucesso. Agora faça o login",
-                        [
-                          { text: "OK" }
-                        ],
-                        { cancelable: false }
-                      );
-                    navigation.reset({
-                        routes:[
-                            {name: 'preload'}
-                        ]
-                    })
+                    auth()
+                    .signInWithEmailAndPassword(email, password)
+                    .then(() => {
+                        navigation.reset({
+                            routes:[
+                                {name: 'apptab'}
+                            ]
+                        });
+                        
+                        Alert.alert(
+                            "Login",
+                            "Conta criada com sucesso.",
+                            [
+                              { text: "OK" }
+                            ],
+                            { cancelable: false }
+                        );
+                    });
+                    
                 })
-
+                return true;
             })
             .catch(error => {
                 if(error.code == 'auth/email-already-in-use') {     // Erro que acontece caso já tenha um usuário com o mesmo email
@@ -50,13 +57,30 @@ export default {
                       );
                 }
             })
+
+            return res;
     },
 
-    login: async (email, password) => {
+    login: async (email, password, navigation) => {
         const res = 
                 auth()
                 .signInWithEmailAndPassword(email, password)
                 .then(() => {
+                    navigation.reset({
+                        routes:[
+                            {name: 'apptab'}
+                        ]
+                    });
+                    
+                    Alert.alert(
+                        "Login",
+                        "Login feito com sucesso.",
+                        [
+                          { text: "OK" }
+                        ],
+                        { cancelable: false }
+                    );
+
                     return true;
                 })
                 .catch(error => {   // Caso email ou senha foram digitados incorretamentes

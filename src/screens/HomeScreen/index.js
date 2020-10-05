@@ -4,6 +4,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
 import ProductDefault from '../../components/ProductDefault';
 import {Animated, StatusBar} from 'react-native';
+import Auth from '@react-native-firebase/auth';
+import {useSelector} from 'react-redux';
 
 import {
     Container,
@@ -53,6 +55,7 @@ let comments = [
 
 export default () => {
     const navigation = useNavigation();
+    const email = useSelector(state=>state.user.email);
 
     const goToFilter = (type, img) => {
         navigation.navigate('filter', {type, img});
@@ -131,16 +134,18 @@ export default () => {
                 </PopView>
 
             </ScrollContainer>
-
-            <Animated.View style={{bottom: bot}}>
-                <NoUserLoginBtn onPress={() => navigation.navigate('login')} underlayColor="#dfdfdf"> 
-                    <>
-                        <NoUserLoginText>Para fazer pedidos no SeuMercado</NoUserLoginText>
-                        <NoUserLoginText style={{color: '#ea1d2c', fontWeight: 'bold'}}>Entrar ou cadastrar-se</NoUserLoginText>
-                    </>
-                </NoUserLoginBtn>      
-            </Animated.View>  
-
+            
+            {!email &&
+                <Animated.View style={{bottom: bot}}>
+                    <NoUserLoginBtn onPress={() => navigation.navigate('login')} underlayColor="#dfdfdf"> 
+                        <>
+                            <NoUserLoginText>Para fazer pedidos no SeuMercado</NoUserLoginText>
+                            <NoUserLoginText style={{color: '#ea1d2c', fontWeight: 'bold'}}>Entrar ou cadastrar-se</NoUserLoginText>
+                        </>
+                    </NoUserLoginBtn>      
+                </Animated.View>  
+            }
         </Container>
     );
 }
+

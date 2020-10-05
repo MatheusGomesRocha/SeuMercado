@@ -7,7 +7,9 @@ import EyeOn from '../../assets/svg/eye_on.svg';
 import Google from '../../assets/svg/google.svg';
 import Facebook from '../../assets/svg/facebook.svg';
 import Whatsapp from '../../assets/svg/whatsapp.svg';
-
+import Api from '../../Api';
+import {connect} from 'react-redux';
+import {Alert} from 'react-native';
 
 import {
     Container,
@@ -34,7 +36,7 @@ import {
     LoginBtn,       
 } from './style';
 
-export default () => {
+function SignUpScreen(props) {
     const navigation = useNavigation();
 
     const [name, setName] = useState();
@@ -42,8 +44,26 @@ export default () => {
     const [email, setEmail] = useState();
     const [pass, setPass] = useState();
     const [confirmPass, setConfirmPass] = useState();
+
     const [securePass, setSecurePass] = useState(true)
     const [secureConfirmPass, setSecureConfirmPass] = useState(true)
+
+    const SignUp = async () => {
+        let res = await Api.signUp(name, email, cpf, pass, navigation);
+
+        if(res) {
+            props.setEmail(email);
+        } else {
+            Alert.alert(
+                "Error",
+                "Ocorreu um erro, por favor tente novamente.",
+                [
+                  { text: "OK" }
+                ],
+                { cancelable: false }
+            );
+        }
+    }
 
     return(
         <Container>
@@ -84,7 +104,7 @@ export default () => {
 
                     <InputView>
                         <Icon style={{marginLeft: 10}} name="lock" size={25} />
-                        <Input secureTextEntry={secureConfirmPass} placeholder="Confime sua senha" onChangeText={cp=>setConfirmPass(cp)} />
+                        <Input onSubmitEditing={SignUp} secureTextEntry={secureConfirmPass} placeholder="Confime sua senha" onChangeText={cp=>setConfirmPass(cp)} />
                         {secureConfirmPass ?
                         <>
                             <BtnEye onPress={() => setSecureConfirmPass(false)}>
@@ -128,10 +148,18 @@ export default () => {
             
             </Scroll>
             
-            <BtnSignUp bgColor={pass && pass.length >= 6 && email && name && cpf && pass == confirmPass ? '#ea1d2c' : '#aaa'} onPress={() => alert('log in')} disabled={pass && pass.length >= 6 && email && name && cpf && pass == confirmPass ? false : true}>
+            <BtnSignUp onPress={SignUp} bgColor={pass && pass.length >= 6 && email && name && cpf && pass == confirmPass ? '#ea1d2c' : '#aaa'} disabled={pass && pass.length >= 6 && email && name && cpf && pass == confirmPass ? false : true}>
                 <BtnSignUpText>Finalizar</BtnSignUpText>
             </BtnSignUp>
             
         </Container>
     );
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setEmail:(email)=>dispatch({type:'SET_EMAIL', payload: {email}})        // Seta o email no redux
+    };
+}
+
+export default connect(null, mapDispatchToProps) (SignUpScreen);

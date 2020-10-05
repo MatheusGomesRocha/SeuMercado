@@ -1,14 +1,45 @@
 import React from 'react';
+import {connect, useSelector} from 'react-redux';
+import auth from '@react-native-firebase/auth';
+import {useNavigation} from '@react-navigation/native';
 
 import {
     Container,
-    Texto
+
+    BtnSignOut,
+    BtnText,
 } from './style';
 
-export default () => {
+function UserScreen(props) {
+    const email = useSelector(state=>state.user.email);
+    const navigation = useNavigation();
+
+    const SignOut = async () => {    // Função de Logout
+        props.SignOut();
+        auth().signOut();
+        navigation.reset({
+            index: 0,
+            routes: [
+                { name: 'home' }
+            ]
+        });
+    }
+
     return(
         <Container>
-            <Texto> Olá mundo User </Texto>
+            {email?
+                <BtnSignOut onPress={SignOut}>
+                    <BtnText>Sair</BtnText>
+                </BtnSignOut>
+            : null}
         </Container>
     );
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        SignOut:(SignOut)=>dispatch({type:'SIGN_OUT'}),     // Log Out
+    };
+}
+
+export default connect(null, mapDispatchToProps) (UserScreen);
