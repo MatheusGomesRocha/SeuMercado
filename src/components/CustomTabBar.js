@@ -19,7 +19,8 @@ const Div = styled.View `
 
 const Texto = styled.Text`
     font-size: 12px;
-    color: #808080;
+    color: ${props=>props.color};
+    margin-top: 5px;
 `;
 
 const Touch = styled.TouchableOpacity `
@@ -27,17 +28,6 @@ const Touch = styled.TouchableOpacity `
     justify-content: center;
     align-items: center;
     height: 70px;
-`;
-
-const TouchCenter = styled.TouchableHighlight `
-    width: 70px;
-    height: 70px;
-    background-color: #fff;
-    justify-content: center;
-    align-items: center;
-    margin-top: -20px;
-    border-radius: 35px;
-    border: 3px solid #FE654F;
 `;
 
 export default ({state, descriptors, navigation, index}) => {          /** Props que vem para facilitar a customização */
@@ -54,14 +44,17 @@ export default ({state, descriptors, navigation, index}) => {          /** Props
                 :
                     <HomeEmptyIcon style={{opacity: 0.7}} width="28" height="28" fill="#000" />
                 }
+                    <Texto color={state.index === 0 ? '#000' : '#808080'}>Início</Texto>
             </Touch>
 
             <Touch key={index} onPress={() => goTo('search')}>
                 <SearchIcon style={{opacity: state.index === 1 ? 1 : 0.7}} width="28" height="28" fill="#000" />
+                <Texto color={state.index === 1 ? '#000' : '#808080'}>Busca</Texto>
             </Touch>
 
             <Touch underlayColor="rgba(255, 255, 255, 0.9)" key={index} onPress={() => goTo('cart')}>
-                <CartIcon style={{opacity: state.index === 2 ? 1 : 0.7}} width="32" height="32" fill="#000" />
+                <CartIcon style={{opacity: state.index === 2 ? 1 : 0.7}} width="28" height="28" fill="#000" />
+                <Texto color={state.index === 2 ? '#000' : '#808080'}>Carrinho</Texto>
             </Touch>
 
             <Touch key={index} onPress={() => goTo('favorites')}>
@@ -70,6 +63,7 @@ export default ({state, descriptors, navigation, index}) => {          /** Props
                 :
                     <FavoriteEmptyIcon style={{opacity: 0.7}} width="28" height="28" fill="#000" />
                 }
+                    <Texto color={state.index === 3 ? '#000' : '#808080'}>Histórico</Texto>
             </Touch>
 
             <Touch key={index} onPress={() => goTo('user')}>
@@ -78,6 +72,7 @@ export default ({state, descriptors, navigation, index}) => {          /** Props
                 :
                     <UserEmptyIcon style={{opacity: 0.7}} width="28" height="28" fill="#000" />
                 }            
+                    <Texto color={state.index === 4 ? '#000' : '#808080'}>Perfil</Texto>
             </Touch>
         </Div>
     );
