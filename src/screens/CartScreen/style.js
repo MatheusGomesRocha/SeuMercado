@@ -5,4 +5,5 @@ export const Container = styled.SafeAreaView`
     background-color: #fff;
 `;
 
+export const Scroll = styled.ScrollView``;
 export const Flat = styled.FlatList``;

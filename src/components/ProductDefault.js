@@ -3,6 +3,7 @@ import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SearchIcon from '../assets/svg/search.svg';
 import {useNavigation} from '@react-navigation/native';
+import Api from '../Api';
 
 const Div = styled.View`
     background-color: #fff;
@@ -86,13 +87,14 @@ export default (props) => {
 
     const [quantidade, setQuantidade] = useState(1);
     const [userSearch, setUserSearch] = useState();
-    const [arraySearch, setArraySearch] = useState(array);
+    const [products, setProducts] = useState([]);
+    const [arraySearch, setArraySearch] = useState(products);
 
-    const filterData = array.filter((item) => {              // Array que será mostrado, pegando o valor digitado do usuário e filtrando para mostrar os que tem
+    const filterData = products.filter((item) => {              // Array que será mostrado, pegando o valor digitado do usuário e filtrando para mostrar os que tem
         if(userSearch) {
             return item.name.indexOf(userSearch) >=0
         } else {
-            return array;
+            return products;
         }
     }) 
 
@@ -100,6 +102,17 @@ export default (props) => {
         if(filterData) {
             setArraySearch(filterData)
         }
+    }, [])
+
+    useEffect(() => {
+        const getProducts = async () => {
+            setProducts([]);
+            
+            let json = await Api.getProducts();
+            setProducts(json)
+        }
+
+        getProducts();
     }, [])
 
     const GoToProduct = (name, img, description, price) => {
@@ -120,14 +133,14 @@ export default (props) => {
             }
 
             {filterData.map((item, k) => (
-                <ItemView key={k} underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => GoToProduct(item.name, item.avatar, item.description, item.price)}>
+                <ItemView key={k} underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => GoToProduct(item.name, item.img, item.description, item.price)}>
                     <ItemRow>
 
-                        <Avatar source={item.avatar} />
+                        <Avatar source={item.img} />
 
                         <ItemHeader>
                             <Name>{item.name}</Name>
-                            <Description numberOfLines={2}>{item.description}</Description>
+                            <Description numberOfLines={2}>{item.description?item.description: 'Nenhuma descrição atribuída'}</Description>
                             <Price>R$ {parseFloat(item.price).toFixed(2)}</Price>
                         </ItemHeader>
 

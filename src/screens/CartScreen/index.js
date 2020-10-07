@@ -3,13 +3,16 @@ import ProductDefault from '../../components/ProductDefault';
 
 import {
     Container,
-    Texto
+    Texto,
+    Scroll,
 } from './style';
 
 export default () => {
     return(
         <Container>
-            <ProductDefault cart={true}/>
+            <Scroll>
+                <ProductDefault cart={true}/>
+            </Scroll>
         </Container>
     );
 }

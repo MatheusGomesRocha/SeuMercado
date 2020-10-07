@@ -158,21 +158,24 @@ export default {
     //     return res;
     // },
 
-    // getBarbers: async () => {
-    //    let list = [];
+    getProducts: async () => {
+       let list = [];
 
-    //    let results = await firestore().collection('barbers').get();
+       let results = await firestore().collection('products').get();
 
-    //    results.forEach(result => {
-    //        let data = result.data();
-    //        list.push({
-    //            id: data.id,
-    //            name: data.name,
-    //            stars: data.stars,
-    //        })
-    //    })
+       results.forEach(result => {
+           let data = result.data();
+           list.push({
+               id: data.id,
+               name: data.name,
+               type: data.type,
+               description: data.description,
+               price: data.price,
+               img: data.img,
+           })
+       })
 
-    //    return list
-    // },
+       return list
+    },
 
 }
