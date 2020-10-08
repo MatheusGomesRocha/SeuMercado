@@ -3,6 +3,13 @@ import {connect, useSelector} from 'react-redux';
 import auth from '@react-native-firebase/auth';
 import {useNavigation} from '@react-navigation/native';
 import FavoriteIcon from '../../assets/svg/favorite_empty.svg';
+import CupomIcon from '../../assets/svg/cupom.svg';
+import ChatIcon from '../../assets/svg/chat.svg';
+import LocationIcon from '../../assets/svg/location.svg';
+import AngleRightIcon from '../../assets/svg/angle_right.svg';
+import CogIcon from '../../assets/svg/cog.svg';
+import PowerOffIcon from '../../assets/svg/power_off.svg';
+import HelpIcon from '../../assets/svg/question_mark.svg';
 
 import {
     Container,
@@ -19,11 +26,15 @@ import {
 
     HeaderLoginView,
 
-    BtnView,
+    BtnTopView,
     DefaultBtn,
     LeftView,
     BtnText,
     BtnSmallText,
+
+    BtnBottomView,
+    DefaultBottomBtn,
+    DefaultBottomText,
 } from './style';
 
 function UserScreen(props) {
@@ -70,13 +81,15 @@ function UserScreen(props) {
                         </HeaderLoginView>
                     }
 
-                    <BtnView>
+                    <BtnTopView>
                         <DefaultBtn>
                             <>
+                                <LocationIcon width="25" height="25" fill="#333" />
                                 <LeftView>
                                     <BtnText>Endereços</BtnText>
                                     <BtnSmallText>Meus endereços cadastrados</BtnSmallText>
                                 </LeftView>
+                                <AngleRightIcon width="15" height="15" />
                             </>
                         </DefaultBtn>
 
@@ -87,31 +100,73 @@ function UserScreen(props) {
                                     <BtnText>Favoritos</BtnText>
                                     <BtnSmallText>Meus produtos favoritos</BtnSmallText>
                                 </LeftView>
+                                <AngleRightIcon width="15" height="15" />
                             </>
                         </DefaultBtn>
 
                         <DefaultBtn>
-                            <LeftView>
-                                <BtnText>Cupons</BtnText>
-                                <BtnSmallText>Meus cupons de desconto</BtnSmallText>
-                            </LeftView>
+                            <>
+                                <CupomIcon width="25" height="25" fill="#333" />
+                                <LeftView>
+                                    <BtnText>Cupons</BtnText>
+                                    <BtnSmallText>Meus cupons de desconto</BtnSmallText>
+                                </LeftView>
+                                <AngleRightIcon width="15" height="15" />
+                            </>
                         </DefaultBtn>
 
 
                         {email?
-                            <>
-                                <DefaultBtn>
-                                    <BtnText>Conversas</BtnText>
-                                </DefaultBtn>
-
-                                <DefaultBtn onPress={SignOut}>
-                                        <BtnText>Sair</BtnText>
-                                </DefaultBtn>
-                            </>
+                            <DefaultBtn>
+                                <>
+                                    <ChatIcon width="25" height="25" fill="#333" />
+                                    <LeftView>
+                                        <BtnText>Conversas</BtnText>
+                                        <BtnSmallText>Minhas conversas</BtnSmallText>
+                                    </LeftView>
+                                    <AngleRightIcon width="15" height="15" />
+                                </>
+                            </DefaultBtn>
                         : null } 
 
-                    </BtnView>
+                    </BtnTopView>
 
+                    <BtnBottomView>
+                        <DefaultBottomBtn>
+                            <>
+                                <HelpIcon width="25" height="25" fill="#aaa" />
+                                <LeftView>
+                                    <DefaultBottomText>Ajuda</DefaultBottomText>
+                                </LeftView>
+                                <AngleRightIcon width="15" height="15" />
+                            </>
+                        </DefaultBottomBtn>
+
+                        <DefaultBottomBtn>
+                            <>
+                                <CogIcon width="25" height="25" fill="#aaa" />
+                                <LeftView>
+                                    <DefaultBottomText>Configurações</DefaultBottomText>
+                                </LeftView>
+                                <AngleRightIcon width="15" height="15" />
+                            </>
+                        </DefaultBottomBtn>
+
+                        {email ?
+                            <DefaultBottomBtn onPress={SignOut}>
+                            <>
+                                <PowerOffIcon  width="25" height="25" fill="#aaa" />
+                                <LeftView>
+                                    <DefaultBottomText>Sair</DefaultBottomText>
+                                </LeftView>
+                                <AngleRightIcon width="15" height="15" />
+                            </>
+                            </DefaultBottomBtn>
+                        : null}
+                        
+
+                    </BtnBottomView>
+                    
                 </FatherView>
 
             </Scroll>

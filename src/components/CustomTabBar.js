@@ -4,8 +4,7 @@ import HomeEmptyIcon from '../assets/svg/home_empty.svg';
 import HomeFullIcon from '../assets/svg/home_full.svg';
 import SearchIcon from '../assets/svg/search.svg';
 import CartIcon from '../assets/svg/carrinho.svg';
-import FavoriteEmptyIcon from '../assets/svg/favorite_empty.svg';
-import FavoriteFullIcon from '../assets/svg/favorite_full.svg';
+import Clock from '../assets/svg/clock.svg';
 import UserFullIcon from '../assets/svg/user_full.svg';
 import UserEmptyIcon from '../assets/svg/user_empty.svg';
 
@@ -58,11 +57,7 @@ export default ({state, descriptors, navigation, index}) => {          /** Props
             </Touch>
 
             <Touch key={index} onPress={() => goTo('favorites')}>
-                {state.index === 3 ?
-                    <FavoriteFullIcon width="28" height="28" fill="#000" />
-                :
-                    <FavoriteEmptyIcon style={{opacity: 0.7}} width="28" height="28" fill="#000" />
-                }
+                    <Clock style={{opacity: state.index === 3 ? 1 : 0.7}} width="28" height="28" fill="#000" />
                     <Texto color={state.index === 3 ? '#000' : '#808080'}>Histórico</Texto>
             </Touch>
 

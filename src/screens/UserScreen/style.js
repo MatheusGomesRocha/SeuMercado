@@ -46,7 +46,7 @@ export const HeaderLoginView = styled.View`
 `;
 
 
-export const BtnView = styled.View`
+export const BtnTopView = styled.View`
     align-items: center;
 `;
 export const DefaultBtn = styled.TouchableHighlight`
@@ -60,7 +60,7 @@ export const DefaultBtn = styled.TouchableHighlight`
 `;
 export const LeftView = styled.View`
     margin-left: 20px;
-    width: 80%;
+    width: 85%;
 `;
 export const BtnText = styled.Text`
     color: #000;
@@ -68,4 +68,24 @@ export const BtnText = styled.Text`
 `;
 export const BtnSmallText = styled.Text`
     color: #aaa;
+`;
+
+
+
+export const BtnBottomView = styled.View`
+    margin-top: 80px;
+    align-items: center;
+`;
+export const DefaultBottomBtn = styled.TouchableHighlight`
+    flex-direction: row;
+    height: 80px;
+    align-items: center;
+    borderBottomWidth: 1px;
+    borderBottomColor: #ddd;
+    width: 100%;
+    padding: 15px;
+`;
+export const DefaultBottomText = styled.Text`
+    color: #aaa;
+    font-size: 18px;
 `;
