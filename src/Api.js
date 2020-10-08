@@ -178,4 +178,24 @@ export default {
        return list
     },
 
+    getProductsFiltered: async (type) => {
+        let list = [];
+ 
+        let results = await firestore().collection('products').where('type', '==', type).get();
+ 
+        results.forEach(result => {
+            let data = result.data();
+            list.push({
+                id: data.id,
+                name: data.name,
+                type: data.type,
+                description: data.description,
+                price: data.price,
+                img: data.img,
+            })
+        })
+ 
+        return list
+     },
+
 }

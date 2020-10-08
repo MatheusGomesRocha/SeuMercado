@@ -178,7 +178,7 @@ export default (props) => {
             </Animated.ScrollView>
 
             <Animated.View style={[styles.header, { transform: [{ translateY: headerTranslateY }] }]}>
-                <Animated.Image style={[styles.headerBackground, { opacity: imageOpacity, transform: [{ translateY: imageTranslateY }],},]} source={props.img}/>
+                <Animated.Image style={[styles.headerBackground, { opacity: imageOpacity, transform: [{ translateY: imageTranslateY }],},]} source={props.img && {uri:props.img}}/>
                 <Animated.View style={[styles.overlay, { opacity: imageOpacity},]}></Animated.View>
             </Animated.View>
 

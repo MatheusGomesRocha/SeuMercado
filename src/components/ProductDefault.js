@@ -135,8 +135,7 @@ export default (props) => {
             {filterData.map((item, k) => (
                 <ItemView key={k} underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => GoToProduct(item.name, item.img, item.description, item.price)}>
                     <ItemRow>
-
-                        <Avatar source={item.img} />
+                        <Avatar source={item.img && {uri:item.img}} />
 
                         <ItemHeader>
                             <Name>{item.name}</Name>

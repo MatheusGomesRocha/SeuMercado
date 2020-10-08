@@ -1,13 +1,10 @@
-import React, { useRef } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
+import Api from '../Api';
 
 import {
-  SafeAreaView,
   StyleSheet,
-  Image,
-  View,
-  Text,
   Animated,
 } from 'react-native';
 
@@ -39,7 +36,7 @@ const ItemHeader = styled.View`
     justify-content: center;
     margin-left: 10px;
 `;
-const Avatar = styled.Image`
+const Img = styled.Image`
     width: 120px;
     height: 120px;
     margin-top: 1px;
@@ -71,21 +68,25 @@ const HEADER_MAX_HEIGHT = 250;
 const HEADER_MIN_HEIGHT = 84;
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
-let array = [
-    {avatar: require('../assets/img/carnes/bife.jpg'), name: 'Bife', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: 10.00},
-    {avatar: require('../assets/img/carnes/asa_frango.jpg'), name: 'Asa de Frango', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: 10.40},
-    {avatar: require('../assets/img/carnes/contra_file.jpg'), name: 'Contra filé', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: 10.20},
-    {avatar: require('../assets/img/carnes/frango_assado.jpg'), name: 'Frango Assado', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: 10.00},
-    {avatar: require('../assets/img/carnes/peixe.jpg'), name: 'Peixe Cozido', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: 10.00},
-    {avatar: require('../assets/img/carnes/peixe.jpg'), name: 'Peixe Assado', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: 10.00},
-    {avatar: require('../assets/img/carnes/peixe.jpg'), name: 'Peixe na grelha', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: 10.00},
-];
 
 
 export default (props) => {
   const navigation = useNavigation();
+  const [productsFiltered, setProductsFiltered] = useState([]);
   
   const scrollY = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    const getProducts = async () => {
+        setProductsFiltered([]);
+        
+        let json = await Api.getProductsFiltered(props.type);
+        setProductsFiltered(json)
+    }
+
+    getProducts();
+  }, [])
+
 
   const GoToProduct = (name, img, description, price) => {
     navigation.navigate('product', {name, img, description, price})
@@ -147,8 +148,8 @@ export default (props) => {
         )}>
 
         <ArrayView>
-            {array.map((item, k) => (
-                    <ItemBtn key={k} underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => GoToProduct(item.name, item.avatar, item.description, item.price)}>
+            {productsFiltered.map((item, k) => (
+                    <ItemBtn key={k} underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => GoToProduct(item.name, item.img, item.description, item.price)}>
                         <ItemRow>
 
                             <ItemHeader>
@@ -157,7 +158,7 @@ export default (props) => {
                                 <Price>R$ {parseFloat(item.price).toFixed(2)}</Price>
                             </ItemHeader>
 
-                        <Avatar resizeMode="cover" source={item.avatar} />
+                        <Img resizeMode="cover" source={item.img && {uri: item.img}} />
 
                     </ItemRow>
                 </ItemBtn>
