@@ -10,6 +10,7 @@ import AngleRightIcon from '../../assets/svg/angle_right.svg';
 import CogIcon from '../../assets/svg/cog.svg';
 import PowerOffIcon from '../../assets/svg/power_off.svg';
 import HelpIcon from '../../assets/svg/question_mark.svg';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import {
     Container,
@@ -61,6 +62,7 @@ function UserScreen(props) {
                     {!email ?
                         <HeaderView>
                             <HeaderRowView>
+                                <Icon name="user-circle" size={70} />
                                 <HeaderText numberOfLines={2}>Falta pouco para começar a fazer seus pedidos</HeaderText>
                             </HeaderRowView>
                             <GoToLoginBtn onPress={() => navigation.navigate('login')}>
@@ -69,9 +71,9 @@ function UserScreen(props) {
                         </HeaderView>
                     : 
                         <HeaderLoginView>
-                            <DefaultBtn style={{borderBottomColor: '#aaa', height: 100}}>
+                            <DefaultBtn onPress={() => navigation.navigate('userdata')} style={{borderBottomColor: '#aaa', height: 100}}>
                                 <>
-                                    <FavoriteIcon width="25" height="25" fill="#333" />
+                                    <Icon name="user-circle" size={50} />
                                     <LeftView>
                                             <BtnText>{emailSplit}</BtnText>
                                             <BtnSmallText>Meus dados</BtnSmallText>

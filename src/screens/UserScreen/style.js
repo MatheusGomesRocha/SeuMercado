@@ -19,12 +19,14 @@ export const HeaderView = styled.View`
 `;
 export const HeaderRowView = styled.View`
     flex-direction: row;
-    margin: 15px 0 35px 0;
+    margin: 15px 0 25px 0;
+    align-items: center;
 `;
 export const HeaderText = styled.Text`
     font-size: 18px;
-    width: 65%;
+    width: 75%;
     font-weight: bold;
+    margin-left: 20px;
 `;
 export const GoToLoginBtn = styled.TouchableHighlight`
     border: 1px solid #bbb;

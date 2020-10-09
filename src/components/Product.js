@@ -235,7 +235,7 @@ export default (props) => {
             right: 0,
             width: null,
             height: HEADER_MAX_HEIGHT,
-            resizeMode: 'cover',
+            resizeMode: 'stretch',
         },
 
         // Overlay por cima para escurecer a imagem

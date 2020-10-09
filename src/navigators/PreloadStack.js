@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import PreloadScreen from '../screens/PreloadScreen';
-import HomeStack from './HomeStack';
+import MainStack from './MainStack';
 
 const Preload = createStackNavigator();
 
@@ -16,7 +16,7 @@ export default () => {
             }}
         >
             <Preload.Screen name="preload" component={PreloadScreen} />
-            <Preload.Screen name="apptab" component={HomeStack} />        
+            <Preload.Screen name="apptab" component={MainStack} />        
         </Preload.Navigator>
     );
 }
