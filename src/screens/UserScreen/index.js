@@ -10,7 +10,10 @@ import AngleRightIcon from '../../assets/svg/angle_right.svg';
 import CogIcon from '../../assets/svg/cog.svg';
 import PowerOffIcon from '../../assets/svg/power_off.svg';
 import HelpIcon from '../../assets/svg/question_mark.svg';
+<<<<<<< HEAD
 import Icon from 'react-native-vector-icons/FontAwesome';
+=======
+>>>>>>> 7757bdd54a90e7a879282f04f8ad530ca0fdef51
 
 import {
     Container,
