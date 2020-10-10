@@ -4,7 +4,7 @@ import CustomTabBar from '../components/CustomTabBar';      /** Import para a Ta
 import HomeScreen from '../screens/HomeScreen';
 import CartScreen from '../screens/CartScreen';
 import SearchScreen from '../screens/SearchScreen';
-import FavoriteScreen from '../screens/FavoriteScreen';
+import HistoryTopBar from './HistoryTopBar';
 import UserScreen from '../screens/UserScreen';
 
 
@@ -21,7 +21,7 @@ export default () => {
             <AppTab.Screen name="home" component={HomeScreen} />
             <AppTab.Screen name="search" component={SearchScreen} />
             <AppTab.Screen name="cart" component={CartScreen} />
-            <AppTab.Screen name="favorites" component={FavoriteScreen} />
+            <AppTab.Screen name="history" component={HistoryTopBar} />
             <AppTab.Screen name="user" component={UserScreen} />
         </AppTab.Navigator>
     );

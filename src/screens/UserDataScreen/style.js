@@ -5,22 +5,24 @@ export const Container = styled.SafeAreaView`
     background-color: #fff;
 `;
 
-export const Header = styled.View`
-    flex-direction: row;
-    align-items: center;
-    height: 70px;
-    borderBottomWidth: 1px;
-    borderBottomColor: rgba(0, 0, 0, 0.1);
+export const FatherView = styled.View`
+    margin-top: 15px;
 `;
 
-export const HeaderBackBtn = styled.TouchableHighlight`
-    width: 30px;
-    height: 30px;
-    border-radius: 25px;
-    margin-left: 20px;
+export const DefaultBtn = styled.TouchableHighlight`
+    flex-direction: row;
+    height: 80px;
+    padding: 15px;
+    align-items: center;
+    borderBottomWidth: 1px;
+    borderBottomColor: #ddd;
 `; 
-
-export const HeaderText = styled.Text`
-    margin-left: 100px;
-    font-size: 18px;
+export const LeftView = styled.View`
+    width: 95%;
+`;
+export const BtnText = styled.Text`
+    font-size: 16px;
+`;
+export const BtnSmallText = styled.Text`
+    color: #ccc;
 `;
