@@ -21,7 +21,7 @@ export default () => {
             <AppTab.Screen name="home" component={HomeScreen} />
             <AppTab.Screen name="search" component={SearchScreen} />
             <AppTab.Screen name="cart" component={CartScreen} />
-            <AppTab.Screen name="history" component={HistoryTopBar} />
+            <AppTab.Screen name="order" component={HistoryTopBar} />
             <AppTab.Screen name="user" component={UserScreen} />
         </AppTab.Navigator>
     );

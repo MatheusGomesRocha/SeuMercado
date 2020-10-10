@@ -56,9 +56,9 @@ export default ({state, descriptors, navigation, index}) => {          /** Props
                 <Texto color={state.index === 2 ? '#000' : '#808080'}>Carrinho</Texto>
             </Touch>
 
-            <Touch key={index} onPress={() => goTo('favorites')}>
+            <Touch key={index} onPress={() => goTo('order')}>
                     <Clock style={{opacity: state.index === 3 ? 1 : 0.7}} width="28" height="28" fill="#000" />
-                    <Texto color={state.index === 3 ? '#000' : '#808080'}>Histórico</Texto>
+                    <Texto color={state.index === 3 ? '#000' : '#808080'}>Pedidos</Texto>
             </Touch>
 
             <Touch key={index} onPress={() => goTo('user')}>
