@@ -7,7 +7,7 @@ a mais que é o "carrinho" que é pra onde vai todos os produtos que o usuário 
 Fiz esse App na intenção de pegar experiência e melhorar tanto meu front-end quanto meu back-end. Usando 
 React-Native em conjunto com Firebase (para salvar os dados) e mais algumas bibliotecas que estarei listando abaixo.
 
-  react-native-community/async-storage: 1.12.0	
+  - react-native-community/async-storage: 1.12.0	
   react-native-community/masked-view: 0.1.10
   react-native-firebase/app: 8.4.5
   react-native-firebase/auth: 9.3.0
