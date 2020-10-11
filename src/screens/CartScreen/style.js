@@ -29,7 +29,7 @@ export const NoInfoView = styled.View`
     align-items: center;
     justify-content: center;
 `;
-export const NoProductText = styled.Text`
+export const NoInfoText = styled.Text`
     font-size: 25px;
     margin-top: 20px;
     color: #000;

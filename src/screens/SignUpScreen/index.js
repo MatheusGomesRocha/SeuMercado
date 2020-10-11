@@ -90,13 +90,13 @@ function SignUpScreen(props) {
                         {securePass ?
                         <>
                             <BtnEye onPress={() => setSecurePass(false)}>
-                                <EyeOn fill="#000" width={30} height={30} style={{marginRight: 10}}/>
+                                <EyeOn fill="#ea1d2c" width={30} height={30} style={{marginRight: 10}}/>
                             </BtnEye>
                         </>
                         :
                         <>
                             <BtnEye onPress={() => setSecurePass(true)}>
-                                <EyeOff fill="#000" width={30} height={30} style={{marginRight: 10}}/>
+                                <EyeOff fill="#ea1d2c" width={30} height={30} style={{marginRight: 10}}/>
                             </BtnEye>
                         </>
                         }
@@ -108,13 +108,13 @@ function SignUpScreen(props) {
                         {secureConfirmPass ?
                         <>
                             <BtnEye onPress={() => setSecureConfirmPass(false)}>
-                                <EyeOn fill="#000" width={30} height={30} style={{marginRight: 10}}/>
+                                <EyeOn fill="#ea1d2c" width={30} height={30} style={{marginRight: 10}}/>
                             </BtnEye>
                         </>
                         :
                         <>
                             <BtnEye onPress={() => setSecureConfirmPass(true)}>
-                                <EyeOff fill="#000" width={30} height={30} style={{marginRight: 10}}/>
+                                <EyeOff fill="#ea1d2c" width={30} height={30} style={{marginRight: 10}}/>
                             </BtnEye>
                         </>
                         }
@@ -141,7 +141,7 @@ function SignUpScreen(props) {
                     <LoginView>
                         <LoginText>Já possui uma conta? </LoginText>
                         <LoginBtn onPress={() => navigation.goBack()} >
-                            <LoginText style={{textDecorationLine: 'underline', fontWeight: 'bold'}}>Fazer login</LoginText>
+                            <LoginText style={{textDecorationLine: 'underline', fontWeight: 'bold', color: '#ea1d2c'}}>Fazer login</LoginText>
                         </LoginBtn>
                     </LoginView>
                 </AllView>

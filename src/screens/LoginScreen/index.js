@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
-import ArrowLeft from '../../assets/svg/arrow_left.svg';
+import User from '../../assets/svg/user_full.svg';
 import EyeOff from '../../assets/svg/eye_off.svg';
 import EyeOn from '../../assets/svg/eye_on.svg';
 import Google from '../../assets/svg/google.svg';
@@ -63,23 +63,23 @@ function LoginScreen(props) {
         <Container>
 
             <InputView>
-                <Icon style={{marginLeft: 10}} name="user" size={25} />
+                <User width="25" height="25" fill="#ea1d2c"/>
                 <Input keyboardType="email-address" placeholder="Email" onChangeText={e=>setEmail(e)} />
             </InputView>
 
             <InputView>
-                <Icon style={{marginLeft: 10}} name="lock" size={25} />
+                <Icon style={{marginLeft: 10}} name="lock" size={25} color="#ea1d2c"/>
                 <Input onSubmitEditing={Login} secureTextEntry={securePass} placeholder="Senha" onChangeText={p=>setPass(p)} />
                 {securePass ?
                 <>
                     <BtnEye onPress={() => setSecurePass(false)}>
-                        <EyeOn fill="#000" width={30} height={30} style={{marginRight: 10}}/>
+                        <EyeOn fill="#ea1d2c" width={30} height={30} style={{marginRight: 10}}/>
                     </BtnEye>
                 </>
                 :
                 <>
                     <BtnEye onPress={() => setSecurePass(true)}>
-                        <EyeOff fill="#000" width={30} height={30} style={{marginRight: 10}}/>
+                        <EyeOff fill="#ea1d2c" width={30} height={30} style={{marginRight: 10}}/>
                     </BtnEye>
                 </>
                 }
@@ -105,7 +105,7 @@ function LoginScreen(props) {
             <SignUpView>
                 <SignUpText>Não tem uma conta? </SignUpText>
                 <SignUpBtn onPress={() => navigation.navigate('signup')}>
-                    <SignUpText style={{textDecorationLine: 'underline', fontWeight: 'bold'}}>Cadastre-se</SignUpText>
+                    <SignUpText style={{textDecorationLine: 'underline', fontWeight: 'bold', color: '#ea1d2c'}}>Cadastre-se</SignUpText>
                 </SignUpBtn>
             </SignUpView>
 

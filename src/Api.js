@@ -251,4 +251,23 @@ export default {
         return list
      },
 
+     getOrderFinish: async () => {
+        let list = [];
+ 
+        let results = await firestore().collection('orderfinish').get();
+ 
+        results.forEach(result => {
+            let data = result.data();
+            list.push({
+                id: data.id,
+                date: data.date,
+                quantidade: data.quantidade,
+                status: data.status,
+                price: data.price,
+            })
+        })
+ 
+        return list
+     },
+
 }

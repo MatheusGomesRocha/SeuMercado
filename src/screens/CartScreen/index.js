@@ -17,7 +17,7 @@ import {
     DefaultBtnText,
 
     NoInfoView,
-    NoProductText,
+    NoInfoText,
 } from './style';
 
 export default () => {
@@ -50,7 +50,7 @@ export default () => {
         return(
             <NoInfoView>
                 <EmptyCart width="200px" height="200px" />
-                <NoProductText>O seu carrinho está vazio</NoProductText>
+                <NoInfoText>O seu carrinho está vazio</NoInfoText>
             </NoInfoView>
         );
     }
@@ -67,7 +67,7 @@ export default () => {
         return(
             <NoInfoView>
                 <LoginSvg width="200px" height="200px" />
-                <NoProductText>Para ver seu carrinho, por favor faça o Login</NoProductText>
+                <NoInfoText>Para ver seu carrinho, por favor faça o Login</NoInfoText>
             </NoInfoView>
         );
     }

@@ -45,10 +45,10 @@ export const AllLineView = styled.View`
 export const LineView = styled.View`
     height: 2px;
     width: 25%;
-    background-color: #aaa;
+    background-color: #ea1d2c;
 `;
 export const LineText = styled.Text`
-    color: #aaa;
+    color: #ea1d2c;
 `;
 export const OptionSignUpView = styled.View`
     flex-direction: row;
