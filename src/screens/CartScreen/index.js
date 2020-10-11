@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import ProductList from '../../components/ProductList';
+import ProductCart from '../../components/ProductCart';
 import Api from '../../Api';
 import auth from '@react-native-firebase/auth';
 
@@ -7,6 +7,9 @@ import {
     Container,
     
     Flat,
+
+    DefaultBtn,
+    DefaultBtnText,
 } from './style';
 
 export default () => {
@@ -30,9 +33,13 @@ export default () => {
             
             <Flat
                 data={arrayCart}
-                renderItem={({item}) => <ProductList data={item} />}
+                renderItem={({item}) => <ProductCart data={item} />}
                 keyExtractor={(item) => item.id}
-            />        
+            />       
+
+            <DefaultBtn>
+                <DefaultBtnText>Finalizar Pedido</DefaultBtnText>
+            </DefaultBtn> 
         </Container>
     );
 }

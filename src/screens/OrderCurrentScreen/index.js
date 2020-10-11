@@ -9,16 +9,16 @@ import {View} from 'react-native';
 export default () => {
     const [array, setArray] = useState([]);
 
-    useEffect(() => {
-        const getProducts = async () => {
-            setArray([]);
+    // useEffect(() => {
+    //     const getProducts = async () => {
+    //         setArray([]);
             
-            let json = await Api.getProductsCart();
-            setArray(json)
-        }
+    //         let json = await Api.getProductsCart();
+    //         setArray(json)
+    //     }
 
-        getProducts();
-    }, [])
+    //     getProducts();
+    // }, [])
     
     return(
         <Container>
