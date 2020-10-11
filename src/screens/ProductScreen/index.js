@@ -10,7 +10,9 @@ import {
 export default () => {
     const route = useRoute();
 
+    const id = route.params.id;
     const name = route.params.name;
+    const type = route.params.type;
     const img = route.params.img;
     const description = route.params.description;
     const price = route.params.price;
@@ -18,7 +20,7 @@ export default () => {
     return(
         <Container>
             <StatusBar translucent={true} backgroundColor="transparent" barStyle="light-content" />
-            <Product img={img} name={name} price={price} description={description} />
+            <Product id={id} img={img} type={type} name={name} price={price} description={description} />
         </Container>
     );
 }

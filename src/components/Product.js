@@ -1,6 +1,8 @@
 import React, {useState, useRef, useEffect } from 'react';
 import ProductDefault from './ProductDefault';
 import styled from 'styled-components/native';
+import Api from '../Api';
+import auth from '@react-native-firebase/auth';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Less from '../assets/svg/less.svg';
 import Plus from '../assets/svg/plus.svg';
@@ -97,6 +99,9 @@ export default (props) => {
     const [qtd, setQtd] = useState(1);
     const [price, setPrice] = useState(props.price);
     const scrollY = useRef(new Animated.Value(0)).current;
+    const [userName, setUserName] = useState([]);
+    const userId = auth().currentUser.uid;
+    const [bot, setBot] = useState(new Animated.Value(-200));
 
     const headerTranslateY = scrollY.interpolate({
         inputRange: [0, HEADER_SCROLL_DISTANCE],
@@ -142,7 +147,6 @@ export default (props) => {
         extrapolate: 'clamp',
     });
 
-    const [bot, setBot] = useState(new Animated.Value(-200));
     useEffect(() => {
         Animated.timing(bot, {
             toValue: 0,
@@ -153,8 +157,14 @@ export default (props) => {
     
     useEffect(() => {
         setPrice(parseFloat(props.price*qtd).toFixed(2));
-    }, [qtd])
+    }, [qtd]);
+
+
+    const setIntoCart = () => {
+        let json = Api.setIntoCart(userId, props.id, props.name, props.type, qtd, props.price);
+    }
     
+
     return (
         <Container>
             
@@ -201,7 +211,7 @@ export default (props) => {
                     
                 </QtdView>
 
-                <BtnAdd>
+                <BtnAdd onPress={setIntoCart}>
                     <>
                         <BtnAddText>Adicionar</BtnAddText>
                         <BtnAddText style={{fontWeight: 'bold'}}>R${price}</BtnAddText>

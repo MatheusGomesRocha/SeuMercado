@@ -99,40 +99,66 @@ export default {
         return res;  
     },
 
-    // setAppointment: async (id, barberId, barberName, userId, serviceId, serviceName, servicePrice, selectDay, selectMonth, selectYear, selectHour) => {
-    //     const res =
-    //         firestore()
-    //         .collection('appointments')
-    //         .add({
-    //             id: id,
-    //             barberId: barberId,
-    //             barberName: barberName,
-    //             userId: userId,
-    //             serviceId: serviceId,
-    //             serviceName: serviceName,
-    //             servicePrice: servicePrice,
-    //             date: selectDay+'/'+selectMonth+'/'+selectYear,
-    //             hour: selectHour,
-    //             done: false
-    //         })
-    //         .then(() => {
-    //             return true;
-    //         })
-    //         .catch(error => {
-    //             if(error) {
-    //                 Alert.alert(
-    //                     "Error",
-    //                     "Houve algum problema, tente novamente mais tarde",
-    //                     [
-    //                       { text: "OK" }
-    //                     ],
-    //                     { cancelable: false }
-    //                   );
-    //             }
-    //         })
+    getUserLogin: async (id) => {
+        let list = [];
 
-    //     return res;
-    // },
+        const subscriber = firestore()
+            .collection('users')
+            .doc(id)
+            .onSnapshot(documentSnapshot => {
+                let data = documentSnapshot.data();
+                list.push({
+                    id: data.id,
+                    name: data.name,
+                })
+            });
+
+        return list;
+        
+    },
+
+    setIntoCart: async (userId, productId, productName, productType, productQtd, productPrice) => {
+        const res =
+            firestore()
+            .collection('cart')
+            .add({
+                id: '15',
+                userId: userId,
+                items: {
+                        id: productId,
+                        name: productName,
+                        type: productType,
+                        quantidade: productQtd,
+                        price: productPrice,
+                }
+            })
+            .then(() => {
+                Alert.alert(
+                    "Sucesso",
+                    "O produto foi adicionado ao seu carrinho",
+                    [
+                      { text: "OK" }
+                    ],
+                    { cancelable: false }
+                );
+
+                return true;
+            })
+            .catch(error => {
+                if(error) {
+                    Alert.alert(
+                        "Error",
+                        "Houve algum problema, tente novamente mais tarde",
+                        [
+                          { text: "OK" }
+                        ],
+                        { cancelable: false }
+                    );
+                }
+            })
+
+        return res;
+    },
 
     // updateProfile: async (userId, name, email, password) => {
     //     const res = 
@@ -192,6 +218,23 @@ export default {
                 description: data.description,
                 price: data.price,
                 img: data.img,
+            })
+        })
+ 
+        return list
+     },
+
+    getProductsCart: async (id) => {
+        let list = [];
+ 
+        let results = await firestore().collection('cart').where('userId', '==', id).get();
+ 
+        results.forEach(result => {
+            let data = result.data();
+            list.push({
+                id: data.id,
+                userId: data.userId,
+                items: data.items,
             })
         })
  

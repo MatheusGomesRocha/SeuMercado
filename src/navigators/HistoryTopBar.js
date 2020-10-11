@@ -1,7 +1,7 @@
 import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import OrderFinishScreen from '../screens/OrderFinishScreen';
-import OrderCurrentScreen from '..../screens/OrderCurrentScreen';
+import OrderCurrentScreen from '../screens/OrderCurrentScreen';
 import {Dimensions} from 'react-native';
 
 const TopTab = createMaterialTopTabNavigator();

@@ -115,9 +115,9 @@ export default (props) => {
         getProducts();
     }, [])
 
-    const GoToProduct = (name, img, description, price) => {
-        navigation.navigate('product', {name, img, description, price})
-      } 
+    const GoToProduct = (id, name, type, img, description, price) => {
+        navigation.navigate('product', {id, name, type, img, description, price});
+    } 
     
 
 
@@ -133,10 +133,9 @@ export default (props) => {
             }
 
             {filterData.map((item, k) => (
-                <ItemView key={k} underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => GoToProduct(item.name, item.img, item.description, item.price)}>
+                <ItemView key={k} underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => GoToProduct(item.id, item.name, item.type, item.img, item.description, item.price)}>
                     <ItemRow>
                         <Avatar source={item.img && {uri:item.img}} />
-
                         <ItemHeader>
                             <Name>{item.name}</Name>
                             <Description numberOfLines={2}>{item.description?item.description: 'Nenhuma descrição atribuída'}</Description>

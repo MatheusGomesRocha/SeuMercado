@@ -2,8 +2,8 @@ import styled from 'styled-components/native';
 
 export const Container = styled.SafeAreaView`
     flex: 1;
-    background-color: #fff;
+    background-color: #eee;
+    
 `;
 
-export const Scroll = styled.ScrollView``;
 export const Flat = styled.FlatList``;
