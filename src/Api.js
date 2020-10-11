@@ -273,7 +273,7 @@ export default {
     getFilters: async () => {
         let list = [];
  
-        let results = await firestore().collection('types').get();
+        let results = await firestore().collection('types').orderBy('id', 'asc').get();
  
         results.forEach(result => {
             let data = result.data();

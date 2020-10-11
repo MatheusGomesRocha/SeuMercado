@@ -29,26 +29,29 @@ const IconBtn = styled.TouchableOpacity`
 `;
 
 const ItemView = styled.TouchableHighlight`
-    height: 120px;
+    min-height: 120px;
     width: 100%;
     flex-direction: row;
     border-radius: 10px;
     background-color: #fff;
     align-items: center;
-    margin-top: 30px;
+    borderBottomWidth: 1px;
+    borderBottomColor: #ddd;
+    padding: 20px;
 `;
 
 const ItemRow = styled.View`
     flex-direction: row;
+    align-items: center;
 `;
 const ItemHeader = styled.View`
-    width: 55%;
-    justify-content: center;
-    margin-left: 10px;
+    width: 70%;
+    margin-left: 25px;
 `;
 const Avatar = styled.Image`
-    width: 120px;
-    height: 120px;
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
 `;
 const Name = styled.Text`
     font-size: 16px;
@@ -74,13 +77,6 @@ const ItemQntdValue = styled.Text`
     font-size: 18px;
 `;
 
-
-let array = [
-    {avatar: require('../assets/img/carnes/bife.jpg'), name: 'Fulano', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: 10.00},
-    {avatar: require('../assets/img/carnes/asa_frango.jpg'), name: 'Cicrano', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: 10.35},
-    {avatar: require('../assets/img/carnes/contra_file.jpg'), name: 'Beltrano', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: 10.20},
-    {avatar: require('../assets/img/carnes/frango_assado.jpg'), name: 'Teste', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum', price: 10.58},
-];
 
 export default (props) => {
     const navigation = useNavigation();
@@ -137,7 +133,7 @@ export default (props) => {
 
                         <ItemHeader>
                             <Name>{item.name}</Name>
-                            <Description numberOfLines={2}>{item.description?item.description: 'Nenhuma descrição atribuída'}</Description>
+                            <Description numberOfLines={3}>{item.description?item.description: 'Nenhuma descrição atribuída'}</Description>
                             <Price>R$ {parseFloat(item.price).toFixed(2)}</Price>
                         </ItemHeader>
 

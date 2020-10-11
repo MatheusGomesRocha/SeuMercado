@@ -80,7 +80,7 @@ export default (props) => {
     const getProducts = async () => {
         setProductsFiltered([]);
         
-        let json = await Api.getProductsFiltered(props.time);
+        let json = await Api.getProductsFiltered(props.type);
         setProductsFiltered(json)
     }
 
@@ -136,6 +136,7 @@ export default (props) => {
     extrapolate: 'clamp',
   });
 
+  
 
   return (
     <Container>
@@ -168,7 +169,7 @@ export default (props) => {
       </Animated.ScrollView>
 
       <Animated.View style={[styles.header, { transform: [{ translateY: headerTranslateY }] }]}>
-        <Animated.Image style={[styles.headerBackground, { opacity: imageOpacity, transform: [{ translateY: imageTranslateY }],},]} source={props.img}/>
+        <Animated.Image style={[styles.headerBackground, { opacity: imageOpacity, transform: [{ translateY: imageTranslateY }],},]} source={props.img && {uri: props.img}}/>
         <Animated.View style={[styles.overlay, { opacity: imageOpacity},]}></Animated.View>
       </Animated.View>
 
