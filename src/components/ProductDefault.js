@@ -4,9 +4,11 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import SearchIcon from '../assets/svg/search.svg';
 import {useNavigation} from '@react-navigation/native';
 import Api from '../Api';
+import {useSelector} from 'react-redux';
+import {Alert} from 'react-native';
 
 const Div = styled.View`
-    margin: 0 15px 15px 15px;
+    margin: 0 15px 0 15px;
 `;
 
 const InputView = styled.View`
@@ -28,7 +30,7 @@ const IconBtn = styled.TouchableOpacity`
     padding: 15px;
 `;
 
-const ItemView = styled.TouchableHighlight`
+const ItemBtn = styled.TouchableHighlight`
     min-height: 120px;
     width: 100%;
     flex-direction: row;
@@ -37,7 +39,7 @@ const ItemView = styled.TouchableHighlight`
     align-items: center;
     borderBottomWidth: 1px;
     borderBottomColor: #ddd;
-    padding: 20px;
+    padding: 15px;
 `;
 
 const ItemRow = styled.View`
@@ -78,8 +80,9 @@ const ItemQntdValue = styled.Text`
 `;
 
 
-export default (props) => {
+export default ({data}, props) => {
     const navigation = useNavigation();
+    const userLogin = useSelector(state=>state.user.email);
 
     const [quantidade, setQuantidade] = useState(1);
     const [userSearch, setUserSearch] = useState();
@@ -100,46 +103,35 @@ export default (props) => {
         }
     }, [])
 
-    useEffect(() => {
-        const getProducts = async () => {
-            setProducts([]);
-            
-            let json = await Api.getProducts();
-            setProducts(json)
-        }
-
-        getProducts();
-    }, [])
-
     const GoToProduct = (id, name, img, description, price) => {
-        navigation.navigate('product', {id, name, img, description, price});
+        if(userLogin) {
+            navigation.navigate('product', {id, name, img, description, price});
+        } else {
+            Alert.alert(
+                "Ops...",
+                "Você precisa está logado para ver o produto",
+                [
+                  { text: "OK" }
+                ],
+                { cancelable: false }
+            );
+        }
     } 
     
     return(
         <Div>
-            {props.cart &&
-            <InputView>
-                <Input placeholder="Saiba se o produto já está no carrinho" onChangeText={f=>setUserSearch(f)} />
-                    <IconBtn onPress={() => alert('Icon pressed')}>
-                        <SearchIcon width="25" height="25" fill="#000" />
-                    </IconBtn>
-            </InputView>
-            }
+            <ItemBtn underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => GoToProduct(data.id, data.name, data.img, data.description, data.price)}>
+                <ItemRow>
+                    <Avatar source={data.img && {uri:data.img}} />
 
-            {filterData.map((item, k) => (
-                <ItemView key={k} underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => GoToProduct(item.id, item.name, item.img, item.description, item.price)}>
-                    <ItemRow>
-                        <Avatar source={item.img && {uri:item.img}} />
+                    <ItemHeader>
+                        <Name>{data.name}</Name>
+                        <Description numberOfLines={3}>{data.description?data.description: 'Nenhuma descrição atribuída'}</Description>
+                        <Price>R$ {parseFloat(data.price).toFixed(2)}</Price>
+                    </ItemHeader>
 
-                        <ItemHeader>
-                            <Name>{item.name}</Name>
-                            <Description numberOfLines={3}>{item.description?item.description: 'Nenhuma descrição atribuída'}</Description>
-                            <Price>R$ {parseFloat(item.price).toFixed(2)}</Price>
-                        </ItemHeader>
-
-                    </ItemRow>
-                </ItemView>
-            ))}
+                </ItemRow>
+            </ItemBtn>
         </Div>
     );
 }

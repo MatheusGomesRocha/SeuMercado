@@ -2,15 +2,24 @@ import React, {useState, useEffect, useRef} from 'react';
 import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
 import Api from '../Api';
+import {useSelector} from 'react-redux';
 
 import {
+  Alert,
   StyleSheet,
   Animated,
+  ActivityIndicator,
 } from 'react-native';
 
 const Container = styled.View`
     flex: 1;
     background-color: #fff;
+`;
+
+const LoadingView = styled.View`
+    flex: 1;
+    align-items: center;
+    justify-content: center;
 `;
 
 const ArrayView = styled.View`
@@ -20,11 +29,15 @@ const ArrayView = styled.View`
     margin: 50px 0 15px 0;
 `;
 const ItemBtn = styled.TouchableHighlight`
-    height: 121px;
-    width: 90%;
-    margin-top: 15px;
-    border: none;
-    elevation: 1;
+    min-height: 120px;
+    width: 100%;
+    flex-direction: row;
+    border-radius: 10px;
+    background-color: #fff;
+    align-items: center;
+    borderBottomWidth: 1px;
+    borderBottomColor: #ddd;
+    padding: 20px;
 `;
 
 const ItemRow = styled.View`
@@ -32,14 +45,13 @@ const ItemRow = styled.View`
     justify-content: space-between;
 `;
 const ItemHeader = styled.View`
-    width: 60%;
-    justify-content: center;
-    margin-left: 10px;
+    width: 70%;
+    margin-left: 25px;
 `;
 const Img = styled.Image`
-    width: 120px;
-    height: 120px;
-    margin-top: 1px;
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
 `;
 const Name = styled.Text`
     font-size: 16px;
@@ -73,8 +85,16 @@ const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 export default (props) => {
   const navigation = useNavigation();
   const [productsFiltered, setProductsFiltered] = useState([]);
-  
+  const userLogin = useSelector(state=>state.user.email);
+  const [loading, setLoading] = useState(true);
+
   const scrollY = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    setTimeout(() => {
+        setLoading(false);
+    }, 2000)
+  }, [])
 
   useEffect(() => {
     const getProducts = async () => {
@@ -88,8 +108,19 @@ export default (props) => {
   }, [])
 
 
-  const GoToProduct = (name, img, description, price) => {
-    navigation.navigate('product', {name, img, description, price})
+  const GoToProduct = (id, name, img, description, price) => {
+      if(userLogin) {
+          navigation.navigate('product', {id, name, img, description, price})
+      } else {
+          Alert.alert(
+              "Ops...",
+              "Você precisa está logado para ver o produto",
+              [
+                { text: "OK" }
+              ],
+              { cancelable: false }
+          );
+      }
   } 
 
   // O Input seria o tamanho do scroll a ser realizado para aplicar as mudanças
@@ -137,36 +168,52 @@ export default (props) => {
   });
 
   
+  const ProductFilterComponent = ({data}) => {
+    return(
+        <ItemBtn underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => GoToProduct(data.id, data.name, data.img, data.description, data.price)}>
+          <ItemRow>
+
+            <ItemHeader>
+              <Name>{data.name}</Name>
+              <Description numberOfLines={2}>{data.description}</Description>
+              <Price>R$ {parseFloat(data.price).toFixed(2)}</Price>
+            </ItemHeader>
+
+            <Img resizeMode="cover" source={data.img && {uri: data.img}} />
+          
+          </ItemRow>
+        </ItemBtn>
+    );
+  }
 
   return (
     <Container>
-      <Animated.ScrollView
-        contentContainerStyle={{ paddingTop: HEADER_MAX_HEIGHT - 32, alignItems: 'center' }}
-        scrollEventThrottle={16}
-        onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-          { useNativeDriver: true },
-        )}>
+      {loading ?
+        <>
+          <LoadingView>
+            <ActivityIndicator size="large" color="#ea1d2c" />
+          </LoadingView>
+        </>
+      :
+        <>
+          <Animated.ScrollView
+            contentContainerStyle={{ paddingTop: HEADER_MAX_HEIGHT - 32, alignItems: 'center' }}
+            scrollEventThrottle={16}
+            onScroll={Animated.event(
+              [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+              { useNativeDriver: true },
+            )}>
 
-        <ArrayView>
-            {productsFiltered.map((item, k) => (
-                    <ItemBtn key={k} underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => GoToProduct(item.name, item.img, item.description, item.price)}>
-                        <ItemRow>
+            <ArrayView>
+                {productsFiltered.map((item) => (
+                  <ProductFilterComponent data={item} key={item.id} />
+                ))}
+            </ArrayView>
 
-                            <ItemHeader>
-                                <Name>{item.name}</Name>
-                                <Description numberOfLines={2}>{item.description}</Description>
-                                <Price>R$ {parseFloat(item.price).toFixed(2)}</Price>
-                            </ItemHeader>
-
-                        <Img resizeMode="cover" source={item.img && {uri: item.img}} />
-
-                    </ItemRow>
-                </ItemBtn>
-            ))}
-        </ArrayView>
-
-      </Animated.ScrollView>
+          </Animated.ScrollView>
+        </>
+      }
+      
 
       <Animated.View style={[styles.header, { transform: [{ translateY: headerTranslateY }] }]}>
         <Animated.Image style={[styles.headerBackground, { opacity: imageOpacity, transform: [{ translateY: imageTranslateY }],},]} source={props.img && {uri: props.img}}/>

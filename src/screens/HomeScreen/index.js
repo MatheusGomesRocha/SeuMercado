@@ -3,7 +3,7 @@ import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
 import ProductDefault from '../../components/ProductDefault';
-import {Animated, StatusBar} from 'react-native';
+import {Animated, StatusBar, ActivityIndicator, StyleSheet} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {useSelector} from 'react-redux';
 import Api from '../../Api';
@@ -12,6 +12,11 @@ import {
     Container,
     ScrollContainer,
     Texto,
+
+    LoadingView,
+
+    FlatView,
+    Flat,
 
     Scroll,
     FilterView,
@@ -58,6 +63,8 @@ export default () => {
     const navigation = useNavigation();
     const email = useSelector(state=>state.user.email);
     const [filterArray, setFilterArray] = useState([]);
+    const [productArray, setProductArray] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const goToFilter = (type, img) => {
         navigation.navigate('filter', {type, img});
@@ -65,6 +72,12 @@ export default () => {
 
     const [bot, setBot] = useState(new Animated.Value(-50));
 
+    useEffect(() => {
+        setTimeout(() => {
+            setLoading(false);
+        }, 2000)
+    }, [])
+    
     useEffect(() => {
         Animated.timing(bot, {
             toValue: 100,
@@ -85,6 +98,17 @@ export default () => {
         getFilter();
     }, [])
 
+    useEffect(() => {
+        const getProducts = async () => {
+            setProductArray([]);
+            
+            let json = await Api.getProducts();
+            setProductArray(json)
+        }
+
+        getProducts();
+    }, [])
+
     const FilterComponent = ({data}) => {
         return(
             <ItemFilterBtn onPress={() => goToFilter(data.name, data.img)} >
@@ -98,16 +122,15 @@ export default () => {
     return(
         <Container>
 	        <StatusBar backgroundColor="#fff" barStyle="dark-content"/>
-            <ScrollContainer>
+            {loading ?
+                <>
+                    <LoadingView>
+                        <ActivityIndicator size="large" color="#ea1d2c" />
+                    </LoadingView>
+                </>   
+            :
 
-                <Scroll decelerationRate="fast" horizontal={true} showsHorizontalScrollIndicator={false}>
-                    <FilterView>
-                        {filterArray.map((item, k) => (
-                            <FilterComponent data={item} key={item.id}/>
-                        ))}
-                    </FilterView>
-                </Scroll>
-
+                <>
                 {/* <CommentsView>
                     <Swiper
                         showsPagination={false}
@@ -147,25 +170,54 @@ export default () => {
                         
                     </Swiper>
                 </CommentsView> */}
-
-                <PopView>
-                    <PopText>Mais populares</PopText>
-                    <ProductDefault home={true}/>
-                </PopView>
-
-            </ScrollContainer>
+ 
             
-            {!email &&
-                <Animated.View style={{bottom: bot}}>
-                    <NoUserLoginBtn onPress={() => navigation.navigate('login')} underlayColor="#dfdfdf"> 
-                        <>
-                            <NoUserLoginText>Para fazer pedidos no SeuMercado</NoUserLoginText>
-                            <NoUserLoginText style={{color: '#ea1d2c', fontWeight: 'bold'}}>Entrar ou cadastrar-se</NoUserLoginText>
-                        </>
-                    </NoUserLoginBtn>      
-                </Animated.View>  
+                    <Flat
+                        ListHeaderComponent={
+                            <>
+                                <FlatView>
+                                    <Flat
+                                        decelerationRate="fast"
+                                        showsHorizontalScrollIndicator={false}
+                                        horizontal={true}
+                                        data={filterArray}
+                                        renderItem={({item}) => <FilterComponent data={item} />}
+                                        keyExtractor={(item) => item.id}
+                                        contentContainerStyle={styles.Flat}
+                                    />  
+                                </FlatView>
+                                <PopView>
+                                    <PopText>Mais populares</PopText>
+                                </PopView>
+                            </>
+                        }
+                        data={productArray}
+                        renderItem={({item}) => <ProductDefault home={true} data={item}/> }
+                        keyExtractor={(item) => item.id}
+                        contentContainerStyle={styles.Flat1}
+                    />  
+            
+                    {!email &&
+                        <Animated.View style={{bottom: bot}}>
+                            <NoUserLoginBtn onPress={() => navigation.navigate('login')} underlayColor="#dfdfdf"> 
+                                <>
+                                    <NoUserLoginText>Para fazer pedidos no SeuMercado</NoUserLoginText>
+                                    <NoUserLoginText style={{color: '#ea1d2c', fontWeight: 'bold'}}>Entrar ou cadastrar-se</NoUserLoginText>
+                                </>
+                            </NoUserLoginBtn>      
+                        </Animated.View>  
+                    }
+
+                </>
             }
         </Container>
     );
 }
+
+const styles = StyleSheet.create({
+    Flat: {
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+  });
 

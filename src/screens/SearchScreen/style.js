@@ -27,3 +27,9 @@ export const IconBtn = styled.TouchableOpacity`
 `;
 
 export const Flat = styled.FlatList``;
+
+export const LoadingView = styled.View`
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+`;

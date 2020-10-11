@@ -12,6 +12,20 @@ export const Scroll = styled.ScrollView`
     max-height: 180px;
 `;
 
+export const LoadingView = styled.View`
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+`;
+
+export const Flat = styled.FlatList`
+    height: 180px;
+`;
+export const FlatView = styled.View`
+    height: 180px;
+    align-items: center;
+    justify-content: center;
+`;
 
 export const FilterView = styled.View`
     flex-direction: row;

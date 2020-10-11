@@ -8,7 +8,7 @@ const Div = styled.View`
 export default ({data}) => {
     return(
             <Div>
-                <ProductDefault search={true} />
+                <ProductDefault data={data} search={true} />
             </Div>        
     );
 }
