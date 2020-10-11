@@ -80,7 +80,7 @@ export default (props) => {
     const getProducts = async () => {
         setProductsFiltered([]);
         
-        let json = await Api.getProductsFiltered(props.type);
+        let json = await Api.getProductsFiltered(props.time);
         setProductsFiltered(json)
     }
 

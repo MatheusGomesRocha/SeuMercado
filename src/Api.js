@@ -232,7 +232,7 @@ export default {
         })
  
         return list
-     },
+    },
 
     getProductsCart: async (id) => {
         let list = [];
@@ -249,9 +249,9 @@ export default {
         })
  
         return list
-     },
+    },
 
-     getOrderFinish: async () => {
+    getOrderFinish: async () => {
         let list = [];
  
         let results = await firestore().collection('orderfinish').get();
@@ -268,6 +268,23 @@ export default {
         })
  
         return list
-     },
+    },
+
+    getFilters: async () => {
+        let list = [];
+ 
+        let results = await firestore().collection('types').get();
+ 
+        results.forEach(result => {
+            let data = result.data();
+            list.push({
+                id: data.id,
+                name: data.name,
+                img: data.img,
+            })
+        })
+ 
+        return list
+    },
 
 }

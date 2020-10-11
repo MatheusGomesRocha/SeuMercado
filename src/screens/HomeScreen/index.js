@@ -4,8 +4,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
 import ProductDefault from '../../components/ProductDefault';
 import {Animated, StatusBar} from 'react-native';
-import Auth from '@react-native-firebase/auth';
+import auth from '@react-native-firebase/auth';
 import {useSelector} from 'react-redux';
+import Api from '../../Api';
 
 import {
     Container,
@@ -56,6 +57,7 @@ let comments = [
 export default () => {
     const navigation = useNavigation();
     const email = useSelector(state=>state.user.email);
+    const [filterArray, setFilterArray] = useState([]);
 
     const goToFilter = (type, img) => {
         navigation.navigate('filter', {type, img});
@@ -70,6 +72,27 @@ export default () => {
             useNativeDriver: false,
         }).start();
     }, [])
+
+    useEffect(() => {
+        const getFilter = async () => {
+            setFilterArray([]);
+
+            let json = await Api.getFilters();
+
+            setFilterArray(json);
+        }
+
+        getFilter();
+    }, [])
+
+    const FilterComponent = ({data}) => {
+        return(
+            <ItemFilterBtn onPress={() => goToFilter(data.name, data.img)} >
+                <ImgFilter source={data.img && {uri: data.img}} />
+                <Texto>{data.name}</Texto> 
+            </ItemFilterBtn>
+        );
+    }
     
 
     return(
@@ -79,11 +102,8 @@ export default () => {
 
                 <Scroll decelerationRate="fast" horizontal={true} showsHorizontalScrollIndicator={false}>
                     <FilterView>
-                        {array.map((item, k) => (
-                            <ItemFilterBtn onPress={() => goToFilter(item.type, item.img)} key={k}>
-                                <ImgFilter source={item.img} />
-                                <Texto>{item.type}</Texto> 
-                            </ItemFilterBtn>
+                        {filterArray.map((item, k) => (
+                            <FilterComponent data={item} key={item.id}/>
                         ))}
                     </FilterView>
                 </Scroll>
