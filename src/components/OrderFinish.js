@@ -1,16 +1,17 @@
 import React from 'react';
 import styled from 'styled-components/native';
 
-
 const ItemView = styled.View`
     flex: 1;
     padding: 15px;
 `;
 
+
 const DateText = styled.Text`
     font-size: 18px;
     font-weight: bold;
 `;
+
 
 const InfoItemView = styled.View`
     margin: 15px 0 15px 0;
@@ -21,6 +22,7 @@ const InfoItemView = styled.View`
     border-radius: 10px;
 `;
 
+
 const HeaderView = styled.View`
     flex-direction: row;
     margin: 0 15px 0 15px;
@@ -29,11 +31,15 @@ const HeaderView = styled.View`
     borderBottomWidth: 1px;
     borderBottomColor: #ddd;
 `;
+
+
 const Img = styled.Image`
     width: 60px;
     height: 60px;
     border-radius: 30px;
 `;
+
+
 const ColumnView = styled.View`
     margin-left: 15px;
 `;
@@ -43,6 +49,7 @@ const ColumnTextTop = styled.Text`
 const ColumnTextBottom = styled.Text`
     color: #aaa;
 `;
+
 
 const OrderView = styled.View`
     flex-direction: row;
@@ -82,6 +89,7 @@ const StatusText = styled.Text`
     font-size: 16px;
     color: green;
 `;
+
 
 const BtnView = styled.View`
     flex-direction: row;

@@ -41,7 +41,10 @@ import {
 
 function UserScreen(props) {
     const email = useSelector(state=>state.user.email);
+
     const navigation = useNavigation();
+
+    let emailSplit = email.split('@')[0];     // Quebrando email para pegar o nome antes do @
 
     const SignOut = async () => {    // Função de Logout
         props.SignOut();
@@ -53,8 +56,6 @@ function UserScreen(props) {
             ]
         });
     }
-
-    let emailSplit = email.split('@')[0];     // Quebrando email para pegar o nome antes do @
 
     return(
         <Container>

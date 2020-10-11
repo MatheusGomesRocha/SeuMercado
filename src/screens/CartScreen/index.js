@@ -22,8 +22,9 @@ import {
 
 export default () => {
     const [arrayCart, setArrayCart] = useState([]);
-    const userLogin = useSelector(state=>state.user.email);
     const [loading, setLoading] = useState(true);
+
+    const userLogin = useSelector(state=>state.user.email);
 
     if(userLogin) {
         const userId = auth().currentUser.uid;
@@ -76,7 +77,7 @@ export default () => {
     return(
         <Container>
             {/* Quando abre a tela vai ferificar o tempo de loading que é 2s */}
-             {!loading ? 
+            {!loading ? 
                 <>
                     {/* Depois verifica se tem algum usuário logado */}
                     {userLogin ? 
@@ -85,6 +86,11 @@ export default () => {
                             {arrayCart.length > 0 ? 
                                 <>
                                     <Flat
+                                        ListHeaderComponent={
+                                            <>
+                                                <DefaultBtnText style={{color: '#333'}}>Fazer header com preço de tudo somado</DefaultBtnText>
+                                            </>
+                                        }
                                         data={arrayCart}
                                         renderItem={({item}) => <ProductCart data={item} />}
                                         keyExtractor={(item) => item.id}

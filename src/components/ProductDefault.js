@@ -5,30 +5,13 @@ import SearchIcon from '../assets/svg/search.svg';
 import {useNavigation} from '@react-navigation/native';
 import Api from '../Api';
 import {useSelector} from 'react-redux';
+
 import {Alert} from 'react-native';
 
 const Div = styled.View`
     margin: 0 15px 0 15px;
 `;
 
-const InputView = styled.View`
-    background-color: #00000030;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    height: 50px;
-    border-radius: 25px;
-    width: 90%;
-    margin: 30px 0 30px 0;
-`;
-const Input = styled.TextInput`
-    color: #000;
-    padding: 15px;
-    flex: 1;
-`;
-const IconBtn = styled.TouchableOpacity`
-    padding: 15px;
-`;
 
 const ItemBtn = styled.TouchableHighlight`
     min-height: 120px;
@@ -42,19 +25,25 @@ const ItemBtn = styled.TouchableHighlight`
     padding: 15px;
 `;
 
+
 const ItemRow = styled.View`
     flex-direction: row;
     align-items: center;
 `;
-const ItemHeader = styled.View`
-    width: 70%;
-    margin-left: 25px;
-`;
+
+
 const Avatar = styled.Image`
     width: 80px;
     height: 80px;
     border-radius: 10px;
 `;
+
+
+const ItemHeader = styled.View`
+    width: 70%;
+    margin-left: 25px;
+`;
+
 const Name = styled.Text`
     font-size: 16px;
 `;
@@ -69,6 +58,7 @@ const Price = styled.Text`
     margin-top: 5px;
 `;
 
+
 const ItemQntd = styled.View`
     justify-content: center;
     align-items: center;
@@ -81,13 +71,20 @@ const ItemQntdValue = styled.Text`
 
 
 export default ({data}, props) => {
-    const navigation = useNavigation();
-    const userLogin = useSelector(state=>state.user.email);
-
     const [quantidade, setQuantidade] = useState(1);
     const [userSearch, setUserSearch] = useState();
     const [products, setProducts] = useState([]);
     const [arraySearch, setArraySearch] = useState(products);
+
+    const navigation = useNavigation();
+
+    const userLogin = useSelector(state=>state.user.email);
+
+    useEffect(() => {
+        if(filterData) {
+            setArraySearch(filterData)
+        }
+    }, [])
 
     const filterData = products.filter((item) => {              // Array que será mostrado, pegando o valor digitado do usuário e filtrando para mostrar os que tem
         if(userSearch) {
@@ -96,12 +93,6 @@ export default ({data}, props) => {
             return products;
         }
     }) 
-
-    useEffect(() => {
-        if(filterData) {
-            setArraySearch(filterData)
-        }
-    }, [])
 
     const GoToProduct = (id, name, img, description, price) => {
         if(userLogin) {

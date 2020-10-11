@@ -4,6 +4,8 @@ import {Alert} from 'react-native';
 
 export default {
 
+    // Auths
+
     signUp: async(name, email, cpf, password, navigation) => {
         const res =
             auth()      // Cria um usuário com email e senha no firebase Auth
@@ -99,6 +101,8 @@ export default {
         return res;  
     },
 
+    // Get Functions
+
     getUserLogin: async (id) => {
         let list = [];
 
@@ -116,6 +120,102 @@ export default {
         return list;
         
     },
+
+    getProducts: async () => {
+        let list = [];
+ 
+        let results = await firestore().collection('products').get();
+ 
+        results.forEach(result => {
+            let data = result.data();
+            list.push({
+                id: data.id,
+                name: data.name,
+                type: data.type,
+                description: data.description,
+                price: data.price,
+                img: data.img,
+            })
+        })
+ 
+        return list
+    },
+ 
+    getProductsFiltered: async (type) => {
+         let list = [];
+  
+         let results = await firestore().collection('products').where('type', '==', type).get();
+  
+         results.forEach(result => {
+             let data = result.data();
+             list.push({
+                 id: data.id,
+                 name: data.name,
+                 type: data.type,
+                 description: data.description,
+                 price: data.price,
+                 img: data.img,
+             })
+         })
+  
+         return list
+    },
+ 
+    getProductsCart: async (id) => {
+         let list = [];
+  
+         let results = await firestore().collection('cart').where('userId', '==', id).get();
+  
+         results.forEach(result => {
+             let data = result.data();
+             list.push({
+                 id: data.id,
+                 userId: data.userId,
+                 items: data.items,
+             })
+         })
+  
+         return list
+    },
+ 
+    getOrderFinish: async () => {
+         let list = [];
+  
+         let results = await firestore().collection('orderfinish').get();
+  
+         results.forEach(result => {
+             let data = result.data();
+             list.push({
+                 id: data.id,
+                 date: data.date,
+                 quantidade: data.quantidade,
+                 status: data.status,
+                 price: data.price,
+             })
+         })
+  
+         return list
+    },
+ 
+    getFilters: async () => {
+         let list = [];
+  
+         let results = await firestore().collection('types').orderBy('id', 'asc').get();
+  
+         results.forEach(result => {
+             let data = result.data();
+             list.push({
+                 id: data.id,
+                 name: data.name,
+                 img: data.img,
+             })
+         })
+  
+         return list
+    },
+
+
+    // Set Function
 
     setIntoCart: async (userId, productId, productName, productType, productQtd, productPrice, navigation) => {
         let id = Math.floor(Math.random() * (999999999 - 1));
@@ -194,97 +294,6 @@ export default {
     //     return res;
     // },
 
-    getProducts: async () => {
-       let list = [];
-
-       let results = await firestore().collection('products').get();
-
-       results.forEach(result => {
-           let data = result.data();
-           list.push({
-               id: data.id,
-               name: data.name,
-               type: data.type,
-               description: data.description,
-               price: data.price,
-               img: data.img,
-           })
-       })
-
-       return list
-    },
-
-    getProductsFiltered: async (type) => {
-        let list = [];
- 
-        let results = await firestore().collection('products').where('type', '==', type).get();
- 
-        results.forEach(result => {
-            let data = result.data();
-            list.push({
-                id: data.id,
-                name: data.name,
-                type: data.type,
-                description: data.description,
-                price: data.price,
-                img: data.img,
-            })
-        })
- 
-        return list
-    },
-
-    getProductsCart: async (id) => {
-        let list = [];
- 
-        let results = await firestore().collection('cart').where('userId', '==', id).get();
- 
-        results.forEach(result => {
-            let data = result.data();
-            list.push({
-                id: data.id,
-                userId: data.userId,
-                items: data.items,
-            })
-        })
- 
-        return list
-    },
-
-    getOrderFinish: async () => {
-        let list = [];
- 
-        let results = await firestore().collection('orderfinish').get();
- 
-        results.forEach(result => {
-            let data = result.data();
-            list.push({
-                id: data.id,
-                date: data.date,
-                quantidade: data.quantidade,
-                status: data.status,
-                price: data.price,
-            })
-        })
- 
-        return list
-    },
-
-    getFilters: async () => {
-        let list = [];
- 
-        let results = await firestore().collection('types').orderBy('id', 'asc').get();
- 
-        results.forEach(result => {
-            let data = result.data();
-            list.push({
-                id: data.id,
-                name: data.name,
-                img: data.img,
-            })
-        })
- 
-        return list
-    },
+    
 
 }

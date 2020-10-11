@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
 import EmailIcon from '../../assets/svg/email.svg';
 import Lock from '../../assets/svg/lock.svg';
@@ -10,19 +9,17 @@ import Facebook from '../../assets/svg/facebook.svg';
 import Whatsapp from '../../assets/svg/whatsapp.svg';
 import Api from '../../Api';
 import {connect} from 'react-redux';
+
 import {Alert} from 'react-native';
 
 import {
     Container,
     
     InputView,
+    InputLine,
     Input,
     BtnEye,
-    InputLine,
-
-    BtnLogin,
-    BtnLoginText,
-
+    
     ForgotBtn,
     ForgotText,
 
@@ -34,15 +31,18 @@ import {
 
     SignUpView,
     SignUpText,        
-    SignUpBtn,       
+    SignUpBtn, 
+    
+    BtnLogin,
+    BtnLoginText,
 } from './style';
 
 function LoginScreen(props) {
-    const navigation = useNavigation();
-
     const [email, setEmail] = useState();
     const [pass, setPass] = useState();
-    const [securePass, setSecurePass] = useState(true)
+    const [securePass, setSecurePass] = useState(true);
+
+    const navigation = useNavigation();
 
     const Login = async () => {
         let res = await Api.login(email, pass, navigation);

@@ -5,9 +5,12 @@ export const Container = styled.SafeAreaView`
     background-color: #fff;
 `;
 
+
 export const Scroll = styled.ScrollView``;
 
+
 export const FatherView = styled.View``;
+
 
 export const HeaderView = styled.View`
     height: 190px;

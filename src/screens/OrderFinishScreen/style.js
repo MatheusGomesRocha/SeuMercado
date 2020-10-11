@@ -5,7 +5,9 @@ export const Container = styled.SafeAreaView`
     background-color: #efefef;
 `;
 
+
 export const Flat = styled.FlatList``;
+
 
 export const NoInfoView = styled.View`
     flex: 1;
@@ -13,7 +15,6 @@ export const NoInfoView = styled.View`
     justify-content: center;
     background-color: #fff;
 `;
-
 export const NoInfoText = styled.Text`
     font-size: 25px;
     margin-top: 20px;
@@ -22,7 +23,6 @@ export const NoInfoText = styled.Text`
     width: 90%;
     
 `;
-
 export const DefaultBtn = styled.TouchableHighlight`
     height: 60px;
     width: 90%;

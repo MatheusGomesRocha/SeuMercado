@@ -7,7 +7,6 @@ import SearchScreen from '../screens/SearchScreen';
 import HistoryTopBar from './HistoryTopBar';
 import UserScreen from '../screens/UserScreen';
 
-
 const AppTab = createBottomTabNavigator();
 
 export default () => {

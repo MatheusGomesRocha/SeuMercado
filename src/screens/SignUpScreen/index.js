@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
 import EmailIcon from '../../assets/svg/email.svg';
 import UserIcon from '../../assets/svg/user_full.svg';
@@ -22,12 +21,9 @@ import {
     AllView,
 
     InputView,
+    InputLine,
     Input,
     BtnEye,
-    InputLine,
-
-    BtnSignUp,
-    BtnSignUpText,
 
     OtherSignUpView,
     AllLineView,
@@ -37,21 +33,23 @@ import {
 
     LoginView,
     LoginText,        
-    LoginBtn,       
+    LoginBtn, 
+
+    BtnSignUp,
+    BtnSignUpText,     
 } from './style';
 
 function SignUpScreen(props) {
-    const navigation = useNavigation();
-
     const [name, setName] = useState();
     const [cpf, setCpf] = useState();
     const [email, setEmail] = useState();
     const [pass, setPass] = useState();
     const [confirmPass, setConfirmPass] = useState();
+    const [securePass, setSecurePass] = useState(true);
+    const [secureConfirmPass, setSecureConfirmPass] = useState(true);
 
-    const [securePass, setSecurePass] = useState(true)
-    const [secureConfirmPass, setSecureConfirmPass] = useState(true)
-
+    const navigation = useNavigation();
+    
     const SignUp = async () => {
         let res = await Api.signUp(name, email, cpf, pass, navigation);
 
@@ -72,6 +70,7 @@ function SignUpScreen(props) {
     return(
         <Container>
             <Scroll>
+
                 <AllView>
                     <InputView>
                         <UserIcon width="25" height="25" fill="#ea1d2c" style={{marginLeft: 10}}/>

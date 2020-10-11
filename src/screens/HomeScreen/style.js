@@ -5,18 +5,13 @@ export const Container = styled.SafeAreaView`
     background-color: #fff;
 `;
 
-export const ScrollContainer = styled.ScrollView``;
-
-
-export const Scroll = styled.ScrollView`
-    max-height: 180px;
-`;
 
 export const LoadingView = styled.View`
     flex: 1;
     align-items: center;
     justify-content: center;
 `;
+
 
 export const Flat = styled.FlatList`
     height: 180px;
@@ -27,10 +22,7 @@ export const FlatView = styled.View`
     justify-content: center;
 `;
 
-export const FilterView = styled.View`
-    flex-direction: row;
-    margin-top: 10px;
-`;
+
 export const ItemFilterBtn = styled.TouchableOpacity`
     margin: 10px;
     align-items: center;
@@ -40,12 +32,39 @@ export const ImgFilter = styled.Image`
     height: 120px;
     border-radius: 10px;
 `;
-export const Texto = styled.Text`
+export const FilterText = styled.Text`
     font-size: 16px;
     margin-top: 5px;
     color: #000;
 `;
 
+
+export const PopView = styled.View`
+    margin-top: 10px;
+`;
+export const PopText = styled.Text`
+    font-weight: bold;
+    font-size: 22px;
+    padding: 10px 10px 10px 20px;
+`;
+
+
+export const NoUserLoginBtn = styled.TouchableHighlight`
+    position: absolute;
+    z-index: 999;
+    background-color: #fff;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    height: 80px;
+    left: 10%;
+    border-radius: 10px;
+    elevation: 15;
+    shadowRadius: 12px;
+`;
+export const NoUserLoginText = styled.Text`
+    font-size: 16px;
+`;
 
 
 export const CommentsView = styled.View`
@@ -90,29 +109,5 @@ export const CommentsText = styled.Text`
 
 
 
-export const PopView = styled.View`
-    margin-top: 10px;
-`;
-export const PopText = styled.Text`
-    font-weight: bold;
-    font-size: 22px;
-    padding: 10px 10px 10px 20px;
-`;
 
 
-export const NoUserLoginBtn = styled.TouchableHighlight`
-    position: absolute;
-    z-index: 999;
-    background-color: #fff;
-    align-items: center;
-    justify-content: center;
-    width: 80%;
-    height: 80px;
-    left: 10%;
-    border-radius: 10px;
-    elevation: 15;
-    shadowRadius: 12px;
-`;
-export const NoUserLoginText = styled.Text`
-    font-size: 16px;
-`;

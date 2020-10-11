@@ -16,15 +16,16 @@ import {
 
     NoInfoView,
     NoInfoText,
-
     DefaultBtn,
     DefaultText,
 } from './style';
 
 export default () => {
-    const userLogin = useSelector(state=>state.user.email);
     const [arrayOrder, setArrayOrder] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    const userLogin = useSelector(state=>state.user.email);
+    
     const navigation = useNavigation();
 
     if(userLogin) {
@@ -65,6 +66,7 @@ export default () => {
         );
     }
 
+    // Quando não tiver nenhum produto e o usuário clicar no botão, será redirecionado para os itens filtrados em Geral
     const NoProduct = () => {
         let type = 'Geral';
         let img = require('../../assets/img/geral_filter.jpg');

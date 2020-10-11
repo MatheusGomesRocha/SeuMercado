@@ -1,10 +1,8 @@
 import React, {useState, useRef, useEffect } from 'react';
-import ProductDefault from './ProductDefault';
 import {useNavigation} from '@react-navigation/native';
 import styled from 'styled-components/native';
 import Api from '../Api';
 import auth from '@react-native-firebase/auth';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import Less from '../assets/svg/less.svg';
 import Plus from '../assets/svg/plus.svg';
 
@@ -21,12 +19,6 @@ const Container = styled.SafeAreaView`
     flex: 1;
     background-color: #fff;
 `;
-
-const Title = styled.Text`
-    color: #fff;
-    font-size: 22px;
-`;
-
 
 
 const InfosView = styled.View`
@@ -52,19 +44,12 @@ const ProductPrice = styled.Text`
 `;
 
 
-
-const BtnAddView = styled.View`
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 90px;
-    borderTopWidth: 1px;
-    borderTopColor: #eee;
-    justify-content: space-between;
-    align-items: center;
-    flex-direction: row;
-    padding: 10px;
+const Title = styled.Text`
+    color: #fff;
+    font-size: 22px;
 `;
+
+
 const QtdView = styled.View`
     width: 35%;
     height: 50px;
@@ -78,6 +63,8 @@ const QtdBtn = styled.TouchableOpacity``;
 const QtdText = styled.Text`
     font-size: 18px;
 `;
+
+
 const BtnAdd = styled.TouchableHighlight`
     background-color: #ea1d2c;
     height: 50px;
@@ -97,19 +84,16 @@ const HEADER_MIN_HEIGHT = 84;
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
 export default (props) => {
-    const [qtd, setQtd] = useState(1);
+    // States
     const [price, setPrice] = useState(props.price);
-    const scrollY = useRef(new Animated.Value(0)).current;
-    const [userName, setUserName] = useState([]);
-    const userId = auth().currentUser.uid;
     const [bot, setBot] = useState(new Animated.Value(-200));
-    const navigation = useNavigation();
+    const [qtd, setQtd] = useState(1);
+    
+    const scrollY = useRef(new Animated.Value(0)).current;
 
-    const headerTranslateY = scrollY.interpolate({
-        inputRange: [0, HEADER_SCROLL_DISTANCE],
-        outputRange: [0, -HEADER_SCROLL_DISTANCE],
-        extrapolate: 'clamp',
-    });
+    const userId = auth().currentUser.uid;
+
+    const navigation = useNavigation();
 
 
     // O Input seria o tamanho do scroll a ser realizado para aplicar as mudanças
@@ -118,6 +102,13 @@ export default (props) => {
 
     // Aqui tem 3 fases da opacity (primeiro: antes de realizar o scroll, quando a imagem está sendo mostrada. segundo: durante o scroll que está sendo mudado. e terceiro: quando a imagem já sumiu)
     // O Scroll tem um tamanho máximo até mudar da imagem para o header, que seria o HEADER_SCROLL_DISTANCE
+
+    const headerTranslateY = scrollY.interpolate({
+        inputRange: [0, HEADER_SCROLL_DISTANCE],
+        outputRange: [0, -HEADER_SCROLL_DISTANCE],
+        extrapolate: 'clamp',
+    });
+
 
     const imageOpacity = scrollY.interpolate({
         inputRange: [0, HEADER_SCROLL_DISTANCE / 2, HEADER_SCROLL_DISTANCE],
@@ -149,6 +140,7 @@ export default (props) => {
         extrapolate: 'clamp',
     });
 
+
     useEffect(() => {
         Animated.timing(bot, {
             toValue: 0,
@@ -166,10 +158,8 @@ export default (props) => {
         let json = Api.setIntoCart(userId, props.id, props.name, props.type, qtd, props.price * qtd, navigation);
     }
     
-
     return (
         <Container>
-            
             
             <Animated.ScrollView
                 contentContainerStyle={{ paddingTop: HEADER_MAX_HEIGHT - 32, alignItems: 'center' }}

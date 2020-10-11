@@ -1,11 +1,11 @@
 import React from 'react';
 import ProductFiltered from '../../components/ProductFiltered';
 import {useRoute} from '@react-navigation/native';
+
 import {StatusBar} from 'react-native';
 
 import {
     Container,
-
 } from './style';
 
 export default () => {

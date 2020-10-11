@@ -5,7 +5,16 @@ export const Container = styled.SafeAreaView`
     background-color: #fff;
 `;
 
-export const Scroll = styled.ScrollView``;
+
+export const LoadingView = styled.View`
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+`;
+
+
+export const Flat = styled.FlatList``;
+
 
 export const InputView = styled.View`
     background-color: #00000030;
@@ -21,15 +30,8 @@ export const Input = styled.TextInput`
     padding: 15px;
     flex: 1;
 `;
-
 export const IconBtn = styled.TouchableOpacity`
     padding: 15px;
 `;
 
-export const Flat = styled.FlatList``;
 
-export const LoadingView = styled.View`
-    flex: 1;
-    align-items: center;
-    justify-content: center;
-`;

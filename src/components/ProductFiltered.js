@@ -16,11 +16,13 @@ const Container = styled.View`
     background-color: #fff;
 `;
 
+
 const LoadingView = styled.View`
     flex: 1;
     align-items: center;
     justify-content: center;
 `;
+
 
 const ArrayView = styled.View`
     flex: 1;
@@ -39,6 +41,7 @@ const ItemBtn = styled.TouchableHighlight`
     borderBottomColor: #ddd;
     padding: 20px;
 `;
+
 
 const ItemRow = styled.View`
     flex-direction: row;
@@ -90,38 +93,6 @@ export default (props) => {
 
   const scrollY = useRef(new Animated.Value(0)).current;
 
-  useEffect(() => {
-    setTimeout(() => {
-        setLoading(false);
-    }, 2000)
-  }, [])
-
-  useEffect(() => {
-    const getProducts = async () => {
-        setProductsFiltered([]);
-        
-        let json = await Api.getProductsFiltered(props.type);
-        setProductsFiltered(json)
-    }
-
-    getProducts();
-  }, [])
-
-
-  const GoToProduct = (id, name, img, description, price) => {
-      if(userLogin) {
-          navigation.navigate('product', {id, name, img, description, price})
-      } else {
-          Alert.alert(
-              "Ops...",
-              "Você precisa está logado para ver o produto",
-              [
-                { text: "OK" }
-              ],
-              { cancelable: false }
-          );
-      }
-  } 
 
   // O Input seria o tamanho do scroll a ser realizado para aplicar as mudanças
 
@@ -167,7 +138,23 @@ export default (props) => {
     extrapolate: 'clamp',
   });
 
-  
+  useEffect(() => {
+    setTimeout(() => {
+        setLoading(false);
+    }, 2000)
+  }, [])
+
+  useEffect(() => {
+    const getProducts = async () => {
+        setProductsFiltered([]);
+        
+        let json = await Api.getProductsFiltered(props.type);
+        setProductsFiltered(json)
+    }
+
+    getProducts();
+  }, [])
+
   const ProductFilterComponent = ({data}) => {
     return(
         <ItemBtn underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => GoToProduct(data.id, data.name, data.img, data.description, data.price)}>
@@ -185,6 +172,21 @@ export default (props) => {
         </ItemBtn>
     );
   }
+
+  const GoToProduct = (id, name, img, description, price) => {
+    if(userLogin) {
+        navigation.navigate('product', {id, name, img, description, price})
+    } else {
+        Alert.alert(
+            "Ops...",
+            "Você precisa está logado para ver o produto",
+            [
+              { text: "OK" }
+            ],
+            { cancelable: false }
+        );
+    }
+} 
 
   return (
     <Container>

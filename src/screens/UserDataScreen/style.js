@@ -5,9 +5,11 @@ export const Container = styled.SafeAreaView`
     background-color: #fff;
 `;
 
+
 export const FatherView = styled.View`
     margin-top: 15px;
 `;
+
 
 export const DefaultBtn = styled.TouchableHighlight`
     flex-direction: row;
@@ -17,6 +19,8 @@ export const DefaultBtn = styled.TouchableHighlight`
     borderBottomWidth: 1px;
     borderBottomColor: #ddd;
 `; 
+
+
 export const LeftView = styled.View`
     width: 95%;
 `;

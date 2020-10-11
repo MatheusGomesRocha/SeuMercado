@@ -10,46 +10,32 @@ import Api from '../../Api';
 
 import {
     Container,
-    ScrollContainer,
-    Texto,
 
     LoadingView,
 
-    FlatView,
     Flat,
+    FlatView,
 
-    Scroll,
-    FilterView,
     ItemFilterBtn,
     ImgFilter,
-
-    CommentsView,
-    CommentsItemView,
-    CommentsHeader,
-    CommentsImg,
-    CommentsColumn,
-    CommentsName,
-    CommentsRate,
-    CommentsDate,
-    CommentsText,
+    FilterText,
 
     PopView,
     PopText,
 
     NoUserLoginBtn,
     NoUserLoginText,
-} from './style';
 
-let array = [
-    {img: require('../../assets/img/geral_filter.jpg'), type: 'Geral'},
-    {img: require('../../assets/img/carne_filter.jpg'), type: 'Carnes'},
-    {img: require('../../assets/img/legume_filter.jpg'), type: 'Legumes'},
-    {img: require('../../assets/img/vegetal_filter.jpg'), type: 'Vegetais'},
-    {img: require('../../assets/img/bebida.jpg'), type: 'Bebidas'},
-    {img: require('../../assets/img/higiene_filter.jpg'), type: 'Higiene pessoal'},
-    {img: require('../../assets/img/lanchonete_filter.jpg'), type: 'Lanchonete'},
-    {img: require('../../assets/img/sorvete.jpg'), type: 'Sorvetes'},
-];
+    // CommentsView,
+    // CommentsItemView,
+    // CommentsHeader,
+    // CommentsImg,
+    // CommentsColumn,
+    // CommentsName,
+    // CommentsRate,
+    // CommentsDate,
+    // CommentsText,
+} from './style';
 
 let comments = [
     {text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum. Vestibulum ac nisl erat. Proin ut ex ut purus consequat tincidunt. Donec elementum sem ligula, sed luctus ipsum dictum mollis. Nullam porta ipsum est. Quisque ultricies eros sit amet fringilla vehicula.'},
@@ -60,17 +46,13 @@ let comments = [
 ];
 
 export default () => {
-    const navigation = useNavigation();
-    const email = useSelector(state=>state.user.email);
     const [filterArray, setFilterArray] = useState([]);
     const [productArray, setProductArray] = useState([]);
     const [loading, setLoading] = useState(true);
-
-    const goToFilter = (type, img) => {
-        navigation.navigate('filter', {type, img});
-    }
-
     const [bot, setBot] = useState(new Animated.Value(-50));
+
+    const navigation = useNavigation();
+    const email = useSelector(state=>state.user.email);
 
     useEffect(() => {
         setTimeout(() => {
@@ -109,11 +91,15 @@ export default () => {
         getProducts();
     }, [])
 
+    const goToFilter = (type, img) => {
+        navigation.navigate('filter', {type, img});
+    }
+
     const FilterComponent = ({data}) => {
         return(
             <ItemFilterBtn onPress={() => goToFilter(data.name, data.img)} >
                 <ImgFilter source={data.img && {uri: data.img}} />
-                <Texto>{data.name}</Texto> 
+                <FilterText>{data.name}</FilterText> 
             </ItemFilterBtn>
         );
     }

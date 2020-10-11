@@ -17,18 +17,18 @@ export const InputView = styled.View`
     margin-bottom: 15px;
     align-items: center;
 `;
-export const Input = styled.TextInput`
-    flex: 1;  
-    margin-left: 10px;
-    font-size: 16px;
-`;
-export const BtnEye = styled.TouchableOpacity``;
 export const InputLine = styled.View`
     height: 40px;
     width: 1px;
     background-color: #aaa;
     margin-left: 10px;
 `;
+export const Input = styled.TextInput`
+    flex: 1;  
+    margin-left: 10px;
+    font-size: 16px;
+`;
+export const BtnEye = styled.TouchableOpacity``;
 
 
 export const ForgotBtn = styled.TouchableOpacity`

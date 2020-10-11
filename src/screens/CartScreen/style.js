@@ -6,7 +6,9 @@ export const Container = styled.SafeAreaView`
     
 `;
 
+
 export const Flat = styled.FlatList``;
+
 
 export const DefaultBtn = styled.TouchableHighlight`
     background-color: #ea1d2c;

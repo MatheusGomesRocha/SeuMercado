@@ -7,13 +7,13 @@ import Api from '../../Api';
 import {
     Container,
     
-    InputView,
-    Input,
-
-    IconBtn,
+    LoadingView,
 
     Flat,
-    LoadingView,
+
+    InputView,
+    Input,
+    IconBtn,
 } from './style';
 
 
@@ -49,11 +49,6 @@ export default () => {
         getProducts();
     }, [])
 
-
-    const onRefresh = () => {
-        setRefresh(true);
-    }
-
     useEffect(() => {
         let arrayShuffle = function(arr) {
 			let newPos;
@@ -72,6 +67,9 @@ export default () => {
         setRefresh(false);
     }, [refresh])
 
+    const onRefresh = () => {
+        setRefresh(true);
+    }
     
     return(
         <Container>
