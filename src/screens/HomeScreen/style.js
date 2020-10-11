@@ -77,12 +77,12 @@ export const CommentsText = styled.Text`
 
 
 export const PopView = styled.View`
-    margin-top: 20px;
+    margin-top: 10px;
 `;
 export const PopText = styled.Text`
     font-weight: bold;
     font-size: 22px;
-    padding: 20px 10px 10px 20px;
+    padding: 10px 10px 10px 20px;
 `;
 
 

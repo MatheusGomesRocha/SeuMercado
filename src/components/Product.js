@@ -1,5 +1,6 @@
 import React, {useState, useRef, useEffect } from 'react';
 import ProductDefault from './ProductDefault';
+import {useNavigation} from '@react-navigation/native';
 import styled from 'styled-components/native';
 import Api from '../Api';
 import auth from '@react-native-firebase/auth';
@@ -102,6 +103,7 @@ export default (props) => {
     const [userName, setUserName] = useState([]);
     const userId = auth().currentUser.uid;
     const [bot, setBot] = useState(new Animated.Value(-200));
+    const navigation = useNavigation();
 
     const headerTranslateY = scrollY.interpolate({
         inputRange: [0, HEADER_SCROLL_DISTANCE],
@@ -161,7 +163,7 @@ export default (props) => {
 
 
     const setIntoCart = () => {
-        let json = Api.setIntoCart(userId, props.id, props.name, props.type, qtd, props.price * qtd);
+        let json = Api.setIntoCart(userId, props.id, props.name, props.type, qtd, props.price * qtd, navigation);
     }
     
 

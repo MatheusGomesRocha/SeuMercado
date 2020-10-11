@@ -6,9 +6,7 @@ import {useNavigation} from '@react-navigation/native';
 import Api from '../Api';
 
 const Div = styled.View`
-    background-color: #fff;
-    align-items: center;
-    margin-bottom: 15px;
+    margin: 0 15px 15px 15px;
 `;
 
 const InputView = styled.View`
@@ -32,10 +30,12 @@ const IconBtn = styled.TouchableOpacity`
 
 const ItemView = styled.TouchableHighlight`
     height: 120px;
-    border: none;
-    elevation: 1;
-    width: 90%;
-    margin-top: 15px;
+    width: 100%;
+    flex-direction: row;
+    border-radius: 10px;
+    background-color: #fff;
+    align-items: center;
+    margin-top: 30px;
 `;
 
 const ItemRow = styled.View`
@@ -115,12 +115,10 @@ export default (props) => {
         getProducts();
     }, [])
 
-    const GoToProduct = (id, name, type, img, description, price) => {
-        navigation.navigate('product', {id, name, type, img, description, price});
+    const GoToProduct = (id, name, img, description, price) => {
+        navigation.navigate('product', {id, name, img, description, price});
     } 
     
-
-
     return(
         <Div>
             {props.cart &&
@@ -133,9 +131,10 @@ export default (props) => {
             }
 
             {filterData.map((item, k) => (
-                <ItemView key={k} underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => GoToProduct(item.id, item.name, item.type, item.img, item.description, item.price)}>
+                <ItemView key={k} underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => GoToProduct(item.id, item.name, item.img, item.description, item.price)}>
                     <ItemRow>
                         <Avatar source={item.img && {uri:item.img}} />
+
                         <ItemHeader>
                             <Name>{item.name}</Name>
                             <Description numberOfLines={2}>{item.description?item.description: 'Nenhuma descrição atribuída'}</Description>

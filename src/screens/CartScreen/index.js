@@ -2,6 +2,11 @@ import React, {useState, useEffect} from 'react';
 import ProductCart from '../../components/ProductCart';
 import Api from '../../Api';
 import auth from '@react-native-firebase/auth';
+import {useSelector} from 'react-redux';
+import EmptyCart from '../../assets/svg/empty_cart.svg';
+import LoginSvg from '../../assets/svg/login.svg';
+
+import {ActivityIndicator} from 'react-native';
 
 import {
     Container,
@@ -10,36 +15,101 @@ import {
 
     DefaultBtn,
     DefaultBtnText,
+
+    NoInfoView,
+    NoProductText,
 } from './style';
 
 export default () => {
     const [arrayCart, setArrayCart] = useState([]);
-    const userId = auth().currentUser.uid;
+    const userLogin = useSelector(state=>state.user.email);
+    const [loading, setLoading] = useState(true);
+
+    if(userLogin) {
+        const userId = auth().currentUser.uid;
+
+        useEffect(() => {
+            const getProducts = async () => {
+                setArrayCart([]);
+                
+                let json = await Api.getProductsCart(userId);
+                setArrayCart(json)
+            }
+    
+            getProducts();
+        }, [])
+    }
 
     useEffect(() => {
-        const getProducts = async () => {
-            setArrayCart([]);
-            
-            let json = await Api.getProductsCart(userId);
-            setArrayCart(json)
-        }
-
-        getProducts();
+        setTimeout(() => {
+            setLoading(false);
+        }, 2000)
     }, [])
+
+    const NoProduct = () => {
+        return(
+            <NoInfoView>
+                <EmptyCart width="200px" height="200px" />
+                <NoProductText>O seu carrinho está vazio</NoProductText>
+            </NoInfoView>
+        );
+    }
+
+    const LoadingScreen = () => {
+        return(
+            <NoInfoView>
+                <ActivityIndicator size="large" color="#ea1d2c" />
+            </NoInfoView>
+        );
+    }
+
+    const NoUserLogin = () => {
+        return(
+            <NoInfoView>
+                <LoginSvg width="200px" height="200px" />
+                <NoProductText>Para ver seu carrinho, por favor faça o Login</NoProductText>
+            </NoInfoView>
+        );
+    }
 
 
     return(
         <Container>
-            
-            <Flat
-                data={arrayCart}
-                renderItem={({item}) => <ProductCart data={item} />}
-                keyExtractor={(item) => item.id}
-            />       
+            {/* Quando abre a tela vai ferificar o tempo de loading que é 2s */}
+             {!loading ? 
+                <>
+                    {/* Depois verifica se tem algum usuário logado */}
+                    {userLogin ? 
+                        <>
+                            {/* Depois verifica se o usuário tem algum produto no carrinho */}
+                            {arrayCart.length > 0 ? 
+                                <>
+                                    <Flat
+                                        data={arrayCart}
+                                        renderItem={({item}) => <ProductCart data={item} />}
+                                        keyExtractor={(item) => item.id}
+                                    />  
+                                    
+                                    <DefaultBtn>
+                                        <DefaultBtnText>Finalizar Pedido</DefaultBtnText>
+                                    </DefaultBtn> 
+                                </>
+                            :
+                                // Se não tiver produto no carrinho, retorna a função que retorna um componente NoProduct
+                                <NoProduct />   
+                            }        
+                        </>
 
-            <DefaultBtn>
-                <DefaultBtnText>Finalizar Pedido</DefaultBtnText>
-            </DefaultBtn> 
+                    :
+                        // Se não tiver usuário logado, retorna a função que retorna um componente NoUserLogin
+                        <NoUserLogin />
+                    }
+                </>
+
+            : 
+                // Durante os 2s de loading mostra a função de LoadingScreen que é apenas um indicador de carregamento
+                <LoadingScreen />
+            }        
         </Container>
     );
 }

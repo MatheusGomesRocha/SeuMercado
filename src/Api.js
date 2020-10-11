@@ -33,8 +33,8 @@ export default {
                         });
                         
                         Alert.alert(
-                            "Login",
-                            "Conta criada com sucesso.",
+                            "Cadastro",
+                            "Conta criada com sucesso. Já está logado",
                             [
                               { text: "OK" }
                             ],
@@ -117,13 +117,17 @@ export default {
         
     },
 
-    setIntoCart: async (userId, productId, productName, productType, productQtd, productPrice) => {
+    setIntoCart: async (userId, productId, productName, productType, productQtd, productPrice, navigation) => {
+        let id = Math.floor(Math.random() * (999999999 - 1));
+        let idString = id.toString();
+
         const res =
             firestore()
             .collection('cart')
             .add({
-                id: '15',
+                id: idString,
                 userId: userId,
+                status: 'pendente',
                 items: {
                         id: productId,
                         name: productName,
@@ -133,6 +137,12 @@ export default {
                 }
             })
             .then(() => {
+                navigation.reset({
+                    routes:[
+                        {name: 'apptab'}
+                    ]
+                });
+
                 Alert.alert(
                     "Sucesso",
                     "O produto foi adicionado ao seu carrinho",
