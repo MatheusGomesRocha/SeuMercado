@@ -10,10 +10,9 @@ export const Container = styled.SafeAreaView`
 
 export const InputView = styled.View`
     flex-direction: row;
-    borderBottomWidth: 1px;
-    borderBottomColor: #000;
+    border: 1px solid #ddd;
     width: 80%;
-    height: 50px;
+    height: 60px;
     border-radius: 10px;
     margin-bottom: 15px;
     align-items: center;
@@ -21,9 +20,15 @@ export const InputView = styled.View`
 export const Input = styled.TextInput`
     flex: 1;  
     margin-left: 10px;
+    font-size: 16px;
 `;
 export const BtnEye = styled.TouchableOpacity``;
-
+export const InputLine = styled.View`
+    height: 40px;
+    width: 1px;
+    background-color: #aaa;
+    margin-left: 10px;
+`;
 
 
 export const ForgotBtn = styled.TouchableOpacity`
@@ -48,10 +53,10 @@ export const AllLineView = styled.View`
 export const LineView = styled.View`
     height: 2px;
     width: 25%;
-    background-color: #ea1d2c;
+    background-color: #aaa;
 `;
 export const LineText = styled.Text`
-    color: #ea1d2c;
+    color: #aaa;
 `;
 export const OptionLoginView = styled.View`
     flex-direction: row;

@@ -1,7 +1,10 @@
 import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
-import ArrowLeft from '../../assets/svg/arrow_left.svg';
+import EmailIcon from '../../assets/svg/email.svg';
+import UserIcon from '../../assets/svg/user_full.svg';
+import Lock from '../../assets/svg/lock.svg';
+import IdIcon from '../../assets/svg/id.svg';
 import EyeOff from '../../assets/svg/eye_off.svg';
 import EyeOn from '../../assets/svg/eye_on.svg';
 import Google from '../../assets/svg/google.svg';
@@ -21,6 +24,7 @@ import {
     InputView,
     Input,
     BtnEye,
+    InputLine,
 
     BtnSignUp,
     BtnSignUpText,
@@ -70,22 +74,26 @@ function SignUpScreen(props) {
             <Scroll>
                 <AllView>
                     <InputView>
-                        <Icon style={{marginLeft: 10}} name="user" size={25} />
+                        <UserIcon width="25" height="25" fill="#ea1d2c" style={{marginLeft: 10}}/>
+                        <InputLine></InputLine>
                         <Input placeholder="Seu nome" onChangeText={n=>setName(n)} />
                     </InputView>
 
                     <InputView>
-                        <Icon style={{marginLeft: 10}} name="user" size={25} />
+                        <IdIcon width="25" height="25" fill="#ea1d2c" style={{marginLeft: 10}}/>
+                        <InputLine></InputLine>
                         <Input keyboardType="numeric" placeholder="CPf" onChangeText={c=>setCpf(c)} />
                     </InputView>
 
                     <InputView>
-                        <Icon style={{marginLeft: 10}} name="user" size={25} />
+                        <EmailIcon width="25" height="25" fill="#ea1d2c" style={{marginLeft: 10}}/>
+                        <InputLine></InputLine>
                         <Input keyboardType="email-address" placeholder="Email" onChangeText={e=>setEmail(e)} />
                     </InputView>
 
                     <InputView>
-                        <Icon style={{marginLeft: 10}} name="lock" size={25} />
+                        <Lock width="25" height="25" fill="#ea1d2c" style={{marginLeft: 10}}/>
+                        <InputLine></InputLine>
                         <Input secureTextEntry={securePass} placeholder="Senha" onChangeText={p=>setPass(p)} />
                         {securePass ?
                         <>
@@ -103,7 +111,8 @@ function SignUpScreen(props) {
                     </InputView>
 
                     <InputView>
-                        <Icon style={{marginLeft: 10}} name="lock" size={25} />
+                        <Lock width="25" height="25" fill="#ea1d2c" style={{marginLeft: 10}}/>
+                        <InputLine></InputLine>
                         <Input onSubmitEditing={SignUp} secureTextEntry={secureConfirmPass} placeholder="Confime sua senha" onChangeText={cp=>setConfirmPass(cp)} />
                         {secureConfirmPass ?
                         <>

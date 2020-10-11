@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
-import User from '../../assets/svg/user_full.svg';
+import EmailIcon from '../../assets/svg/email.svg';
+import Lock from '../../assets/svg/lock.svg';
 import EyeOff from '../../assets/svg/eye_off.svg';
 import EyeOn from '../../assets/svg/eye_on.svg';
 import Google from '../../assets/svg/google.svg';
@@ -17,6 +18,7 @@ import {
     InputView,
     Input,
     BtnEye,
+    InputLine,
 
     BtnLogin,
     BtnLoginText,
@@ -63,12 +65,14 @@ function LoginScreen(props) {
         <Container>
 
             <InputView>
-                <User width="25" height="25" fill="#ea1d2c"/>
+                <EmailIcon width="25" height="25" fill="#ea1d2c" style={{marginLeft: 10}} />
+                <InputLine></InputLine>
                 <Input keyboardType="email-address" placeholder="Email" onChangeText={e=>setEmail(e)} />
             </InputView>
 
             <InputView>
-                <Icon style={{marginLeft: 10}} name="lock" size={25} color="#ea1d2c"/>
+                <Lock width="25" height="25" fill="#ea1d2c" style={{marginLeft: 10}} />
+                <InputLine></InputLine>
                 <Input onSubmitEditing={Login} secureTextEntry={securePass} placeholder="Senha" onChangeText={p=>setPass(p)} />
                 {securePass ?
                 <>
