@@ -106,16 +106,16 @@ export default {
     getUserLogin: async (id) => {
         let list = [];
 
-        const subscriber = firestore()
-            .collection('users')
-            .doc(id)
-            .onSnapshot(documentSnapshot => {
-                let data = documentSnapshot.data();
-                list.push({
-                    id: data.id,
-                    name: data.name,
-                })
-            });
+        let results = await firestore().collection('users').where('id', '==', id).get();
+
+        results.forEach(result => {
+            let data = result.data();
+            list.push({
+                id: data.id,
+                name: data.name,
+            })
+        })
+
 
         return list;
         
@@ -228,7 +228,6 @@ export default {
             .add({
                 id: idString,
                 userId: userId,
-                status: 'pendente',
                 items: {
                         id: productId,
                         name: productName,
@@ -248,6 +247,63 @@ export default {
                 Alert.alert(
                     "Sucesso",
                     "O produto foi adicionado ao seu carrinho",
+                    [
+                      { text: "OK" }
+                    ],
+                    { cancelable: false }
+                );
+
+                return true;
+            })
+            .catch(error => {
+                if(error) {
+                    Alert.alert(
+                        "Error",
+                        "Houve algum problema, tente novamente mais tarde",
+                        [
+                          { text: "OK" }
+                        ],
+                        { cancelable: false }
+                    );
+                }
+            })
+
+        return res;
+    },
+
+    setUserOrder: async (userId, userName, subtotal, navigation) => {
+        let id = Math.floor(Math.random() * (999999999 - 1));
+        let idString = id.toString();
+
+        const res =
+            firestore()
+            .collection('orders')
+            .add({
+                id: idString,
+                userId: userId,
+                status: 'pendente',
+                order: {
+                        userName: userName,
+                        subtotal: subtotal,
+                        payment: 'card',
+                        adress: {
+                            rua: 'Santos Dummont',
+                            number: '3008',
+                            bairro: 'Tabapuazinho',
+                            referencia: 'Bessa X Ap-02 - Arena Bola na Rede ou Uma Industria'
+                        }
+                }
+            })
+            .then(() => {
+                navigation.reset({
+                    routes:[
+                        {name: 'apptab'}
+                    ]
+                });
+
+                Alert.alert(
+                    "Sucesso",
+                    "Seu pedido foi com feito com sucesso. Agora você pode acompanha-lo na parte de Pedidos Em Andamento.",
                     [
                       { text: "OK" }
                     ],

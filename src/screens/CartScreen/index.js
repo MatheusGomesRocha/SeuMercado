@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import ProductCart from '../../components/ProductCart';
 import Api from '../../Api';
 import auth from '@react-native-firebase/auth';
+import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import EmptyCart from '../../assets/svg/empty_cart.svg';
 import LoginSvg from '../../assets/svg/login.svg';
@@ -24,16 +25,20 @@ import {
 } from './style';
 
 export default () => {
+    const [userInfo, setUserInfo] = useState([]);
     const [arrayCart, setArrayCart] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const userLogin = useSelector(state=>state.user.email);
+
+    const navigation = useNavigation();
 
     var subtotal = 0;       // Variável que pega o valor total dos produtos que estão no carrinho
 
     arrayCart.forEach(item => {     // Função foreach que pega o subtotal
         subtotal += item.items.price * item.items.quantidade
     })
+    
 
     if(userLogin) {
         const userId = auth().currentUser.uid;
@@ -48,6 +53,16 @@ export default () => {
     
             getProducts();
         }, [])
+
+        useEffect(() => {
+            const getUserLogin = async () => {
+                let json = await Api.getUserLogin(userId);
+
+                setUserInfo(json);
+            }
+
+            getUserLogin();
+        }, [])
     }
 
     useEffect(() => {
@@ -61,7 +76,7 @@ export default () => {
         return(
             <NoInfoView>
                 <EmptyCart width="200px" height="200px" />
-                <NoInfoText>O seu carrinho está vazio</NoInfoText>
+                <NoInfoText>O seu carrinho está vazio </NoInfoText>
             </NoInfoView>
         );
     }
@@ -81,6 +96,18 @@ export default () => {
                 <NoInfoText>Para ver seu carrinho, por favor faça o Login</NoInfoText>
             </NoInfoView>
         );
+    }
+
+    const setUserOrder = async () => {
+        const userId = auth().currentUser.uid;
+
+        var userName = '';
+
+        userInfo.forEach(item => {
+            userName = item.name;
+        })
+
+        let res = await Api.setUserOrder(userId, userName, subtotal, navigation);
     }
 
     return(
@@ -107,7 +134,7 @@ export default () => {
                                         keyExtractor={(item) => item.id}
                                     />  
                                     
-                                    <DefaultBtn>
+                                    <DefaultBtn onPress={setUserOrder}>
                                         <DefaultBtnText>Finalizar Pedido</DefaultBtnText>
                                     </DefaultBtn> 
                                 </>

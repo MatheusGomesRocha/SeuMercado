@@ -75,7 +75,7 @@ export default () => {
                 <Shopping width="200px" height="200px" />
                 <NoInfoText>Você não tem pedidos em andamento</NoInfoText>
                 <DefaultBtn onPress={() => navigation.navigate('filter', {type, img})}>
-                    <DefaultText>Ver Produtos</DefaultText>
+                    <DefaultText>Faça suas compras</DefaultText>
                 </DefaultBtn>
             </NoInfoView>
         );
