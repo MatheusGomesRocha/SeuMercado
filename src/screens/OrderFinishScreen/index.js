@@ -92,7 +92,7 @@ export default () => {
             
             setArrayOrder(json)        // Pegando geral do pedido (total a pagar, quantidade total, id do pedido)
 
-            setMatrizOrder(json[0].order);          // Pegando infos do pedido. Enviar isso aqui para o component no "flat" e lá. enviar para a próxima tela.
+            setMatrizOrder(json[0].order);          // Pegando infos do pedido. Enviar isso aqui para o component no "flat" e lá enviar para a próxima tela.
                                                     // Para acessa-lo é só mandar pra tela Details como data e pegar pelo nome dos campos. Ex: data.name, data.price;
             
             setAdressOrder(json[0].adress);     // Infos do Endereço ou arrayOrder[0].adress
@@ -105,7 +105,6 @@ export default () => {
         getOrder();
     }, [])
     
-
     return(
         <Container>
             {!loading ?

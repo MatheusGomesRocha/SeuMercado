@@ -113,9 +113,6 @@ const BtnText = styled.Text`
 export default ({data, adress, infoOrder}) => {
     const navigation = useNavigation()
 
-    const goToDetails = () => {
-        navigation.navigation('details', {adress, infoOrder})
-    }
 
     return(
         <ItemView>
@@ -147,7 +144,7 @@ export default ({data, adress, infoOrder}) => {
                         <BtnText>Reportar</BtnText>
                     </DefaultBtn>
 
-                    <DefaultBtn underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => alert('Details')}>
+                    <DefaultBtn underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => navigation.navigate('details', {adress, infoOrder})}>
                         <BtnText>Detalhes</BtnText>
                     </DefaultBtn>
                 </BtnView>
