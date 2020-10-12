@@ -13,6 +13,9 @@ import {
     
     Flat,
 
+    HeaderView,
+    HeaderText,
+
     DefaultBtn,
     DefaultBtnText,
 
@@ -25,6 +28,12 @@ export default () => {
     const [loading, setLoading] = useState(true);
 
     const userLogin = useSelector(state=>state.user.email);
+
+    var subtotal = 0;       // Variável que pega o valor total dos produtos que estão no carrinho
+
+    arrayCart.forEach(item => {     // Função foreach que pega o subtotal
+        subtotal += item.items.price * item.items.quantidade
+    })
 
     if(userLogin) {
         const userId = auth().currentUser.uid;
@@ -46,6 +55,7 @@ export default () => {
             setLoading(false);
         }, 2000)
     }, [])
+
 
     const NoProduct = () => {
         return(
@@ -73,7 +83,6 @@ export default () => {
         );
     }
 
-
     return(
         <Container>
             {/* Quando abre a tela vai ferificar o tempo de loading que é 2s */}
@@ -88,7 +97,9 @@ export default () => {
                                     <Flat
                                         ListHeaderComponent={
                                             <>
-                                                <DefaultBtnText style={{color: '#333'}}>Fazer header com preço de tudo somado</DefaultBtnText>
+                                                <HeaderView>
+                                                    <HeaderText>Total: R$ {parseFloat(subtotal).toFixed(2)}</HeaderText>
+                                                </HeaderView>
                                             </>
                                         }
                                         data={arrayCart}

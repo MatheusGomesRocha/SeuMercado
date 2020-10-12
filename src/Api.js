@@ -163,7 +163,7 @@ export default {
  
     getProductsCart: async (id) => {
          let list = [];
-  
+
          let results = await firestore().collection('cart').where('userId', '==', id).get();
   
          results.forEach(result => {
@@ -172,9 +172,10 @@ export default {
                  id: data.id,
                  userId: data.userId,
                  items: data.items,
+		 
              })
          })
-  
+  				
          return list
     },
  
@@ -217,7 +218,7 @@ export default {
 
     // Set Function
 
-    setIntoCart: async (userId, productId, productName, productType, productQtd, productPrice, navigation) => {
+    setIntoCart: async (userId, productId, productName, productImg, productType, productQtd, productPrice, navigation) => {
         let id = Math.floor(Math.random() * (999999999 - 1));
         let idString = id.toString();
 
@@ -231,6 +232,7 @@ export default {
                 items: {
                         id: productId,
                         name: productName,
+                        img: productImg,
                         type: productType,
                         quantidade: productQtd,
                         price: productPrice,

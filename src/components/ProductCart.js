@@ -2,11 +2,11 @@ import React, {useState, useEffect} from 'react';
 import styled from 'styled-components/native';
 
 const Div = styled.View`
-    margin: 30px 15px 0 15px;
+    margin: 15px 15px 0 15px;
 `;
 
 
-const ItemView = styled.TouchableHighlight`
+const ItemBtn = styled.TouchableHighlight`
     height: 150px;
     width: 100%;
     flex-direction: row;
@@ -46,26 +46,18 @@ const ItemPrice = styled.Text`
 
 
 export default ({data}) => {
-    const [price, setPrice] = useState();
-
-    useEffect(() => {
-        setPrice(data.items.price + data.items.price)
-        console.log(data.items.newPrice)
-    }, [])
     return(
         <Div>
-            <ItemView underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => alert('olá')}>
+            <ItemBtn underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => alert('olá')}>
                 <>
-                    <ItemImg source={require('../assets/img/carne_filter.jpg')} />
+                    <ItemImg source={data.items.img && {uri: data.items.img}} />
                     <ColumnView>
                         <ItemName>{data.items.name}</ItemName>
                         <ItemQtd>Quantidade: {data.items.quantidade}</ItemQtd>
                         <ItemPrice>R$ {parseFloat(data.items.price).toFixed(2)}</ItemPrice>
                     </ColumnView>
                 </>
-            </ItemView>
-
-            
+            </ItemBtn>           
         </Div>
     );
 }

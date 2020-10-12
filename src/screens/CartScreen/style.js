@@ -10,6 +10,20 @@ export const Container = styled.SafeAreaView`
 export const Flat = styled.FlatList``;
 
 
+export const HeaderView = styled.View`
+    height: 70px;
+    width: 100%;
+    background-color: #fff;    
+    align-items: center;
+    justify-content: center;
+`;
+export const HeaderText = styled.Text`
+    font-size: 18px;
+    font-weight: bold
+    color: #ea1d2c;
+`;
+
+
 export const DefaultBtn = styled.TouchableHighlight`
     background-color: #ea1d2c;
     width: 100%;

@@ -155,7 +155,7 @@ export default (props) => {
 
 
     const setIntoCart = () => {
-        let json = Api.setIntoCart(userId, props.id, props.name, props.type, qtd, props.price * qtd, navigation);
+        let json = Api.setIntoCart(userId, props.id, props.name, props.img, props.type, qtd, props.price * qtd, navigation);
     }
     
     return (
