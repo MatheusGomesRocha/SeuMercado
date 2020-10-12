@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import { useNavigation } from '@react-navigation/native';
 
 const ItemView = styled.View`
     flex: 1;
@@ -109,7 +110,13 @@ const BtnText = styled.Text`
 `;
 
 
-export default ({data}) => {
+export default ({data, adress, infoOrder}) => {
+    const navigation = useNavigation()
+
+    const goToDetails = () => {
+        navigation.navigation('details', {adress, infoOrder})
+    }
+
     return(
         <ItemView>
             <DateText>Quarta, 19/02/2020</DateText>
@@ -126,9 +133,9 @@ export default ({data}) => {
                 </HeaderView>
 
                 <OrderView>
-                    <OrderQtdText> {data.quantidade} </OrderQtdText>
+                    <OrderQtdText> {data.quantidadeTotal} </OrderQtdText>
                     <OrderNameText> Produtos por </OrderNameText>
-                    <OrderPriceText> R$ {parseFloat(data.price).toFixed(2)} </OrderPriceText>
+                    <OrderPriceText> R$ {parseFloat(data.subtotal).toFixed(2)} </OrderPriceText>
                 </OrderView>
 
                 <StatusView>

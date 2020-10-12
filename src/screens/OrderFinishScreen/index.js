@@ -22,6 +22,9 @@ import {
 
 export default () => {
     const [arrayOrder, setArrayOrder] = useState([]);
+    const [matrizOrder, setMatrizOrder] = useState([{}]);
+    const [subtotal, setSubtotal] = useState([]);
+    const [adressOrder, setAdressOrder] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const userLogin = useSelector(state=>state.user.email);
@@ -79,7 +82,29 @@ export default () => {
             </NoInfoView>
         );
     }
+ 
+    useEffect(() => {
+        const getOrder = async () => {
+            setArrayOrder([{}]);
+            
+            let json = await Api.getOrdersInfo();
+            
+            
+            setArrayOrder(json)        // Pegando geral do pedido (total a pagar, quantidade total, id do pedido)
 
+            setMatrizOrder(json[0].order);          // Pegando infos do pedido. Enviar isso aqui para o component no "flat" e lá. enviar para a próxima tela.
+                                                    // Para acessa-lo é só mandar pra tela Details como data e pegar pelo nome dos campos. Ex: data.name, data.price;
+            
+            setAdressOrder(json[0].adress);     // Infos do Endereço ou arrayOrder[0].adress
+
+            setSubtotal(json[0].subtotal);
+            
+        }
+        
+        
+        getOrder();
+    }, [])
+    
 
     return(
         <Container>
@@ -92,7 +117,7 @@ export default () => {
                                 <Flat
                                     
                                     data={arrayOrder}
-                                    renderItem={({item}) => <OrderFinish data={item} />}
+                                    renderItem={({item}) => <OrderFinish data={item} adress={arrayOrder[0].adress} infoOrder={matrizOrder}/>}
                                     keyExtractor={(item) => item.id}
                                 />
                             </>

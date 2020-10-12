@@ -34,9 +34,11 @@ export default () => {
     const navigation = useNavigation();
 
     var subtotal = 0;       // Variável que pega o valor total dos produtos que estão no carrinho
+    var quantidadeTotal = 0;
 
     arrayCart.forEach(item => {     // Função foreach que pega o subtotal
         subtotal += item.items.price * item.items.quantidade
+        quantidadeTotal += item.items.quantidade;
     })
     
 
@@ -103,7 +105,7 @@ export default () => {
 
         var userName = '';
         var id = [];
-        var products = [];
+        var products = []; 
 
         userInfo.forEach(item => {
             userName = item.name;
@@ -111,14 +113,18 @@ export default () => {
 
         arrayCart.forEach(item => {
             id.push(item.id);
-            products.push(item);
+            products.push(item.items);
         })
 
-        let res = await Api.setUserOrder(userId, userName, products, subtotal, navigation);
+        let res = await Api.setUserOrder(userId, userName, products, subtotal, quantidadeTotal, navigation);
 
         let del = await Api.deleteCart(id);
     }
 
+
+    
+   
+    
     return(
         <Container>
             {/* Quando abre a tela vai ferificar o tempo de loading que é 2s */}

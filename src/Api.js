@@ -215,6 +215,26 @@ export default {
          return list
     },
 
+    getOrdersInfo: async () => {
+        var list = [];
+ 
+        let results = await firestore().collection('orders').get();
+ 
+        results.forEach(result => {
+            let data = result.data();
+                list.push({
+                    id: data.id,
+                    order: data.order.products.products,
+                    adress: data.order.adress,
+                    subtotal: data.subtotal,
+                    quantidadeTotal: data.quantidadeTotal,
+                    status: data.status,
+                })
+        })
+ 
+        return list
+   },
+
 
     // Set Function
 
@@ -272,7 +292,7 @@ export default {
         return res;
     },
 
-    setUserOrder: async (userId, userName, products, subtotal, navigation) => {
+    setUserOrder: async (userId, userName, products, subtotal, quantidadeTotal, navigation) => {
         let id = Math.floor(Math.random() * (999999999 - 1));
         let idString = id.toString();
 
@@ -283,10 +303,12 @@ export default {
                 id: idString,
                 userId: userId,
                 status: 'pendente',
+                userName: userName,
+                subtotal: subtotal,
+                quantidadeTotal: quantidadeTotal,
                 order: {
-                        products: products,
-                        userName: userName,
-                        subtotal: subtotal,
+                        products: {products},
+                        
                         payment: 'card',
                         adress: {
                             rua: 'Santos Dummont',
@@ -365,8 +387,6 @@ export default {
             .collection('cart')
             .doc(item)
             .delete()
-
-            console.log(item)
         })
     } 
    
