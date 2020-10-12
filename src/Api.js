@@ -225,7 +225,8 @@ export default {
         const res =
             firestore()
             .collection('cart')
-            .add({
+            .doc(idString)
+            .set({
                 id: idString,
                 userId: userId,
                 items: {
@@ -271,7 +272,7 @@ export default {
         return res;
     },
 
-    setUserOrder: async (userId, userName, subtotal, navigation) => {
+    setUserOrder: async (userId, userName, products, subtotal, navigation) => {
         let id = Math.floor(Math.random() * (999999999 - 1));
         let idString = id.toString();
 
@@ -283,6 +284,7 @@ export default {
                 userId: userId,
                 status: 'pendente',
                 order: {
+                        products: products,
                         userName: userName,
                         subtotal: subtotal,
                         payment: 'card',
@@ -300,7 +302,6 @@ export default {
                         {name: 'apptab'}
                     ]
                 });
-
                 Alert.alert(
                     "Sucesso",
                     "Seu pedido foi com feito com sucesso. Agora você pode acompanha-lo na parte de Pedidos Em Andamento.",
@@ -309,6 +310,8 @@ export default {
                     ],
                     { cancelable: false }
                 );
+
+                
 
                 return true;
             })
@@ -353,5 +356,21 @@ export default {
     // },
 
     
+    // Delete Functions
 
+    deleteCart: async (id) => {
+
+        id.forEach(item => {
+            firestore()
+            .collection('cart')
+            .doc(item)
+            .delete()
+
+            console.log(item)
+        })
+    } 
+   
+            
+        
+    
 }

@@ -102,12 +102,21 @@ export default () => {
         const userId = auth().currentUser.uid;
 
         var userName = '';
+        var id = [];
+        var products = [];
 
         userInfo.forEach(item => {
             userName = item.name;
         })
 
-        let res = await Api.setUserOrder(userId, userName, subtotal, navigation);
+        arrayCart.forEach(item => {
+            id.push(item.id);
+            products.push(item);
+        })
+
+        let res = await Api.setUserOrder(userId, userName, products, subtotal, navigation);
+
+        let del = await Api.deleteCart(id);
     }
 
     return(
