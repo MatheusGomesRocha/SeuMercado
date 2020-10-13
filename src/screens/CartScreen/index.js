@@ -12,6 +12,7 @@ import {ActivityIndicator} from 'react-native';
 import {
     Container,
     
+    FlatView,
     Flat,
 
     HeaderView,
@@ -121,10 +122,6 @@ export default () => {
         let del = await Api.deleteCart(id);
     }
 
-
-    
-   
-    
     return(
         <Container>
             {/* Quando abre a tela vai ferificar o tempo de loading que é 2s */}
@@ -136,18 +133,20 @@ export default () => {
                             {/* Depois verifica se o usuário tem algum produto no carrinho */}
                             {arrayCart.length > 0 ? 
                                 <>
-                                    <Flat
-                                        ListHeaderComponent={
-                                            <>
-                                                <HeaderView>
-                                                    <HeaderText>Total: R$ {parseFloat(subtotal).toFixed(2)}</HeaderText>
-                                                </HeaderView>
-                                            </>
-                                        }
-                                        data={arrayCart}
-                                        renderItem={({item}) => <ProductCart data={item} />}
-                                        keyExtractor={(item) => item.id}
-                                    />  
+                                    <FlatView>
+                                        <Flat
+                                            ListHeaderComponent={
+                                                <>
+                                                    <HeaderView>
+                                                        <HeaderText>Total: R$ {parseFloat(subtotal).toFixed(2)}</HeaderText>
+                                                    </HeaderView>
+                                                </>
+                                            }
+                                            data={arrayCart}
+                                            renderItem={({item}) => <ProductCart data={item} />}
+                                            keyExtractor={(item) => item.id}
+                                        /> 
+                                    </FlatView> 
                                     
                                     <DefaultBtn onPress={setUserOrder}>
                                         <DefaultBtnText>Finalizar Pedido</DefaultBtnText>

@@ -17,6 +17,8 @@ export default () => {
     const description = route.params.description;
     const price = route.params.price;
 
+    console.log(price)
+
     return(
         <Container>
             <StatusBar translucent={true} backgroundColor="transparent" barStyle="light-content" />

@@ -86,6 +86,7 @@ const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 export default (props) => {
     // States
     const [price, setPrice] = useState(props.price);
+    const [subtotal, setSubtotal] = useState();
     const [bot, setBot] = useState(new Animated.Value(-200));
     const [qtd, setQtd] = useState(1);
     
@@ -150,12 +151,12 @@ export default (props) => {
     }, [])
     
     useEffect(() => {
-        setPrice(parseFloat(props.price*qtd).toFixed(2));
+        setSubtotal(parseFloat(props.price*qtd).toFixed(2));
     }, [qtd]);
 
 
     const setIntoCart = () => {
-        let json = Api.setIntoCart(userId, props.id, props.name, props.img, props.type, qtd, props.price * qtd, navigation);
+        let json = Api.setIntoCart(userId, props.id, props.name, props.img, props.type, price, qtd, subtotal, navigation);
     }
     
     return (
@@ -206,7 +207,7 @@ export default (props) => {
                 <BtnAdd onPress={setIntoCart}>
                     <>
                         <BtnAddText>Adicionar</BtnAddText>
-                        <BtnAddText style={{fontWeight: 'bold'}}>R${price}</BtnAddText>
+                        <BtnAddText style={{fontWeight: 'bold'}}>R${parseFloat(price * qtd).toFixed(2)}</BtnAddText>
                     </>
                 </BtnAdd>
             </Animated.View>

@@ -169,32 +169,12 @@ export default {
          results.forEach(result => {
              let data = result.data();
              list.push({
-                 id: data.id,
-                 userId: data.userId,
-                 items: data.items,
-		 
+                id: data.id,
+                userId: data.userId,
+                items: data.items,
              })
          })
   				
-         return list
-    },
- 
-    getOrderFinish: async () => {
-         let list = [];
-  
-         let results = await firestore().collection('orderfinish').get();
-  
-         results.forEach(result => {
-             let data = result.data();
-             list.push({
-                 id: data.id,
-                 date: data.date,
-                 quantidade: data.quantidade,
-                 status: data.status,
-                 price: data.price,
-             })
-         })
-  
          return list
     },
  
@@ -215,10 +195,10 @@ export default {
          return list
     },
 
-    getOrdersInfo: async () => {
+    getUserCurrentOrders: async (id, status) => {          // Pega todos os pedidos do usuários
         var list = [];
  
-        let results = await firestore().collection('orders').get();
+        let results = await firestore().collection('orders').where('userId', '==', id).where('status', '==', 'pendente').get();
  
         results.forEach(result => {
             let data = result.data();
@@ -235,10 +215,50 @@ export default {
         return list
    },
 
+   getUserFinishOrders: async (id, status) => {          // Pega todos os pedidos do usuários
+    var list = [];
+
+    let results = await firestore().collection('orders').where('userId', '==', id).where('status', '==', 'entregue').get();
+
+    results.forEach(result => {
+        let data = result.data();
+            list.push({
+                id: data.id,
+                order: data.order.products.products,
+                adress: data.order.adress,
+                subtotal: data.subtotal,
+                quantidadeTotal: data.quantidadeTotal,
+                status: data.status,
+            })
+    })
+
+    return list
+},
+
+   getUserOrdersInfo: async (id) => {           // Pega os detalhes do pedido do usuário
+    var list = [];
+
+    let results = await firestore().collection('orders').where('id', '==', id).get();
+
+    results.forEach(result => {
+        let data = result.data();
+            list.push({
+                id: data.id,
+                order: data.order.products.products,
+                adress: data.order.adress,
+                subtotal: data.subtotal,
+                quantidadeTotal: data.quantidadeTotal,
+                status: data.status,
+            })
+    })
+
+    return list
+},
+
 
     // Set Function
 
-    setIntoCart: async (userId, productId, productName, productImg, productType, productQtd, productPrice, navigation) => {
+    setIntoCart: async (userId, productId, productName, productImg, productType, productPrice, productQtd, subtotal, navigation) => {
         let id = Math.floor(Math.random() * (999999999 - 1));
         let idString = id.toString();
 

@@ -110,14 +110,18 @@ const BtnText = styled.Text`
 `;
 
 
-export default ({data, adress, infoOrder}) => {
+export default ({data, adress, infoOrder, finish}) => {
     const navigation = useNavigation()
 
+    var id = data.id;
+    var subtotal = data.subtotal;
+    var status = data.status;
 
     return(
         <ItemView>
-            <DateText>Quarta, 19/02/2020</DateText>
-
+            {finish &&
+                <DateText>Quarta, 19/02/2020</DateText>
+            }
             <InfoItemView>
 
                 <HeaderView>
@@ -125,14 +129,14 @@ export default ({data, adress, infoOrder}) => {
 
                     <ColumnView>
                         <ColumnTextTop>SeuMercado - Benfica</ColumnTextTop>
-                        <ColumnTextBottom>Pedido concluído - {data.id}</ColumnTextBottom>
+                        <ColumnTextBottom>Pedido concluído - {id}</ColumnTextBottom>
                     </ColumnView>
                 </HeaderView>
 
                 <OrderView>
                     <OrderQtdText> {data.quantidadeTotal} </OrderQtdText>
                     <OrderNameText> Produtos por </OrderNameText>
-                    <OrderPriceText> R$ {parseFloat(data.subtotal).toFixed(2)} </OrderPriceText>
+                    <OrderPriceText> R$ {parseFloat(subtotal).toFixed(2)} </OrderPriceText>
                 </OrderView>
 
                 <StatusView>
@@ -144,7 +148,7 @@ export default ({data, adress, infoOrder}) => {
                         <BtnText>Reportar</BtnText>
                     </DefaultBtn>
 
-                    <DefaultBtn underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => navigation.navigate('details', {adress, infoOrder})}>
+                    <DefaultBtn underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => navigation.navigate('details', {adress, id, subtotal, status})}>
                         <BtnText>Detalhes</BtnText>
                     </DefaultBtn>
                 </BtnView>

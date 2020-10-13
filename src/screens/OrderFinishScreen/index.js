@@ -38,8 +38,8 @@ export default () => {
             const getOrderFinish = async () => {
                 setArrayOrder([]);
                 
-                let json = await Api.getOrderFinish(userId);
-                setArrayOrder(json)
+                let json = await Api.getUserFinishOrders(userId);           
+                setArrayOrder(json)        // Pegando geral do pedido (total a pagar, quantidade total, id do pedido)
             }
     
             getOrderFinish();
@@ -52,6 +52,30 @@ export default () => {
         }, 2000)
     }, [])
 
+    if(arrayOrder) {
+        useEffect(() => {
+            const getOrder = async () => {
+                const userId = auth().currentUser.uid;
+    
+                setArrayOrder([{}]);
+                
+                let json = await Api.getUserFinishOrders(userId);
+                
+                setMatrizOrder(json.order);          // Pegando infos do pedido. Enviar isso aqui para o component no "flat" e lá enviar para a próxima tela.
+                                                                // Para acessa-lo é só mandar pra tela Details como data e pegar pelo nome dos campos. Ex: data.name, data.price;
+                        
+                setAdressOrder(json.adress);     // Infos do Endereço ou arrayOrder.adress
+            
+                setSubtotal(json.subtotal);    
+                
+                // Caso algum dia isso dê erro, adicione um índice da matriz após o json. Ex: json[0].order
+            }
+            
+            
+            getOrder();
+        }, [])
+    }
+    
     const LoadingScreen = () => {
         return(
             <NoInfoView>
@@ -82,28 +106,9 @@ export default () => {
             </NoInfoView>
         );
     }
- 
-    useEffect(() => {
-        const getOrder = async () => {
-            setArrayOrder([{}]);
-            
-            let json = await Api.getOrdersInfo();
-            
-            
-            setArrayOrder(json)        // Pegando geral do pedido (total a pagar, quantidade total, id do pedido)
 
-            setMatrizOrder(json[0].order);          // Pegando infos do pedido. Enviar isso aqui para o component no "flat" e lá enviar para a próxima tela.
-                                                    // Para acessa-lo é só mandar pra tela Details como data e pegar pelo nome dos campos. Ex: data.name, data.price;
-            
-            setAdressOrder(json[0].adress);     // Infos do Endereço ou arrayOrder[0].adress
-
-            setSubtotal(json[0].subtotal);
-            
-        }
-        
-        
-        getOrder();
-    }, [])
+    
+    
     
     return(
         <Container>
@@ -116,7 +121,7 @@ export default () => {
                                 <Flat
                                     
                                     data={arrayOrder}
-                                    renderItem={({item}) => <OrderFinish data={item} adress={arrayOrder[0].adress} infoOrder={matrizOrder}/>}
+                                    renderItem={({item}) => <OrderFinish data={item} adress={arrayOrder[0].adress} infoOrder={matrizOrder} finish={true}/>}
                                     keyExtractor={(item) => item.id}
                                 />
                             </>

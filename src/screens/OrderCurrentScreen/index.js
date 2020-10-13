@@ -23,6 +23,9 @@ import {
 export default () => {
     const [arrayOrder, setArrayOrder] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [matrizOrder, setMatrizOrder] = useState([{}]);
+    const [subtotal, setSubtotal] = useState([]);
+    const [adressOrder, setAdressOrder] = useState([]);
 
     const userLogin = useSelector(state=>state.user.email);
     
@@ -32,14 +35,23 @@ export default () => {
         const userId = auth().currentUser.uid;
 
         useEffect(() => {
-            const getOrderFinish = async () => {
+            const getCurrentOrder = async () => {
                 setArrayOrder([]);
                 
-                let json = await Api.getOrderFinish(userId);
+                let json = await Api.getUserCurrentOrders(userId);
                 setArrayOrder(json)
+
+                setMatrizOrder(json.order);          // Pegando infos do pedido. Enviar isso aqui para o component no "flat" e lá enviar para a próxima tela.
+                                                                // Para acessa-lo é só mandar pra tela Details como data e pegar pelo nome dos campos. Ex: data.name, data.price;
+                        
+                setAdressOrder(json.adress);     // Infos do Endereço ou arrayOrder.adress
+            
+                setSubtotal(json.subtotal);          
+
+                // Caso algum dia isso dê erro, adicione um índice da matriz após o json. Ex: json[0].order
             }
     
-            getOrderFinish();
+            getCurrentOrder();
         }, [])
     }
 
@@ -93,7 +105,7 @@ export default () => {
                                 <Flat
                                     
                                     data={arrayOrder}
-                                    renderItem={({item}) => <OrderFinish data={item} />}
+                                    renderItem={({item}) => <OrderFinish data={item} adress={arrayOrder[0].adress} infoOrder={matrizOrder}/>}
                                     keyExtractor={(item) => item.id}
                                 />
                             </>

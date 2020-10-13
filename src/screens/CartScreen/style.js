@@ -3,11 +3,15 @@ import styled from 'styled-components/native';
 export const Container = styled.SafeAreaView`
     flex: 1;
     background-color: #efefef;
-    
 `;
 
 
-export const Flat = styled.FlatList``;
+export const FlatView = styled.View`
+`;
+export const Flat = styled.FlatList`
+    margin-bottom: 61px;
+
+`;
 
 
 export const HeaderView = styled.View`
