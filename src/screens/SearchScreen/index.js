@@ -3,6 +3,7 @@ import SearchIcon from '../../assets/svg/search.svg';
 import ProductDefault from '../../components/ProductDefault';
 import {RefreshControl, ActivityIndicator} from 'react-native';
 import Api from '../../Api';
+import LoadingScreen from '../../components/LoadingComponent';
 
 import {
     Container,
@@ -74,11 +75,7 @@ export default () => {
     return(
         <Container>
             {loading ?
-                <>
-                    <LoadingView>
-                        <ActivityIndicator size="large" color="#ea1d2c" />
-                    </LoadingView>
-                </>
+                <LoadingScreen />
             :
                 <>
                     <Flat

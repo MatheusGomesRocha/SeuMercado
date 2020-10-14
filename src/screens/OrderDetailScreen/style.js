@@ -58,7 +58,7 @@ export const OrderInfoView = styled.View`
 
 
 export const OrderIdView = styled.View`
-    margin: 30px 0 0 0;
+    margin-top: 15px;
     borderBottomWidth: 1px;
     borderBottomColor: #ddd;
     height: 80px;

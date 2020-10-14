@@ -11,11 +11,11 @@ const ItemView = styled.View`
 const DateText = styled.Text`
     font-size: 18px;
     font-weight: bold;
+    margin-bottom: 15px;
 `;
 
 
 const InfoItemView = styled.View`
-    margin: 15px 0 15px 0;
     height: 300px;
     width: 100%;
     background-color: #fff;
@@ -113,9 +113,10 @@ const BtnText = styled.Text`
 export default ({data, adress, infoOrder, finish}) => {
     const navigation = useNavigation()
 
-    var id = data.id;
-    var subtotal = data.subtotal;
-    var status = data.status;
+    let id = data.id;
+    let idSplit = data.id.substr(0, 4);
+    let subtotal = data.subtotal;
+    let status = data.status;
 
     return(
         <ItemView>
@@ -129,7 +130,7 @@ export default ({data, adress, infoOrder, finish}) => {
 
                     <ColumnView>
                         <ColumnTextTop>SeuMercado - Benfica</ColumnTextTop>
-                        <ColumnTextBottom>Pedido concluído - {id}</ColumnTextBottom>
+                        <ColumnTextBottom>Pedido concluído - {idSplit}</ColumnTextBottom>
                     </ColumnView>
                 </HeaderView>
 

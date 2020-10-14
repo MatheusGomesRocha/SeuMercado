@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useRoute} from '@react-navigation/native';
 import Api from '../../Api';
+import LoadingScreen from '../../components/LoadingComponent';
 
 import {
     Container,
@@ -43,7 +44,8 @@ import {
 
 export default () => {
     const [arrayOrderInfo, setArrayOrderInfo] = useState([{}]);
-    
+    const [loading, setLoading] = useState(true);
+
     const route = useRoute();
 
     let adress = route.params.adress;
@@ -68,6 +70,12 @@ export default () => {
         getOrder();
     }, [])
 
+    useEffect(() => {
+        setTimeout(() => {
+            setLoading(false);
+        }, 2000)
+    }, [])
+
     const ArrayFlat = ({data}) => {
         return(
             <OrderProductView>
@@ -85,66 +93,73 @@ export default () => {
 
     return(
         <Container>
-            <Flat
-                ListHeaderComponent={
-                    <>
-                        <HeaderView>
-                            <TopView>
-                                <TopImg source={require('../../assets/img/carne_filter.jpg')} />
-                                <TopText>Seu Mercado - Benfica</TopText>
-                            </TopView>
+            {loading ?
+                <LoadingScreen />
+            :
+                <>
+                    <Flat
+                    ListHeaderComponent={
+                        <>
+                            <HeaderView>
+                                <TopView>
+                                    <TopImg source={require('../../assets/img/carne_filter.jpg')} />
+                                    <TopText>Seu Mercado - Benfica</TopText>
+                                </TopView>
 
-                            <BottomText>Realizado as 19:28 - 14/11/2025</BottomText>
-                        </HeaderView>
+                                <BottomText>Realizado as 19:28 - 14/11/2025</BottomText>
+                            </HeaderView>
 
-                        <StatusView>
-                            {status == 'pendente' ?
-                                <StatusText color="#F4D35E">À caminho</StatusText>
-                            :
-                                <StatusText color="#28AFB0">Pedido entregue às 19:28</StatusText>
-                            }
-                        </StatusView>
+                            <StatusView>
+                                {status == 'pendente' ?
+                                    <StatusText color="#F4D35E">À caminho</StatusText>
+                                :
+                                    <StatusText color="#28AFB0">Pedido entregue às 19:28</StatusText>
+                                }
+                            </StatusView>
 
-                        <OrderIdView>
-                            <OrderIdText>Pedido nº {orderId}</OrderIdText>
-                        </OrderIdView>
-                    </>
-                }
+                            <OrderIdView>
+                                <OrderIdText>Pedido nº {orderId}</OrderIdText>
+                            </OrderIdView>
+                        </>
+                    }
 
-                    showsVerticalScrollIndicator={false}
-                    data={arrayOrderInfo}
-                    renderItem={({item}) => <ArrayFlat data={item} />}
-                    keyExtractor={(item) => item.id}
+                        showsVerticalScrollIndicator={false}
+                        data={arrayOrderInfo}
+                        renderItem={({item}) => <ArrayFlat data={item} />}
+                        keyExtractor={(item) => item.id}
 
-                ListFooterComponent={
-                    <>
-                        <TotalPriceView>
-                            <PriceView>
-                                <PriceText>Subtotal</PriceText>
-                                <PriceText>R$ {parseFloat(subtotal).toFixed(2)}</PriceText>
-                            </PriceView>
+                    ListFooterComponent={
+                        <>
+                            <TotalPriceView>
+                                <PriceView>
+                                    <PriceText>Subtotal</PriceText>
+                                    <PriceText>R$ {parseFloat(subtotal).toFixed(2)}</PriceText>
+                                </PriceView>
 
-                            <PriceView>
-                                <PriceText>Taxa de entrega</PriceText>
-                                <PriceText>R$ {parseFloat(taxa).toFixed(2)}</PriceText>
-                            </PriceView>
+                                <PriceView>
+                                    <PriceText>Taxa de entrega</PriceText>
+                                    <PriceText>R$ {parseFloat(taxa).toFixed(2)}</PriceText>
+                                </PriceView>
 
-                            <PriceView>
-                                <PriceText color="#ea1d2c" weight="bold">Total</PriceText>
-                                <PriceText color="#ea1d2c" weight="bold">R$ {parseFloat(subtotal + taxa).toFixed(2)}</PriceText>
-                            </PriceView>
-                            
-                        </TotalPriceView>
+                                <PriceView>
+                                    <PriceText color="#ea1d2c" weight="bold">Total</PriceText>
+                                    <PriceText color="#ea1d2c" weight="bold">R$ {parseFloat(subtotal + taxa).toFixed(2)}</PriceText>
+                                </PriceView>
+                                
+                            </TotalPriceView>
 
-                        <AdressView>
-                            <AdressText>Endereço de entrega</AdressText>
-                            <RuaText>R. {adress.rua}, {adress.number} </RuaText>
-                            <BairroText>{adress.bairro}</BairroText>
-                            <ReferenceText>{adress.referencia}</ReferenceText>
-                        </AdressView>
-                    </>
-                }
-                />  
+                            <AdressView>
+                                <AdressText>Endereço de entrega</AdressText>
+                                <RuaText>R. {adress.rua}, {adress.number} </RuaText>
+                                <BairroText>{adress.bairro}</BairroText>
+                                <ReferenceText>{adress.referencia}</ReferenceText>
+                            </AdressView>
+                        </>
+                    }
+                    />
+                </>
+            }
+              
                     
                 
 

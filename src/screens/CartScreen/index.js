@@ -6,8 +6,8 @@ import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import EmptyCart from '../../assets/svg/empty_cart.svg';
 import LoginSvg from '../../assets/svg/login.svg';
+import LoadingScreen from '../../components/LoadingComponent';
 
-import {ActivityIndicator} from 'react-native';
 
 import {
     Container,
@@ -80,14 +80,6 @@ export default () => {
             <NoInfoView>
                 <EmptyCart width="200px" height="200px" />
                 <NoInfoText>O seu carrinho está vazio </NoInfoText>
-            </NoInfoView>
-        );
-    }
-
-    const LoadingScreen = () => {
-        return(
-            <NoInfoView>
-                <ActivityIndicator size="large" color="#ea1d2c" />
             </NoInfoView>
         );
     }

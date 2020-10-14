@@ -6,8 +6,8 @@ import Api from '../../Api';
 import Shopping from '../../assets/svg/shopping_app.svg';
 import LoginSvg from '../../assets/svg/login.svg';
 import {useNavigation} from '@react-navigation/native';
+import LoadingScreen from '../../components/LoadingComponent';
 
-import {ActivityIndicator} from 'react-native';
 
 import {
     Container,
@@ -36,9 +36,10 @@ export default () => {
 
         useEffect(() => {
             const getCurrentOrder = async () => {
+                let status = 'pendente';
                 setArrayOrder([]);
                 
-                let json = await Api.getUserCurrentOrders(userId);
+                let json = await Api.getUserOrders(userId, status);
                 setArrayOrder(json)
 
                 setMatrizOrder(json.order);          // Pegando infos do pedido. Enviar isso aqui para o component no "flat" e lá enviar para a próxima tela.
@@ -60,14 +61,6 @@ export default () => {
             setLoading(false);
         }, 2000)
     }, [])
-
-    const LoadingScreen = () => {
-        return(
-            <NoInfoView>
-                <ActivityIndicator size="large" color="#ea1d2c" />
-            </NoInfoView>
-        );
-    }
 
     const NoUserLogin = () => {
         return(

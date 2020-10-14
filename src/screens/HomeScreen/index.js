@@ -7,6 +7,7 @@ import {Animated, StatusBar, ActivityIndicator, StyleSheet} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {useSelector} from 'react-redux';
 import Api from '../../Api';
+import LoadingScreen from '../../components/LoadingComponent';
 
 import {
     Container,
@@ -109,11 +110,7 @@ export default () => {
         <Container>
 	        <StatusBar backgroundColor="#fff" barStyle="dark-content"/>
             {loading ?
-                <>
-                    <LoadingView>
-                        <ActivityIndicator size="large" color="#ea1d2c" />
-                    </LoadingView>
-                </>   
+                <LoadingScreen />
             :
 
                 <>

@@ -195,30 +195,10 @@ export default {
          return list
     },
 
-    getUserCurrentOrders: async (id, status) => {          // Pega todos os pedidos do usuários
-        var list = [];
- 
-        let results = await firestore().collection('orders').where('userId', '==', id).where('status', '==', 'pendente').get();
- 
-        results.forEach(result => {
-            let data = result.data();
-                list.push({
-                    id: data.id,
-                    order: data.order.products.products,
-                    adress: data.order.adress,
-                    subtotal: data.subtotal,
-                    quantidadeTotal: data.quantidadeTotal,
-                    status: data.status,
-                })
-        })
- 
-        return list
-   },
-
-   getUserFinishOrders: async (id, status) => {          // Pega todos os pedidos do usuários
+   getUserOrders: async (id, status) => {          // Pega todos os pedidos do usuários
     var list = [];
 
-    let results = await firestore().collection('orders').where('userId', '==', id).where('status', '==', 'entregue').get();
+    let results = await firestore().collection('orders').where('userId', '==', id).where('status', '==', status).get();
 
     results.forEach(result => {
         let data = result.data();

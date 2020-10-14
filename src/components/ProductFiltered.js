@@ -3,6 +3,7 @@ import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
 import Api from '../Api';
 import {useSelector} from 'react-redux';
+import LoadingScreen from './LoadingComponent';
 
 import {
   Alert,
@@ -191,11 +192,7 @@ export default (props) => {
   return (
     <Container>
       {loading ?
-        <>
-          <LoadingView>
-            <ActivityIndicator size="large" color="#ea1d2c" />
-          </LoadingView>
-        </>
+        <LoadingScreen />
       :
         <>
           <Animated.ScrollView
