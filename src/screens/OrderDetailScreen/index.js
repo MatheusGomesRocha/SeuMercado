@@ -50,6 +50,7 @@ export default () => {
 
     let adress = route.params.adress;
     let orderId = route.params.id;
+    let idSplit = route.params.id.substr(0, 4);
     let subtotal = route.params.subtotal;
     let status = route.params.status;
     let taxa = 5.75; // Número fictício para ser usado como taxa de entrega
@@ -118,7 +119,7 @@ export default () => {
                             </StatusView>
 
                             <OrderIdView>
-                                <OrderIdText>Pedido nº {orderId}</OrderIdText>
+                                <OrderIdText>Pedido nº {idSplit}</OrderIdText>
                             </OrderIdView>
                         </>
                     }

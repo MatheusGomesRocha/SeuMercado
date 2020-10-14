@@ -1,4 +1,5 @@
 import React from 'react';
+import {useNavigation} from '@react-navigation/native';
 
 import {
     Container,
@@ -20,10 +21,11 @@ let array = [
     {id: '4', avatar: require('../../assets/img/higiene_filter.jpg'), name: 'Aids', LastMessage: 'eiê', date: '20:47'},
 ]
 export default () => {
+    const navigation = useNavigation();
 
     const ArrayMessage = ({data}) => {
         return(
-            <MessageBtn>
+            <MessageBtn onPress={() => navigation.navigate('chatopen')}>
                 <>
                     <Avatar source={data.avatar} />
                     <ColumnView>
