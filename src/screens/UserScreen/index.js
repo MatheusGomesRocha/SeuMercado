@@ -121,7 +121,7 @@ function UserScreen(props) {
 
 
                         {email?
-                            <DefaultBtn>
+                            <DefaultBtn onPress={() => navigation.navigate('chat')}>
                                 <>
                                     <ChatIcon width="25" height="25" fill="#333" />
                                     <LeftView>

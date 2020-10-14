@@ -7,6 +7,7 @@ import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import UserDataScreen from '../screens/UserDataScreen';
 import OrderDetailScreen from '../screens/OrderDetailScreen';
+import ChatScreen from '../screens/ChatScreen';
 
 const HomeStack = createStackNavigator();
 
@@ -20,6 +21,7 @@ export default () => {
             <HomeStack.Screen name="signup" component={SignUpScreen} options={{headerTitle: null, headerTransparent: true, headerTintColor: '#000'}}/>
             <HomeStack.Screen name="userdata" component={UserDataScreen} options={{headerTintColor: '#000', title: 'Meus dados', headerTitleAlign: 'center', headerStyle: {height: 70, elevation: 0}}} />
             <HomeStack.Screen name="details" component={OrderDetailScreen} options={{headerTintColor: '#000', title: 'Detalhes', headerTitleAlign: 'center', headerStyle: {height: 50, elevation: 0}}} />
+            <HomeStack.Screen name="chat" component={ChatScreen} options={{headerTintColor: '#000', title: 'Conversas', headerTitleAlign: 'center', headerStyle: {height: 50, elevation: 0}}} />
         </HomeStack.Navigator>
     );
 }
