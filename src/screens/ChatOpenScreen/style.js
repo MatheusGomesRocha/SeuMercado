@@ -13,20 +13,20 @@ export const Flat = styled.FlatList`
 export const HeaderView = styled.View`
     flex-direction: row;
     background-color: #fff;
-    height: 60px;
+    height: 50px;
     align-items: center;
     padding-left: 15px;
 `;
 export const HeaderImg = styled.Image`
-    height: 50px;
-    width: 50px;
+    height: 40px;
+    width: 40px;
     border-radius: 25px;
 `;
 export const ColumnView = styled.View`
-    margin-left: 5px;
+    margin-left: 10px;
 `;
 export const HeaderName = styled.Text`
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
 `;
 export const HeaderUsers = styled.Text`

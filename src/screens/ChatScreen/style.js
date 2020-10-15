@@ -23,7 +23,7 @@ export const Avatar = styled.Image`
 `;
 export const ColumnView = styled.View`
     width: 70%;
-    margin-left: 15px;
+    margin-left: -15px;
 
 `;
 export const NameText = styled.Text`
