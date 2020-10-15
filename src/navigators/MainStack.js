@@ -9,6 +9,7 @@ import UserDataScreen from '../screens/UserDataScreen';
 import OrderDetailScreen from '../screens/OrderDetailScreen';
 import ChatScreen from '../screens/ChatScreen';
 import ChatOpenScreen from '../screens/ChatOpenScreen';
+import ContactScreen from '../screens/ContactScreen';
 
 const HomeStack = createStackNavigator();
 
@@ -24,6 +25,7 @@ export default () => {
             <HomeStack.Screen name="details" component={OrderDetailScreen} options={{headerTintColor: '#000', title: 'Detalhes', headerTitleAlign: 'center', headerStyle: {height: 50, elevation: 0}}} />
             <HomeStack.Screen name="chat" component={ChatScreen} options={{headerTintColor: '#000', title: 'Conversas', headerTitleAlign: 'center', headerStyle: {height: 50, elevation: 0}}} />
             <HomeStack.Screen name="chatopen" component={ChatOpenScreen} options={{headerTintColor: '#000', title: null, headerTransparent: true}}/>
+            <HomeStack.Screen name="contacts" component={ContactScreen} options={{headerTintColor: '#000', title: 'Contatos', headerTitleAlign: 'center', headerStyle: {height: 50, elevation: 0}}}/>
         </HomeStack.Navigator>
     );
 }

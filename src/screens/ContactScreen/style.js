@@ -30,21 +30,3 @@ export const NameText = styled.Text`
     font-weight: bold;
     font-size: 16px;
 `;
-export const LastMessageText = styled.Text`
-    color: #aaa;
-`;
-export const DateText = styled.Text`
-    color: #aaa;
-`;
-
-export const ContactBtn = styled.TouchableHighlight`
-    width: 80px;
-    height: 80px;
-    border-radius: 40px;
-    background-color: #ea1d2c;
-    position: absolute;
-    bottom: 30px;
-    right: 30px;
-    align-items: center;
-    justify-content: center;
-`;

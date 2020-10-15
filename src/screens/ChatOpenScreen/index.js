@@ -40,7 +40,6 @@ export default () => {
     const targetName = route.params.targetName;
     const chatId = route.params.chatId;
 
-          
 
     const ArrayMessageUser = ({data}) => {
       
@@ -58,9 +57,8 @@ export default () => {
     useEffect(() => {
         setMessage([]);
 
-        let unsub = Api.getContentChat(chatId, setMessage, setUsers);
+        Api.getContentChat(chatId, setMessage, setUsers);
 
-        return unsub;
     }, [chatId]);
 
     const sendMessage = () => {

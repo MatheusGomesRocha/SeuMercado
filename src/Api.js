@@ -251,6 +251,7 @@ export default {
         return list
     },
 
+    // Função que pega todos os chats criados pelo o usuário logado e mostra. setChatList é uma state da ChatScreen que passou como parâmetro para setar corretamente
     getChat: (userId, setChatList) => {
         return firestore()
             .collection('users')
@@ -260,23 +261,25 @@ export default {
                     let data = result.data();
 
                     if (data.chats) {
+                        let chats = [...data.chats];
                         setChatList(data.chats)
                     }
                 }
             })
     },
 
+    // Função que pega o conteúdo do chat (a conversa) entre os dois usuários
     getContentChat: (chatId, setMessage, setUsers) => {
         return firestore()
-        .collection('chats')
-        .doc(chatId)
-        .onSnapshot((result) => {
-            if(result.exists) {
-                let data = result.data();
-                setMessage(data.messages);
-                setUsers(data.users);
-            }
-        })
+            .collection('chats')
+            .doc(chatId)
+            .onSnapshot((result) => {
+                if (result.exists) {
+                    let data = result.data();
+                    setMessage(data.messages);
+                    setUsers(data.users);
+                }
+            })
     },
 
     setIntoCart: async (userId, productId, productName, productImg, productType, productPrice, productQtd, subtotal, navigation) => {
@@ -394,79 +397,104 @@ export default {
         return res;
     },
 
-    setNewChat: async (userId, userName, targetId, targetName) => {
-        let res =
-            await firestore()
-                .collection('chats')
-                .add({
-                    messages: [],
-                    users: [userId, targetId],
-                });
+    // Cria um novo chat com o usuário logado e com o usuário que ele selecionou
+    setNewChat: async (userId, userName, targetId, targetName, setChatId) => {
+        var reference = false;      // Variável para saber se já existe um chat entre esses 2 usuários
 
-        let res1 =
-            firestore()
-                .collection('users')
-                .doc(userId)
-                .update({
-                    chats: firestore.FieldValue.arrayUnion({
-                        chatId: res.id,
-                        title: targetName,
-                        with: targetId
-                    })
-                });
+        const res = await firestore()       // Primeiro é procurado os dados da collection chats em que tenha userId e targetId
+            .collection('chats')
+            .where('users', '==', [userId, targetId])
+            .get()
 
-        let res2 =
-            firestore()
-                .collection('users')
-                .doc(targetId)
-                .update({
-                    chats: firestore.FieldValue.arrayUnion({
-                        chatId: res.id,
-                        title: userName,
-                        with: userId
+        res.forEach(item => {        // Depois é feito um foreach para acessar esses dados. 
+            if (item) {              // Se tiver algum dado, ele retorna true. então atribua a Var reference como true
+                reference = true;
+            }
+        })
+
+        if (userId === targetId) {   // Outra verificação só para garantir caso o usuário tente criar uma conversa com ele mesmo (LOL)
+            return console.log('error');
+        }
+
+        if (!reference) {            // Se a Var reference for false. Então execute a função de add um novo chat normalmente
+            let res =
+                await firestore()
+                    .collection('chats')
+                    .add({
+                        messages: [],
+                        users: [userId, targetId],
+                    });
+
+            let res1 =
+                firestore()
+                    .collection('users')
+                    .doc(userId)
+                    .update({
+                        chats: firestore.FieldValue.arrayUnion({
+                            chatId: res.id,
+                            title: targetName,
+                            with: targetId
+                        })
+                    });
+
+            let res2 =
+                firestore()
+                    .collection('users')
+                    .doc(targetId)
+                    .update({
+                        chats: firestore.FieldValue.arrayUnion({
+                            chatId: res.id,
+                            title: userName,
+                            with: userId
+                        })
                     })
-                })
+
+            setChatId(res.id);
+        } else {
+            return console.log('error')
+        }
     },
 
+    // envia uma mensagem para a collection chats e simultâneamente faz um update na Collection dos usuários contendo a ultima mensagem enviada e o horário dela
     setMessage: async (chatId, userId, content, users) => {
         let now = new Date();
-        let hour = now.getHours()+':'+now.getMinutes();
+        let hour = now.getHours() + ':' + now.getMinutes();
 
         firestore()
-        .collection('chats')
-        .doc(chatId)
-        .update({
-            messages: firestore.FieldValue.arrayUnion({
-                author: userId,
-                content: content,
-                date: hour
-            })
-        });
+            .collection('chats')
+            .doc(chatId)
+            .update({
+                messages: firestore.FieldValue.arrayUnion({
+                    author: userId,
+                    content: content,
+                    date: hour
+                })
+            });
 
-        for(let i in users) {
+        for (let i in users) {
             let u = await firestore()
-            .collection('users')
-            .doc(users[i])
-            .get();
+                .collection('users')
+                .doc(users[i])
+                .get();
 
             let uData = u.data();
-            
-            if(uData.chats) {
+
+            if (uData.chats) {
                 let chats = [...uData.chats];
 
-                for(let e in chats) {
-                    if(chats[e].chatId == chatId) {
+                for (let e in chats) {
+                    if (chats[e].chatId == chatId) {
                         chats[e].lastMessage = content;
                         chats[e].date = hour;
                     }
                 }
 
                 await firestore()
-                .collection('users')
-                .doc(users[i])
-                .update({
-                    chats
-                })
+                    .collection('users')
+                    .doc(users[i])
+                    .update({
+                        chats
+                    })
             }
         }
     },
