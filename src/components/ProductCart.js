@@ -50,11 +50,11 @@ export default ({data}) => {
         <Div>
             <ItemBtn underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => alert('olá')}>
                 <>
-                    <ItemImg source={data.items.img && {uri: data.items.img}} />
+                    <ItemImg source={data.img && {uri: data.img}} />
                     <ColumnView>
-                        <ItemName>{data.items.name}</ItemName>
-                        <ItemQtd>Quantidade: {data.items.quantidade}</ItemQtd>
-                        <ItemPrice>R$ {parseFloat(data.items.price).toFixed(2)}</ItemPrice>
+                        <ItemName>{data.name}</ItemName>
+                        <ItemQtd>Quantidade: {data.quantidade}</ItemQtd>
+                        <ItemPrice>R$ {parseFloat(data.price).toFixed(2)}</ItemPrice>
                     </ColumnView>
                 </>
             </ItemBtn>           

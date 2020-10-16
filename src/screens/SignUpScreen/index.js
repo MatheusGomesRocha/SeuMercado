@@ -50,21 +50,10 @@ function SignUpScreen(props) {
 
     const navigation = useNavigation();
     
-    const SignUp = async () => {
-        let res = await Api.signUp(name, email, cpf, pass, navigation);
+    const SignUp = () => {
+        let res = Api.signUp(name, email, cpf, pass, navigation, props.setEmail);
 
-        if(res) {
-            props.setEmail(email);
-        } else {
-            Alert.alert(
-                "Error",
-                "Ocorreu um erro, por favor tente novamente.",
-                [
-                  { text: "OK" }
-                ],
-                { cancelable: false }
-            );
-        }
+        return res;
     }
 
     return(

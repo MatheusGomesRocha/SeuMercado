@@ -44,21 +44,8 @@ function LoginScreen(props) {
 
     const navigation = useNavigation();
 
-    const Login = async () => {
-        let res = await Api.login(email, pass, navigation);
-
-        if(res) {
-            props.setEmail(email);
-        } else {
-            Alert.alert(
-                "Error",
-                "Ocorreu um erro, por favor tente novamente.",
-                [
-                  { text: "OK" }
-                ],
-                { cancelable: false }
-            );
-        }
+    const Login = () => {
+        Api.login(email, pass, navigation, props.setEmail);
     }
 
     return(

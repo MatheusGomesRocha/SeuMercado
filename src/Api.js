@@ -6,11 +6,16 @@ export default {
 
     // Auths
 
-    signUp: async (name, email, cpf, password, navigation) => {
+    signUp: (name, email, cpf, password, navigation, setEmail) => {
+        let id = Math.floor(Math.random() * (999999999 - 1));
+        let idString = id.toString();
+
         const res =
             auth()      // Cria um usuário com email e senha no firebase Auth
                 .createUserWithEmailAndPassword(email, password)
                 .then(() => {
+                    
+                    
                     auth()
                         .signInWithEmailAndPassword(email, password);  // Depois de criar no Auth é feito o login
                     const user = auth().currentUser;    // Pega o usuário logado (que acabou de logar junto com o cadastro)
@@ -24,16 +29,29 @@ export default {
                             email: email,
                             password: password,
                             chats: []
+                        });
+
+                        navigation.reset({
+                            routes: [
+                                { name: 'apptab' }
+                            ]
+                        });
+
+                        setEmail(email);
+
+                    firestore()
+                        .collection('cart')
+                        .doc(user.uid)
+                        .set({
+                            id: idString,
+                            userId: user.uid,
+                            products: []
                         })
                         .then(() => {
                             auth()
                                 .signInWithEmailAndPassword(email, password)
                                 .then(() => {
-                                    navigation.reset({
-                                        routes: [
-                                            { name: 'apptab' }
-                                        ]
-                                    });
+
 
                                     Alert.alert(
                                         "Cadastro",
@@ -43,10 +61,10 @@ export default {
                                         ],
                                         { cancelable: false }
                                     );
+
                                 });
 
                         })
-                    return true;
                 })
                 .catch(error => {
                     if (error.code == 'auth/email-already-in-use') {     // Erro que acontece caso já tenha um usuário com o mesmo email
@@ -61,14 +79,14 @@ export default {
                     }
                 })
 
-        return res;
     },
 
-    login: async (email, password, navigation) => {
+    login: async (email, password, navigation, setEmail) => {
         const res =
             auth()
                 .signInWithEmailAndPassword(email, password)
                 .then(() => {
+
                     navigation.reset({
                         routes: [
                             { name: 'apptab' }
@@ -84,7 +102,8 @@ export default {
                         { cancelable: false }
                     );
 
-                    return true;
+                    setEmail(email)
+
                 })
                 .catch(error => {   // Caso email ou senha foram digitados incorretamentes
                     if (error) {
@@ -99,7 +118,6 @@ export default {
                     }
                 });
 
-        return res;
     },
 
     // Get Functions
@@ -137,7 +155,7 @@ export default {
         return list;
     },
 
-    getProducts: async () => {
+    getProducts: async (setList) => {
         let list = [];
 
         let results = await firestore().collection('products').get();
@@ -177,21 +195,19 @@ export default {
         return list
     },
 
-    getProductsCart: async (id) => {
-        let list = [];
+    getProductsCart: (id, setArrayCart) => {
+        firestore()
+            .collection('cart')
+            .doc(id)
+            .onSnapshot((result) => {
+                if (result.exists) {
+                    let data = result.data();
 
-        let results = await firestore().collection('cart').where('userId', '==', id).get();
-
-        results.forEach(result => {
-            let data = result.data();
-            list.push({
-                id: data.id,
-                userId: data.userId,
-                items: data.items,
+                    if (data.products) {
+                        setArrayCart(data.products)
+                    }
+                }
             })
-        })
-
-        return list
     },
 
     getFilters: async () => {
@@ -283,31 +299,23 @@ export default {
     },
 
     setIntoCart: async (userId, productId, productName, productImg, productType, productPrice, productQtd, subtotal, navigation) => {
-        let id = Math.floor(Math.random() * (999999999 - 1));
-        let idString = id.toString();
 
         const res =
             await firestore()
                 .collection('cart')
-                .doc(idString)
-                .set({
-                    id: idString,
-                    userId: userId,
-                    items: {
+                .doc(userId)
+                .update({
+                    products: firestore.FieldValue.arrayUnion ({
                         id: productId,
                         name: productName,
                         img: productImg,
                         type: productType,
                         quantidade: productQtd,
                         price: productPrice,
-                    }
+                    })
                 })
                 .then(() => {
-                    navigation.reset({
-                        routes: [
-                            { name: 'apptab' }
-                        ]
-                    });
+                    navigation.navigate('apptab')
 
                     Alert.alert(
                         "Sucesso",
@@ -403,7 +411,7 @@ export default {
 
         const res = await firestore()       // Primeiro é procurado os dados da collection chats em que tenha userId e targetId
             .collection('chats')
-            .where('users', '==', [userId, targetId])
+            .where('users', '==', [userId || targetId, targetId || userId])
             .get()
 
         res.forEach(item => {        // Depois é feito um foreach para acessar esses dados. 
@@ -528,13 +536,13 @@ export default {
 
     // Delete Functions
 
-    deleteCart: async (id) => {
+    deleteCart: async (userId) => {
 
-        id.forEach(item => {
-            firestore()
-                .collection('cart')
-                .doc(item)
-                .delete()
+        firestore()
+        .collection('cart')
+        .doc(userId)
+        .update({
+            products: firestore.FieldValue.delete()
         })
     }
 

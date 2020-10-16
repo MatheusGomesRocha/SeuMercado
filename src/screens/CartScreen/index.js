@@ -37,20 +37,23 @@ export default () => {
     var subtotal = 0;       // Variável que pega o valor total dos produtos que estão no carrinho
     var quantidadeTotal = 0;
 
-    arrayCart.forEach(item => {     // Função foreach que pega o subtotal
-        subtotal += item.items.price * item.items.quantidade
-        quantidadeTotal += item.items.quantidade;
-    })
+    if(arrayCart) {
+        arrayCart.forEach(item => {     // Função foreach que pega o subtotal
+            subtotal += item.price * item.quantidade
+            quantidadeTotal += item.quantidade;
+        })
+    }
+    
     
 
     if(userLogin) {
         const userId = auth().currentUser.uid;
 
         useEffect(() => {
-            const getProducts = async () => {
+            const getProducts = () => {
                 setArrayCart([]);
                 
-                let json = await Api.getProductsCart(userId);
+                let json = Api.getProductsCart(userId, setArrayCart);
                 setArrayCart(json)
             }
     
@@ -97,21 +100,14 @@ export default () => {
         const userId = auth().currentUser.uid;
 
         var userName = '';
-        var id = [];
-        var products = []; 
 
         userInfo.forEach(item => {
             userName = item.name;
         })
 
-        arrayCart.forEach(item => {
-            id.push(item.id);
-            products.push(item.items);
-        })
+        let res = await Api.setUserOrder(userId, userName, arrayCart, subtotal, quantidadeTotal, navigation);
 
-        let res = await Api.setUserOrder(userId, userName, products, subtotal, quantidadeTotal, navigation);
-
-        let del = await Api.deleteCart(id);
+        let del = await Api.deleteCart(userId);
     }
 
     return(
@@ -123,7 +119,7 @@ export default () => {
                     {userLogin ? 
                         <>
                             {/* Depois verifica se o usuário tem algum produto no carrinho */}
-                            {arrayCart.length > 0 ? 
+                            {arrayCart ? 
                                 <>
                                     <FlatView>
                                         <Flat
