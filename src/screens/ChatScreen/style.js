@@ -13,7 +13,7 @@ export const MessageBtn = styled.TouchableHighlight`
     borderBottomWidth: 1px;
     borderBottomColor: #ddd;
     align-items: center;
-    justify-content: space-between;
+    justify-content: ${props=>props.jContent};
     height: 80px;
 `;
 export const Avatar = styled.Image`

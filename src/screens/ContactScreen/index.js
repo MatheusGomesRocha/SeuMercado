@@ -17,7 +17,6 @@ import {
 export default () => {
     const [users, setUsers] = useState([]);
     const [chatList, setChatList] = useState([]);
-    const [userLoginId, setUserLoginId] = useState();
     const [userLoginName, setUserLoginName] = useState();
     const [chatId, setChatId] = useState();
 
@@ -33,7 +32,6 @@ export default () => {
             var userLogin = await Api.getUserLogin(userId);
 
             userLogin.forEach(item => {
-                setUserLoginId(item.id);
                 setUserLoginName(item.name);
             })
 
@@ -48,7 +46,8 @@ export default () => {
     }, [])
 
     const setChat = async (targetId, targetName) => {
-        await Api.setNewChat(userLoginId, userLoginName, targetId, targetName, setChatId);
+        await Api.setNewChat(userId, userLoginName, targetId, targetName, setChatId);
+
 
         if(chatId !== '') {
             navigation.goBack();

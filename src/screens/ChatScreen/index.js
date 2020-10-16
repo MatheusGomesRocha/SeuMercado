@@ -27,27 +27,10 @@ let array = [
 ]
 export default () => {
     const [chatList, setChatList] = useState([]);
-    const [userLoginId, setUserLoginId] = useState();
-    const [userLoginName, setUserLoginName] = useState();
-
+    
     const userId = auth().currentUser.uid;
 
     const navigation = useNavigation();
-
-    useEffect(() => {
-        const getUsers = async () => {
-
-            var userLogin = await Api.getUserLogin(userId);
-
-            userLogin.forEach(item => {
-                setUserLoginId(item.id);
-                setUserLoginName(item.name);
-            })
-
-        }
-
-        getUsers();
-    }, [])
 
     useEffect(() => {
         Api.getChat(userId, setChatList);
@@ -55,18 +38,16 @@ export default () => {
 
     const GoToChat = async (chatId, targetName) => {
         navigation.navigate('chatopen', {chatId, targetName})
-
     }
-
 
     const ArrayMessage = ({ data }) => {
         return (
-            <MessageBtn onPress={() => GoToChat(data.chatId, data.title)}>
+            <MessageBtn jContent={data.lastMessage ? 'space-between' : 'flex-start'} onPress={() => GoToChat(data.chatId, data.title)}>
                 <>
                     <Avatar source={require('../../assets/img/geral_filter.jpg')} />
                     <ColumnView>
                         <NameText>{data.title}</NameText>
-                        <LastMessageText>{data.lastMessage}</LastMessageText>
+                        <LastMessageText numberOfLines={1}>{data.lastMessage}</LastMessageText>
                     </ColumnView>
                     <DateText>{data.date}</DateText>
                 </>
@@ -79,7 +60,7 @@ export default () => {
                 showsVerticalScrollIndicator={false}
                 data={chatList}
                 renderItem={({ item }) => <ArrayMessage data={item} />}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item.users}
             />
 
             <ContactBtn onPress={() => navigation.navigate('contacts')}>

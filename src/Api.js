@@ -28,7 +28,6 @@ export default {
                             cpf: cpf,
                             email: email,
                             password: password,
-                            chats: []
                         });
 
                         navigation.reset({
@@ -45,7 +44,6 @@ export default {
                         .set({
                             id: idString,
                             userId: user.uid,
-                            products: []
                         })
                         .then(() => {
                             auth()
@@ -277,7 +275,6 @@ export default {
                     let data = result.data();
 
                     if (data.chats) {
-                        let chats = [...data.chats];
                         setChatList(data.chats)
                     }
                 }
@@ -296,6 +293,19 @@ export default {
                     setUsers(data.users);
                 }
             })
+    },
+
+    getUserAdress: (id, setList) => {
+        firestore()
+        .collection('users')
+        .doc(id)
+        .onSnapshot((result) => {
+            let data = result.data();
+            if(data.adress) {
+                setList(data.adress)
+            }
+
+        })
     },
 
     setIntoCart: async (userId, productId, productName, productImg, productType, productPrice, productQtd, subtotal, navigation) => {
@@ -429,7 +439,6 @@ export default {
                 await firestore()
                     .collection('chats')
                     .add({
-                        messages: [],
                         users: [userId, targetId],
                     });
 

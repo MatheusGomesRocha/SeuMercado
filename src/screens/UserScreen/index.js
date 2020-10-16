@@ -86,7 +86,7 @@ function UserScreen(props) {
                     }
 
                     <BtnTopView>
-                        <DefaultBtn>
+                        <DefaultBtn onPress={() => navigation.navigate('adress')}>
                             <>
                                 <LocationIcon width="25" height="25" fill="#333" />
                                 <LeftView>

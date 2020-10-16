@@ -83,6 +83,7 @@ export default () => {
                     data={message}
                     renderItem={({item}) => <ArrayMessageUser data={item}/>}
                     keyExtractor={(item) => item.id}
+                    contentContainerStyle={{paddingBottom: 10, paddingTop: 10 }}
                 />
 
                 <SendMessageView>

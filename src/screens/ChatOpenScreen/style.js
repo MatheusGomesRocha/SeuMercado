@@ -69,6 +69,7 @@ export const SendMessageView = styled.View`
     justify-content: space-between;
     position: absolute;
     bottom: 7px;
+    padding-left: 10px;
 `;
 export const SendMessageInput = styled.TextInput`
     background-color: rgba(0, 0, 0, 0.6);
