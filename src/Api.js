@@ -285,17 +285,24 @@ export default {
             })
     },
 
-    getUserAdress: (id, setList) => {
-        firestore()
-        .collection('users')
-        .doc(id)
-        .onSnapshot((result) => {
-            let data = result.data();
-            if(data.adress) {
-                setList(data.adress)
-            }
+    getUserAdress: async (userId) => {
+        var list = [];
 
+        let results = await firestore().collection('adress').where('userId', '==', userId).get();
+
+        results.forEach(result => {
+            let data = result.data();
+            list.push({
+                id: data.id,
+                type: data.type,
+                bairro: data.bairro,
+                rua: data.rua,
+                number: data.number,
+                reference: data.reference,
+            })
         })
+
+        return list
     },
 
     setIntoCart: async (userId, productId, productName, productImg, productType, productPrice, productQtd, subtotal, navigation) => {
@@ -512,7 +519,7 @@ export default {
         }
     },
 
-    setNewAdress: (userId, title, rua, number, bairro, reference) => {
+    setNewAdress: (userId, type, bairro, rua, number, reference) => {
         let id = Math.floor(Math.random() * (999999999 - 1));
         let idString = id.toString();
 
@@ -521,14 +528,29 @@ export default {
         .add({
             id: idString,
             userId: userId,
-            title: title,
+            type: type,
+            bairro: bairro,
             rua: rua,
             number: number,
-            bairro: bairro,
             reference: reference,
         })
     },
-
+    
+    setOrderAdress: (userId, id, type, bairro, rua, number, reference) => {
+        firestore()
+        .collection('users')
+        .doc(userId)
+        .update({
+            adress: [{
+                id: id,
+                type: type,
+                bairro: bairro,
+                rua: rua,
+                number: number,
+                reference: reference,
+            }]
+        })
+    },
 
 
     // updateProfile: async (userId, name, email, password) => {

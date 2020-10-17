@@ -4,6 +4,7 @@ import auth from '@react-native-firebase/auth';
 import Api from '../../Api';
 import LoadingView from '../../components/LoadingComponent';
 import NoDataIcon from '../../assets/svg/no_data.svg';
+import ModalAdress from '../../components/ModalAdress';
 
 import {
     Container,
@@ -30,12 +31,18 @@ export default () => {
     const [check, setCheck] = useState();
     const [adressList, setAdressList] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [showModal, setShowModal] = useState(false);
 
     const userId = auth().currentUser.uid;
 
     useEffect(() => {
-        Api.getUserAdress(userId, setAdressList);
-        console.log(adressList);
+        const getUserAdress = async () => {
+
+            const res = await Api.getUserAdress(userId);
+            setAdressList(res);
+        }
+
+        getUserAdress();
     }, [])
 
     useEffect(() => {
@@ -46,12 +53,12 @@ export default () => {
 
     const AdressArray = ({ data }) => {
         return (
-            <ItemBtn underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => chooseAdress(data.id)} bWidth={check == data.id && '2px'} bColor={check == data.id && '#ea1d2c'}>
+            <ItemBtn underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => chooseAdress(data.id, data.type, data.bairro, data.rua, data.number, data.reference)} bWidth={check == data.id && '2px'} bColor={check == data.id && '#ea1d2c'}>
                 <>
-                    <TitleText>{data.title}</TitleText>
-                    <RuaText>R. {data.rua}, {data.number}</RuaText>
-                    <BairroText>{data.bairro}</BairroText>
-                    <DescriptionText>Bessa X Ap-02 Arena Bola na rede ou uma indústria</DescriptionText>
+                    <TitleText>{data.type}</TitleText>
+                    <RuaText>Rua: {data.rua}, {data.number}</RuaText>
+                    <BairroText>Bairro: {data.bairro}</BairroText>
+                    <DescriptionText>Referência: {data.reference}</DescriptionText>
                 </>
             </ItemBtn>
         );
@@ -66,15 +73,20 @@ export default () => {
         );
     }
 
-    const chooseAdress = (id) => {
+    const chooseAdress = (id, type, bairro, rua, number, reference) => {
+        Api.setOrderAdress(userId, id, type, bairro, rua, number, reference)
         setCheck(id);
+    }
+
+    const openModal = () => {
+        setShowModal(true);
     }
 
     return (
         <Container>
             {loading ?
                 <LoadingView />
-            :
+                :
                 <>
                     {adressList.length > 0 ?
                         <>
@@ -88,15 +100,22 @@ export default () => {
 
 
                         </>
-                    :
+                        :
                         <NoAdress />
                     }
 
-                    <AddBtn>
+                    <AddBtn onPress={() => openModal()}>
                         <PlusIcon width="40px" height="40px" fill="#fff" />
                     </AddBtn>
                 </>
             }
+
+
+            <ModalAdress
+                show={showModal}
+                setShow={setShowModal}
+                userId={userId}
+            />
 
         </Container>
     );
