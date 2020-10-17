@@ -90,16 +90,6 @@ export default {
                             { name: 'apptab' }
                         ]
                     });
-
-                    Alert.alert(
-                        "Login",
-                        "Login feito com sucesso.",
-                        [
-                            { text: "OK" }
-                        ],
-                        { cancelable: false }
-                    );
-
                     setEmail(email)
 
                 })
@@ -475,7 +465,12 @@ export default {
     // envia uma mensagem para a collection chats e simultâneamente faz um update na Collection dos usuários contendo a ultima mensagem enviada e o horário dela
     setMessage: async (chatId, userId, content, users) => {
         let now = new Date();
-        let hour = now.getHours() + ':' + now.getMinutes();
+        let minutes = now.getMinutes();
+        
+        minutes = minutes < 0 ? '0'+minutes : minutes;
+        
+        let hour = now.getHours() + ':' + minutes;
+
 
         firestore()
             .collection('chats')
@@ -515,6 +510,23 @@ export default {
                     })
             }
         }
+    },
+
+    setNewAdress: (userId, title, rua, number, bairro, reference) => {
+        let id = Math.floor(Math.random() * (999999999 - 1));
+        let idString = id.toString();
+
+        firestore()
+        .collection('adress')
+        .add({
+            id: idString,
+            userId: userId,
+            title: title,
+            rua: rua,
+            number: number,
+            bairro: bairro,
+            reference: reference,
+        })
     },
 
 

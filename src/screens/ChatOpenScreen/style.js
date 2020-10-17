@@ -15,7 +15,7 @@ export const HeaderView = styled.View`
     background-color: #fff;
     height: 50px;
     align-items: center;
-    padding-left: 15px;
+    padding-left: 45px;
 `;
 export const HeaderImg = styled.Image`
     height: 40px;
@@ -23,7 +23,7 @@ export const HeaderImg = styled.Image`
     border-radius: 25px;
 `;
 export const ColumnView = styled.View`
-    margin-left: 10px;
+    margin-left: 8px;
 `;
 export const HeaderName = styled.Text`
     font-size: 18px;

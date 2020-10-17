@@ -2,7 +2,6 @@ import styled from 'styled-components/native';
 
 export const Container = styled.SafeAreaView`
     flex: 1;
-    padding: 15px;
 `;
 
 
@@ -16,7 +15,7 @@ export const ItemBtn = styled.TouchableHighlight`
     width: 100%;
     justify-content: center;
     padding: 15px;
-    margin-top: 20px;
+    margin-top: 15px;
     border-width: ${props=>props.bWidth || '0'};
     border-color: ${props=>props.bColor || 'transparent'};
 `;
@@ -47,4 +46,18 @@ export const AddBtn = styled.TouchableHighlight`
     right: 30px;
     align-items: center;
     justify-content: center;
+`;
+
+export const NoInfoView = styled.View`
+    flex: 1;
+    background-color: #fff;
+    align-items: center;
+    justify-content: center;
+`;
+export const NoInfoText = styled.Text`
+    font-size: 25px;
+    margin-top: 20px;
+    color: #000;
+    text-align: center;
+    width: 90%;
 `;

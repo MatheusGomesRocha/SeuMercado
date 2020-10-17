@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import PlusIcon from '../../assets/svg/plus.svg';
 import auth from '@react-native-firebase/auth';
 import Api from '../../Api';
+import LoadingView from '../../components/LoadingComponent';
+import NoDataIcon from '../../assets/svg/no_data.svg';
 
 import {
     Container,
@@ -15,6 +17,9 @@ import {
     DescriptionText,
 
     AddBtn,
+
+    NoInfoView,
+    NoInfoText,
 } from './style';
 
 let array = [
@@ -23,13 +28,20 @@ let array = [
 ]
 export default () => {
     const [check, setCheck] = useState();
-    const [adressList, setAdressList] = useState();
+    const [adressList, setAdressList] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const userId = auth().currentUser.uid;
 
     useEffect(() => {
         Api.getUserAdress(userId, setAdressList);
         console.log(adressList);
+    }, [])
+
+    useEffect(() => {
+        setTimeout(() => {
+            setLoading(false);
+        }, 2000)
     }, [])
 
     const AdressArray = ({ data }) => {
@@ -45,22 +57,47 @@ export default () => {
         );
     }
 
+    const NoAdress = () => {
+        return (
+            <NoInfoView>
+                <NoDataIcon width="200px" height="200px" />
+                <NoInfoText>O seu carrinho está vazio </NoInfoText>
+            </NoInfoView>
+        );
+    }
+
     const chooseAdress = (id) => {
         setCheck(id);
     }
 
     return (
         <Container>
-            <Flat
-                showsVerticalScrollIndicator={false}
-                data={adressList}
-                renderItem={({ item }) => <AdressArray data={item} />}
-                keyExtractor={(item) => item.id}
-            />
+            {loading ?
+                <LoadingView />
+            :
+                <>
+                    {adressList.length > 0 ?
+                        <>
+                            <Flat
+                                showsVerticalScrollIndicator={false}
+                                data={adressList}
+                                renderItem={({ item }) => <AdressArray data={item} />}
+                                keyExtractor={(item) => item.id}
+                                contentContainerStyle={{ margin: 15 }}
+                            />
 
-            <AddBtn>
-                <PlusIcon width="40px" height="40px" fill="#fff" />
-            </AddBtn>
+
+                        </>
+                    :
+                        <NoAdress />
+                    }
+
+                    <AddBtn>
+                        <PlusIcon width="40px" height="40px" fill="#fff" />
+                    </AddBtn>
+                </>
+            }
+
         </Container>
     );
 }
