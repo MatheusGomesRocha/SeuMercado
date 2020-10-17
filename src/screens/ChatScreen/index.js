@@ -19,12 +19,6 @@ import {
     ContactBtn,
 } from './style';
 
-let array = [
-    { id: '1', avatar: require('../../assets/img/geral_filter.jpg'), name: 'Solitários e sem grana', LastMessage: 'eu não lek', date: '20:47' },
-    { id: '2', avatar: require('../../assets/img/carne_filter.jpg'), name: 'Junior', LastMessage: 'Eu vi agr msm', date: '20:00' },
-    { id: '3', avatar: require('../../assets/img/bebida.jpg'), name: 'Mãe', LastMessage: 'Já vou', date: '20:47' },
-    { id: '4', avatar: require('../../assets/img/higiene_filter.jpg'), name: 'Aids', LastMessage: 'eiê', date: '20:47' },
-]
 export default () => {
     const [chatList, setChatList] = useState([]);
     
@@ -47,7 +41,7 @@ export default () => {
                     <Avatar source={require('../../assets/img/geral_filter.jpg')} />
                     <ColumnView>
                         <NameText>{data.title}</NameText>
-                        <LastMessageText numberOfLines={1}>{data.lastMessage}</LastMessageText>
+                        <LastMessageText numberOfLines={1}><LastMessageText style={{color: '#333'}}>{data.lastMessageUser === userId?'Eu:':data.title+':'} </LastMessageText>{data.lastMessage}</LastMessageText>
                     </ColumnView>
                     <DateText>{data.date}</DateText>
                 </>

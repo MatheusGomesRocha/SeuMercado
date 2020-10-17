@@ -502,11 +502,12 @@ export default {
                 for (let e in chats) {
                     if (chats[e].chatId == chatId) {
                         chats[e].lastMessage = content;
+                        chats[e].lastMessageUser = userId;
                         chats[e].date = hour;
                     }
                 }
 
-                await firestore()
+                firestore()
                     .collection('users')
                     .doc(users[i])
                     .update({

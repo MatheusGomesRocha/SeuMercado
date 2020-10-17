@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import SendIcon from '../../assets/svg/send.svg';
-import {useRoute} from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 import Api from '../../Api';
 import auth from '@react-native-firebase/auth';
 
@@ -30,9 +30,9 @@ export default () => {
     const [content, setContent] = useState();
     const [message, setMessage] = useState([]);
     const [users, setUsers] = useState([]);
-    const [time, setTime] = useState();
 
-    
+    const flat = useRef();
+
     const userId = auth().currentUser.uid;
 
     const route = useRoute();
@@ -41,9 +41,9 @@ export default () => {
     const chatId = route.params.chatId;
 
 
-    const ArrayMessageUser = ({data}) => {
-      
-        return(
+    const ArrayMessageUser = ({ data }) => {
+
+        return (
             <MessageView align={data.author == userId ? 'flex-end' : 'flex-start'}>
                 <MessageContentView bgColor={data.author == userId ? '#ea1d2c' : '#333'}>
                     <MessageContentText>{data.content}</MessageContentText>
@@ -62,37 +62,37 @@ export default () => {
     }, [chatId]);
 
     const sendMessage = () => {
-        if(content !== '') {
-            Api.setMessage(chatId, userId, content, users);
+        if (content !== '') {
+            Api.setMessage(chatId, userId, content, users, flat);
             setContent('');
         }
     }
 
-    return(
+    return (
         <Container>
-                <HeaderView>
-                    <HeaderImg source={require('../../assets/img/carne_filter.jpg')} />
-                    <ColumnView>
-                        <HeaderName>{targetName}</HeaderName>
-                        {/* <HeaderUsers>Aids, André, Gabriel, Gabriele, Você</HeaderUsers> */}
-                    </ColumnView>
-                </HeaderView>
+            <HeaderView>
+                <HeaderImg source={require('../../assets/img/carne_filter.jpg')} />
+                <ColumnView>
+                    <HeaderName>{targetName}</HeaderName>
+                    {/* <HeaderUsers>Aids, André, Gabriel, Gabriele, Você</HeaderUsers> */}
+                </ColumnView>
+            </HeaderView>
+ 
+            <Flat
+                showsVerticalScrollIndicator={false}
+                data={message}
+                renderItem={({ item }) => <ArrayMessageUser data={item} />}
+                keyExtractor={(item) => item.id}
+                contentContainerStyle={{ paddingBottom: 10, paddingTop: 10 }}
+            />
 
-                <Flat
-                    showsVerticalScrollIndicator={false}
-                    data={message}
-                    renderItem={({item}) => <ArrayMessageUser data={item}/>}
-                    keyExtractor={(item) => item.id}
-                    contentContainerStyle={{paddingBottom: 10, paddingTop: 10 }}
-                />
+            <SendMessageView>
+                <SendMessageInput onSubmitEditing={() => sendMessage()} value={content} placeholder="Digite uma mensagem" placeholderTextColor="#ccc" onChangeText={c => setContent(c)} />
+                <SendMessageBtn onPress={() => sendMessage()}>
+                    <SendIcon width="25" height="25" fill="#fff" />
+                </SendMessageBtn>
+            </SendMessageView>
 
-                <SendMessageView>
-                    <SendMessageInput value={content} placeholder="Digite uma mensagem" placeholderTextColor="#ccc" onChangeText={c=>setContent(c)} />
-                    <SendMessageBtn onPress={sendMessage}>
-                        <SendIcon width="25" height="25" fill="#fff" />
-                    </SendMessageBtn>
-                </SendMessageView>
-            
         </Container>
     );
 }
