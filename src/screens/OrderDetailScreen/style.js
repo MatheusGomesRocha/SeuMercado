@@ -129,13 +129,20 @@ export const AdressText = styled.Text`
     color: #aaa;
     margin-bottom: 15px;
 `;
+export const TitleText = styled.Text`
+    font-size: 16px;
+    font-weight: bold;
+`;
 export const RuaText = styled.Text`
     font-size: 16px;
+    margin-top: 2px;
 `;
 export const BairroText = styled.Text`
     font-size: 16px;
+    margin-top: 2px;
 `;
 export const ReferenceText = styled.Text`
     font-size: 16px;
     color: #aaa;
+    margin-top: 2px;
 `;

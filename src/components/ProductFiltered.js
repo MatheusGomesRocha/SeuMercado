@@ -1,8 +1,8 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import styled from 'styled-components/native';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import Api from '../Api';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import LoadingScreen from './LoadingComponent';
 
 import {
@@ -89,7 +89,7 @@ const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 export default (props) => {
   const navigation = useNavigation();
   const [productsFiltered, setProductsFiltered] = useState([]);
-  const userLogin = useSelector(state=>state.user.email);
+  const userLogin = useSelector(state => state.user.email);
   const [loading, setLoading] = useState(true);
 
   const scrollY = useRef(new Animated.Value(0)).current;
@@ -131,7 +131,7 @@ export default (props) => {
     outputRange: [0, 0, -8],
     extrapolate: 'clamp',
   });
- 
+
   // Pegando o valor do scroll
   const headerTranslateY = scrollY.interpolate({
     inputRange: [0, HEADER_SCROLL_DISTANCE],
@@ -141,59 +141,54 @@ export default (props) => {
 
   useEffect(() => {
     setTimeout(() => {
-        setLoading(false);
-    }, 2000)
+      setLoading(false);
+    }, 1000)
   }, [])
 
-  useEffect(() => {
-    const getProducts = async () => {
-        setProductsFiltered([]);
-        
-        let json = await Api.getProductsFiltered(props.type);
-        setProductsFiltered(json)
-    }
+  useLayoutEffect(() => {
+    setProductsFiltered([]);
 
-    getProducts();
+    Api.getProductsFiltered(props.type, setProductsFiltered);
   }, [])
 
-  const ProductFilterComponent = ({data}) => {
-    return(
-        <ItemBtn underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => GoToProduct(data.id, data.name, data.img, data.description, data.price)}>
-          <ItemRow>
+  const ProductFilterComponent = ({ data }) => {
+    return (
+      <ItemBtn underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => GoToProduct(data.id, data.name, data.img, data.description, data.price)}>
+        <ItemRow>
 
-            <ItemHeader>
-              <Name>{data.name}</Name>
-              <Description numberOfLines={2}>{data.description}</Description>
-              <Price>R$ {parseFloat(data.price).toFixed(2)}</Price>
-            </ItemHeader>
+          <ItemHeader>
+            <Name>{data.name}</Name>
+            <Description numberOfLines={2}>{data.description}</Description>
+            <Price>R$ {parseFloat(data.price).toFixed(2)}</Price>
+          </ItemHeader>
 
-            <Img resizeMode="cover" source={data.img && {uri: data.img}} />
-          
-          </ItemRow>
-        </ItemBtn>
+          <Img resizeMode="cover" source={data.img && { uri: data.img }} />
+
+        </ItemRow>
+      </ItemBtn>
     );
   }
 
   const GoToProduct = (id, name, img, description, price) => {
-    if(userLogin) {
-        navigation.navigate('product', {id, name, img, description, price})
+    if (userLogin) {
+      navigation.navigate('product', { id, name, img, description, price })
     } else {
-        Alert.alert(
-            "Ops...",
-            "Você precisa está logado para ver o produto",
-            [
-              { text: "OK" }
-            ],
-            { cancelable: false }
-        );
+      Alert.alert(
+        "Ops...",
+        "Você precisa está logado para ver o produto",
+        [
+          { text: "OK" }
+        ],
+        { cancelable: false }
+      );
     }
-} 
+  }
 
   return (
     <Container>
       {loading ?
         <LoadingScreen />
-      :
+        :
         <>
           <Animated.ScrollView
             contentContainerStyle={{ paddingTop: HEADER_MAX_HEIGHT - 32, alignItems: 'center' }}
@@ -204,22 +199,22 @@ export default (props) => {
             )}>
 
             <ArrayView>
-                {productsFiltered.map((item) => (
-                  <ProductFilterComponent data={item} key={item.id} />
-                ))}
+              {productsFiltered.map((item) => (
+                <ProductFilterComponent data={item} key={item.id} />
+              ))}
             </ArrayView>
 
           </Animated.ScrollView>
         </>
       }
-      
+
 
       <Animated.View style={[styles.header, { transform: [{ translateY: headerTranslateY }] }]}>
-        <Animated.Image style={[styles.headerBackground, { opacity: imageOpacity, transform: [{ translateY: imageTranslateY }],},]} source={props.img && {uri: props.img}}/>
-        <Animated.View style={[styles.overlay, { opacity: imageOpacity},]}></Animated.View>
+        <Animated.Image style={[styles.headerBackground, { opacity: imageOpacity, transform: [{ translateY: imageTranslateY }], },]} source={props.img && { uri: props.img }} />
+        <Animated.View style={[styles.overlay, { opacity: imageOpacity },]}></Animated.View>
       </Animated.View>
 
-      <Animated.View style={[styles.topBar, {opacity: titleOpacity, transform: [ { translateY: titleTranslateY }],},]}>
+      <Animated.View style={[styles.topBar, { opacity: titleOpacity, transform: [{ translateY: titleTranslateY }], },]}>
         <Title>{props.type}</Title>
       </Animated.View>
 
@@ -229,46 +224,46 @@ export default (props) => {
 
 const styles = StyleSheet.create({
 
-    //  View pai que encobre a Imagem e o Overlay
-    header: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        backgroundColor: '#ea1d2c',
-        overflow: 'hidden',
-        height: HEADER_MAX_HEIGHT,
-        marginBottom: 50,
-    },
+  //  View pai que encobre a Imagem e o Overlay
+  header: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: '#ea1d2c',
+    overflow: 'hidden',
+    height: HEADER_MAX_HEIGHT,
+    marginBottom: 50,
+  },
 
-    // Imagem
-    headerBackground: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        width: null,
-        height: HEADER_MAX_HEIGHT,
-        resizeMode: 'cover',
-    },
+  // Imagem
+  headerBackground: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    width: null,
+    height: HEADER_MAX_HEIGHT,
+    resizeMode: 'cover',
+  },
 
-    // Overlay por cima para escurecer a imagem
-    overlay: {
-        flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.3)',
-    },
-    
-    // Header
-    topBar: {
-        marginTop: 40,
-        height: 50,
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
+  // Overlay por cima para escurecer a imagem
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+  },
 
-    },
+  // Header
+  topBar: {
+    marginTop: 40,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+
+  },
 });
 

@@ -14,8 +14,8 @@ export default {
             auth()      // Cria um usuário com email e senha no firebase Auth
                 .createUserWithEmailAndPassword(email, password)
                 .then(() => {
-                    
-                    
+
+
                     auth()
                         .signInWithEmailAndPassword(email, password);  // Depois de criar no Auth é feito o login
                     const user = auth().currentUser;    // Pega o usuário logado (que acabou de logar junto com o cadastro)
@@ -30,13 +30,13 @@ export default {
                             password: password,
                         });
 
-                        navigation.reset({
-                            routes: [
-                                { name: 'apptab' }
-                            ]
-                        });
+                    navigation.reset({
+                        routes: [
+                            { name: 'apptab' }
+                        ]
+                    });
 
-                        setEmail(email);
+                    setEmail(email);
 
                     firestore()
                         .collection('cart')
@@ -137,13 +137,14 @@ export default {
             list.push({
                 id: data.id,
                 name: data.name,
+                adress: data.adress
             })
         })
 
         return list;
     },
 
-    getProducts: async (setList) => {
+    getProducts: async () => {
         let list = [];
 
         let results = await firestore().collection('products').get();
@@ -163,12 +164,12 @@ export default {
         return list
     },
 
-    getProductsFiltered: async (type) => {
+    getProductsFiltered: async (type, setFilters) => {
         let list = [];
 
         let results = await firestore().collection('products').where('type', '==', type).get();
 
-        results.forEach(result => {
+        return results.forEach(result => {
             let data = result.data();
             list.push({
                 id: data.id,
@@ -178,9 +179,8 @@ export default {
                 price: data.price,
                 img: data.img,
             })
+            setFilters(list)
         })
-
-        return list
     },
 
     getProductsCart: (id, setArrayCart) => {
@@ -198,61 +198,53 @@ export default {
             })
     },
 
-    getFilters: async () => {
+    getFilters: async (setFilter) => {
         let list = [];
 
         let results = await firestore().collection('types').orderBy('id', 'asc').get();
 
-        results.forEach(result => {
+        return results.forEach(result => {
             let data = result.data();
             list.push({
                 id: data.id,
                 name: data.name,
                 img: data.img,
             })
-        })
 
-        return list
+            setFilter(list)
+        })
     },
 
-    getUserOrders: async (id, status) => {          // Pega todos os pedidos do usuários
+    getUserOrders: async (id, status, setArray) => {          // Pega todos os pedidos do usuários
         var list = [];
 
         let results = await firestore().collection('orders').where('userId', '==', id).where('status', '==', status).get();
 
-        results.forEach(result => {
+        return results.forEach(result => {
             let data = result.data();
             list.push({
                 id: data.id,
-                order: data.order.products.products,
-                adress: data.order.adress,
                 subtotal: data.subtotal,
                 quantidadeTotal: data.quantidadeTotal,
                 status: data.status,
             })
-        })
 
-        return list
+            setArray(list);
+        })
     },
 
-    getUserOrdersInfo: async (id) => {           // Pega os detalhes do pedido do usuário
-        var list = [];
+    getUserOrdersInfo: async (id, setArrayOrderInfo, setAdress, setSubtotal, setStatus) => {           // Pega os detalhes do pedido do usuário
 
         let results = await firestore().collection('orders').where('id', '==', id).get();
 
-        results.forEach(result => {
+        return results.forEach(result => {
             let data = result.data();
-            list.push({
-                id: data.id,
-                order: data.order.products.products,
-                adress: data.order.adress,
-                subtotal: data.subtotal,
-                quantidadeTotal: data.quantidadeTotal,
-                status: data.status,
-            })
-        })
 
-        return list
+            setStatus(data.status);
+            setSubtotal(data.subtotal)
+            setArrayOrderInfo(data.products);
+            setAdress(data.adress);
+        })
     },
 
     // Função que pega todos os chats criados pelo o usuário logado e mostra. setChatList é uma state da ChatScreen que passou como parâmetro para setar corretamente
@@ -305,6 +297,14 @@ export default {
         return list
     },
 
+    getCurrentAdress: () => {
+
+    },
+
+
+
+    // Add funcitons
+
     setIntoCart: async (userId, productId, productName, productImg, productType, productPrice, productQtd, subtotal, navigation) => {
 
         const res =
@@ -312,7 +312,7 @@ export default {
                 .collection('cart')
                 .doc(userId)
                 .update({
-                    products: firestore.FieldValue.arrayUnion ({
+                    products: firestore.FieldValue.arrayUnion({
                         id: productId,
                         name: productName,
                         img: productImg,
@@ -351,7 +351,7 @@ export default {
         return res;
     },
 
-    setUserOrder: async (userId, userName, products, subtotal, quantidadeTotal, navigation) => {
+    setUserOrder: async (userId, userAdress, userName, products, subtotal, quantidadeTotal, navigation) => {
         let id = Math.floor(Math.random() * (999999999 - 1));
         let idString = id.toString();
 
@@ -365,17 +365,10 @@ export default {
                     userName: userName,
                     subtotal: subtotal,
                     quantidadeTotal: quantidadeTotal,
-                    order: {
-                        products: { products },
+                    products: products,
+                    payment: 'card',
+                    adress: userAdress,
 
-                        payment: 'card',
-                        adress: {
-                            rua: 'Santos Dummont',
-                            number: '3008',
-                            bairro: 'Tabapuazinho',
-                            referencia: 'Bessa X Ap-02 - Arena Bola na Rede ou Uma Industria'
-                        }
-                    }
                 })
                 .then(() => {
                     navigation.reset({
@@ -473,9 +466,9 @@ export default {
     setMessage: async (chatId, userId, content, users) => {
         let now = new Date();
         let minutes = now.getMinutes();
-        
-        minutes = minutes < 0 ? '0'+minutes : minutes;
-        
+
+        minutes = minutes < 0 ? '0' + minutes : minutes;
+
         let hour = now.getHours() + ':' + minutes;
 
 
@@ -524,34 +517,37 @@ export default {
         let idString = id.toString();
 
         firestore()
-        .collection('adress')
-        .add({
-            id: idString,
-            userId: userId,
-            type: type,
-            bairro: bairro,
-            rua: rua,
-            number: number,
-            reference: reference,
-        })
-    },
-    
-    setOrderAdress: (userId, id, type, bairro, rua, number, reference) => {
-        firestore()
-        .collection('users')
-        .doc(userId)
-        .update({
-            adress: [{
-                id: id,
+            .collection('adress')
+            .add({
+                id: idString,
+                userId: userId,
                 type: type,
                 bairro: bairro,
                 rua: rua,
                 number: number,
                 reference: reference,
-            }]
-        })
+            })
     },
 
+    setOrderAdress: (userId, id, type, bairro, rua, number, reference) => {
+        firestore()
+            .collection('users')
+            .doc(userId)
+            .update({
+                adress: [{
+                    id: id,
+                    type: type,
+                    bairro: bairro,
+                    rua: rua,
+                    number: number,
+                    reference: reference,
+                }]
+            })
+    },
+
+    setFavorites: () => {
+
+    },
 
     // updateProfile: async (userId, name, email, password) => {
     //     const res = 
@@ -580,15 +576,37 @@ export default {
 
     // Delete Functions
 
-    deleteCart: async (userId) => {
-
+    deleteCart: (userId) => {
         firestore()
-        .collection('cart')
-        .doc(userId)
-        .update({
-            products: firestore.FieldValue.delete()
-        })
-    }
+            .collection('cart')
+            .doc(userId)
+            .update({
+                products: firestore.FieldValue.delete()
+            })
+    },
+
+    deleteProductFromCart: () => {
+
+    },
+
+    deleteAdress: () => {
+
+    },
+
+    deleteFinishOrder: () => {
+
+    },
+
+    deleteChat: () => {
+
+    },
+
+    deleteAccount: () => {
+
+    },
+
+
+
 
 
 

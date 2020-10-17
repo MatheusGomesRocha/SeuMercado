@@ -70,15 +70,9 @@ export default () => {
     }, [])
 
     useEffect(() => {
-        const getFilter = async () => {
             setFilterArray([]);
 
-            let json = await Api.getFilters();
-
-            setFilterArray(json);
-        }
-
-        getFilter();
+            Api.getFilters(setFilterArray);
     }, [])
 
     useEffect(() => {
