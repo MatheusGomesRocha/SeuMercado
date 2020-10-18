@@ -4,6 +4,8 @@ import auth from '@react-native-firebase/auth';
 import Api from '../../Api';
 import ChatIcon from '../../assets/svg/chat.svg';
 
+import { Alert } from 'react-native';
+
 import {
     Container,
 
@@ -21,7 +23,7 @@ import {
 
 export default () => {
     const [chatList, setChatList] = useState([]);
-    
+
     const userId = auth().currentUser.uid;
 
     const navigation = useNavigation();
@@ -30,24 +32,42 @@ export default () => {
         Api.getChat(userId, setChatList);
     }, [])
 
-    const GoToChat = async (chatId, targetName) => {
-        navigation.navigate('chatopen', {chatId, targetName})
-    }
-
     const ArrayMessage = ({ data }) => {
         return (
-            <MessageBtn jContent={data.lastMessage ? 'space-between' : 'flex-start'} onPress={() => GoToChat(data.chatId, data.title)}>
+            <MessageBtn onLongPress={() => AlertChat(data.chatId, data.with)} underlayColor="rgba(0, 0, 0, 0.1)" jContent={data.lastMessage ? 'space-between' : 'flex-start'} onPress={() => GoToChat(data.chatId, data.title)}>
                 <>
                     <Avatar source={require('../../assets/img/geral_filter.jpg')} />
                     <ColumnView>
                         <NameText>{data.title}</NameText>
-                        <LastMessageText numberOfLines={1}><LastMessageText style={{color: '#333'}}>{data.lastMessageUser === userId?'Eu:':data.title+':'} </LastMessageText>{data.lastMessage}</LastMessageText>
+                        <LastMessageText numberOfLines={1}><LastMessageText style={{ color: '#333' }}>{data.lastMessageUser ? data.lastMessageUser === userId ? 'Eu:' : data.title + ':' : null} </LastMessageText>{data.lastMessage}</LastMessageText>
                     </ColumnView>
                     <DateText>{data.date}</DateText>
                 </>
             </MessageBtn>
         );
     }
+
+    const GoToChat = async (chatId, targetName) => {
+        navigation.navigate('chatopen', { chatId, targetName })
+    }
+
+    const AlertChat = (id, target) => {
+        Alert.alert(
+            "Excluir",
+            "Deseja excluir esse endereço?",
+            [
+                { text: "Excluir", onPress: () => deleteChat(id, target) },
+                { text: 'Cancel', style: 'cancel' }
+            ],
+            { cancelable: false }
+        );
+    }
+
+    const deleteChat = (id, target) => {
+        Api.deleteChat(id);
+    }
+
+
     return (
         <Container>
             <Flat

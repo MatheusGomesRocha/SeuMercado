@@ -3,7 +3,6 @@ import styled from 'styled-components/native';
 export const Container = styled.SafeAreaView`
     flex: 1;
     background-color: #fff;
-    padding: 15px;
 `;
 
 export const Flat = styled.FlatList``;
@@ -14,12 +13,13 @@ export const MessageBtn = styled.TouchableHighlight`
     borderBottomColor: #ddd;
     align-items: center;
     justify-content: ${props=>props.jContent};
-    height: 80px;
+    height: 100px;
+    padding: 15px;
 `;
 export const Avatar = styled.Image`
     width: 60px;
     height: 60px;
-    border-radius: 40px;
+    border-radius: 30px;
 `;
 export const ColumnView = styled.View`
     width: 70%;
