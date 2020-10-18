@@ -48,7 +48,7 @@ export default () => {
         getUserAdress();
 
         setEffect(false)
-    }, [effect])
+    }, [effect])        // Pega a state effect como parâmetro para sempre que ela mudar, fazer um refresh e mostrar os dados atualizados
 
     useEffect(() => {
         setTimeout(() => {
@@ -103,7 +103,7 @@ export default () => {
     const deleteAdress = (id) => {
         Api.deleteAdress(id, userId, navigation);
 
-        setEffect(true);
+        setEffect(true);    // true para o efeito de refresh
     }
 
     return (

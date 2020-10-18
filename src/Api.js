@@ -358,7 +358,8 @@ export default {
         const res =
             await firestore()
                 .collection('orders')
-                .add({
+                .doc(idString)
+                .set({
                     id: idString,
                     userId: userId,
                     status: 'pendente',
@@ -606,8 +607,28 @@ export default {
         navigation.navigate('adress')
     },
 
-    deleteFinishOrder: () => {
+    deleteFinishOrder: async (userId) => {
+        let res = await firestore()         // Pega os dados da tabela de orders que são do usuário logado e que já foram entregues
+        .collection('orders')
+        .where('userId', '==', userId)
+        .where('status', '==', 'entregue')
+        .get();
 
+        res.forEach(item => {           // Passa os dados que foram pegues pela query anterior e deleta todos
+            firestore()
+            .collection('orders')
+            .doc(item.id)
+            .delete()
+        });
+
+        Alert.alert(
+            "Sucesso",
+            "Todo o seu histórico de pedidos foi deletado",
+            [
+                { text: "OK" }
+            ],
+            { cancelable: false }
+        );
     },
 
     deleteChat: () => {
