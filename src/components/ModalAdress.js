@@ -57,7 +57,7 @@ const FinishBtnText = styled.Text`
 `;
 
 
-export default ({show, setShow, userId}) => {    
+export default ({show, setShow, userId, setEffect}) => {    
     const [type, setType] = useState();
     const [bairro, setBairro] = useState();
     const [rua, setRua] = useState();
@@ -68,6 +68,7 @@ export default ({show, setShow, userId}) => {
         Api.setNewAdress(userId, type, bairro, rua, number, reference)
 
         setShow(false);
+        setEffect(true);
     }
 
     return(

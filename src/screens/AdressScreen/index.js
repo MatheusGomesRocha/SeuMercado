@@ -5,6 +5,9 @@ import Api from '../../Api';
 import LoadingView from '../../components/LoadingComponent';
 import NoDataIcon from '../../assets/svg/no_data.svg';
 import ModalAdress from '../../components/ModalAdress';
+import { useNavigation } from '@react-navigation/native';
+
+import { Alert, RefreshControl } from 'react-native';
 
 import {
     Container,
@@ -22,16 +25,16 @@ import {
     NoInfoView,
     NoInfoText,
 } from './style';
+import { set } from 'react-native-reanimated';
 
-let array = [
-    { id: '1421', title: 'Casa', rua: 'Santos Dumont', number: '3008', bairro: 'Tabapuazinho' },
-    { id: '121', title: 'Casa', rua: 'Santos Dumont', number: '3008', bairro: 'Tabapuazinho' },
-]
 export default () => {
     const [check, setCheck] = useState();
     const [adressList, setAdressList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
+    const [effect, setEffect] = useState(false);
+
+    const navigation = useNavigation();
 
     const userId = auth().currentUser.uid;
 
@@ -43,17 +46,20 @@ export default () => {
         }
 
         getUserAdress();
-    }, [])
+
+        setEffect(false)
+    }, [effect])
 
     useEffect(() => {
         setTimeout(() => {
             setLoading(false);
-        }, 2000)
+        }, 1000)
+
     }, [])
 
     const AdressArray = ({ data }) => {
         return (
-            <ItemBtn underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => chooseAdress(data.id, data.type, data.bairro, data.rua, data.number, data.reference)} bWidth={check == data.id && '2px'} bColor={check == data.id && '#ea1d2c'}>
+            <ItemBtn onLongPress={() => AlertAdress(data.id)} underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => chooseAdress(data.id, data.type, data.bairro, data.rua, data.number, data.reference)} bWidth={check == data.id && '2px'} bColor={check == data.id && '#ea1d2c'}>
                 <>
                     <TitleText>{data.type}</TitleText>
                     <RuaText>Rua: {data.rua}, {data.number}</RuaText>
@@ -73,6 +79,18 @@ export default () => {
         );
     }
 
+    const AlertAdress = (id) => {
+        Alert.alert(
+            "Excluir",
+            "Deseja excluir esse endereço?",
+            [
+                { text: "Excluir", onPress: () => deleteAdress(id) },
+                { text: 'Cancel', style: 'cancel' }
+            ],
+            { cancelable: false }
+        );
+    }
+
     const chooseAdress = (id, type, bairro, rua, number, reference) => {
         Api.setOrderAdress(userId, id, type, bairro, rua, number, reference)
         setCheck(id);
@@ -80,6 +98,12 @@ export default () => {
 
     const openModal = () => {
         setShowModal(true);
+    }
+
+    const deleteAdress = (id) => {
+        Api.deleteAdress(id, userId, navigation);
+
+        setEffect(true);
     }
 
     return (
@@ -95,7 +119,7 @@ export default () => {
                                 data={adressList}
                                 renderItem={({ item }) => <AdressArray data={item} />}
                                 keyExtractor={(item) => item.id}
-                                contentContainerStyle={{ margin: 15 }}
+                                contentContainerStyle={{ margin: 15, paddingBottom: 50 }}
                             />
 
 
@@ -115,6 +139,7 @@ export default () => {
                 show={showModal}
                 setShow={setShowModal}
                 userId={userId}
+                setEffect={setEffect}
             />
 
         </Container>

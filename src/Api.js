@@ -518,7 +518,8 @@ export default {
 
         firestore()
             .collection('adress')
-            .add({
+            .doc(idString)
+            .set({
                 id: idString,
                 userId: userId,
                 type: type,
@@ -589,8 +590,20 @@ export default {
 
     },
 
-    deleteAdress: () => {
+    deleteAdress: (id, userId, navigation) => {
+        firestore()
+            .collection('adress')
+            .doc(id)
+            .delete()
 
+        firestore()
+        .collection('users')
+        .doc(userId)
+        .update({
+            adress: firestore.FieldValue.delete()
+        })
+
+        navigation.navigate('adress')
     },
 
     deleteFinishOrder: () => {
