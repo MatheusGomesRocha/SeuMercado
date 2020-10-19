@@ -632,11 +632,6 @@ export default {
     },
 
     deleteChat: async (chatId) => {
-        // firestore()
-        // .collection('chats')
-        // .doc(chatId)
-        // .delete()
-
         let res = await firestore()
             .collection('chats')
             .doc(chatId)
@@ -644,40 +639,41 @@ export default {
 
         let data = res.data()
 
-        if(data.users) {
+        if (data.users) {
             let users = [...data.users];
-            
+            for (let i in users) {
+                let u = await firestore()
+                    .collection('users')
+                    .doc(users[i])
+                    .get();
+
+                let uData = u.data();
+
+                if (uData.chats) {
+                    let chats = [...uData.chats];
+
+                    for (let e in chats) {
+
+                        if (chats[e].chatId == chatId) {
+
+                            firestore()
+                                .collection('users')
+                                .doc(users[i])
+                                .update({
+                                    chats: firestore.FieldValue.arrayRemove({'chatId': chats[e].chatId, 'date': chats[e].date, 'lastMessage': chats[e].lastMessage, 'lastMessageUser': chats[e].lastMessageUser, 'title': chats[e].title, 'with': chats[e].with})
+                                })
+
+                        }
+
+                    }
+                }
+            }
         }
 
-
-
-        // for (let i in users) {
-        //     let u = await firestore()
-        //         .collection('users')
-        //         .doc(users[i])
-        //         .get();
-
-        //     let uData = u.data();
-
-        //     if (uData.chats) {
-        //         let chats = [...uData.chats];
-
-        //         for (let e in chats) {
-        //             if (chats[e].chatId == chatId) {
-        //                 chats[e].lastMessage = content;
-        //                 chats[e].lastMessageUser = userId;
-        //                 chats[e].date = hour;
-        //             }
-        //         }
-
-        //         firestore()
-        //             .collection('users')
-        //             .doc(users[i])
-        //             .update({
-        //                 chats
-        //             })
-        //     }
-        // }
+        firestore()
+            .collection('chats')
+            .doc(chatId)
+            .delete()
     },
 
     deleteAccount: () => {
