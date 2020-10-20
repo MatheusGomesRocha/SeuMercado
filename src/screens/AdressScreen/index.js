@@ -74,7 +74,7 @@ export default () => {
         return (
             <NoInfoView>
                 <NoDataIcon width="200px" height="200px" />
-                <NoInfoText>O seu carrinho está vazio </NoInfoText>
+                <NoInfoText>Nenhum endereço cadastrado</NoInfoText>
             </NoInfoView>
         );
     }

@@ -194,7 +194,7 @@ export default {
 
                     if (data.products) {
                         setArrayCart(data.products)
-                    } 
+                    }
                 }
             })
     },
@@ -705,8 +705,11 @@ export default {
             .delete()
     },
 
-    deleteAccount: () => {
-
+    deleteAccount: (userId) => {
+        return firestore()
+            .collection('users')
+            .doc(userId)
+            .delete()
     },
 
 

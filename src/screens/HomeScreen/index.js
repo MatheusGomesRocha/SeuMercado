@@ -64,21 +64,23 @@ export default () => {
     }, [])
 
     useEffect(() => {
-        Animated.timing(bot, {
-            toValue: 100,
-            duration: 500,
-            useNativeDriver: false,
-        }).start();
+        setTimeout(() => {
+            Animated.timing(bot, {
+                toValue: 100,
+                duration: 500,
+                useNativeDriver: false,
+            }).start();
+        }, 2000)
     }, [])
 
-    if (email) {
-        const userId = auth().currentUser.uid;
-        useEffect(() => {
+    useEffect(() => {
+        if (email) {
+            const userId = auth().currentUser.uid;
             setUserAdress([]);
 
             Api.getCurrentAdress(userId, setUserAdress);
-        }, [])
-    }
+        }
+    }, [])
 
     useEffect(() => {
         setFilterArray([]);
@@ -163,7 +165,7 @@ export default () => {
                                 {userAdress.map((item, k) => (
                                     <HeaderBtn underlayColor="rgba(0, 0, 0, 0.1)" key={k} onPress={() => navigation.navigate('adress')}>
                                         <>
-                                            <HeaderText>R.{item.rua}, {item.number}</HeaderText>
+                                            <HeaderText>R. {item.rua}, {item.number}</HeaderText>
                                             <AngleRightIcon width="12" height="12" fill="#ea1d2c" style={{ marginLeft: 10 }} />
                                         </>
                                     </HeaderBtn>

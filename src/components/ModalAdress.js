@@ -84,15 +84,15 @@ export default ({show, setShow, userId, setEffect}) => {
 
                 
                     <ModalItem>
-                        <Input placeholder="Tipo (Casa, Apartamento)" onChangeText={t=>setType(t)}/>
+                        <Input placeholderTextColor="#bbb" placeholder="Tipo (Casa, Apartamento)" onChangeText={t=>setType(t)}/>
 
                         <InputRowView>
-                            <Input width="45%" placeholder="Bairro" onChangeText={b=>setBairro(b)}/>
-                            <Input width="50%" style={{marginLeft: 18}} placeholder="Rua" onChangeText={r=>setRua(r)}/>
+                            <Input placeholderTextColor="#bbb" width="45%" placeholder="Bairro" onChangeText={b=>setBairro(b)}/>
+                            <Input placeholderTextColor="#bbb" width="50%" style={{marginLeft: 18}} placeholder="Rua" onChangeText={r=>setRua(r)}/>
 
                         </InputRowView>
-                        <Input placeholder="Número/Complemento" onChangeText={n=>setNumber(n)}/>
-                        <Input style={{marginBottom: 15}} placeholder="Referência (Opcional)" onChangeText={re=>setReference(re)}/>
+                        <Input placeholderTextColor="#bbb" placeholder="Número/Complemento" onChangeText={n=>setNumber(n)}/>
+                        <Input placeholderTextColor="#bbb" style={{marginBottom: 15}} placeholder="Referência (Opcional)" onChangeText={re=>setReference(re)}/>
                     </ModalItem>
 
                     
