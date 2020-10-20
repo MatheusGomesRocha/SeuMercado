@@ -1,5 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import styled from 'styled-components/native';
+import Api from '../Api';
+import {Alert} from 'react-native';
 
 const Div = styled.View`
     margin: 15px 15px 0 15px;
@@ -44,11 +46,26 @@ const ItemPrice = styled.Text`
     margin-top: 5px;
 `;
 
+export default ({data, userId}) => {
+    const AlertProduct = (id, img, name, price, qtd) => {
+        Alert.alert(
+            "Excluir",
+            "Deseja excluir esse produto do carrinho?",
+            [
+                { text: "Excluir", onPress: () => deleteProductFromCart(id, img, name, price, qtd) },
+                { text: 'Cancel', style: 'cancel' }
+            ],
+            { cancelable: false }
+        );
+    }
 
-export default ({data}) => {
+    const deleteProductFromCart = (id, img, name, price, qtd) => {
+        Api.deleteProductFromCart(userId, id, img, name, price, qtd)
+    }
+
     return(
         <Div>
-            <ItemBtn underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => alert('olá')}>
+            <ItemBtn onLongPress={() => AlertProduct(data.id, data.img, data.name, data.price, data.quantidade)} underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => alert('olá')}>
                 <>
                     <ItemImg source={data.img && {uri: data.img}} />
                     <ColumnView>

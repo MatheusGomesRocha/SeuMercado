@@ -36,18 +36,14 @@ export default () => {
     useEffect(() => {
         setTimeout(() => {
             setLoading(false);
-        }, 1000)
+        }, 2000)
     }, [])
 
     useEffect(() => {
-        const getProducts = async () => {
             setProductArray([]);
             
-            let json = await Api.getProducts();
-            setProductArray(json)
-        }
+            Api.getProducts(setProductArray);
 
-        getProducts();
     }, [])
 
     useEffect(() => {

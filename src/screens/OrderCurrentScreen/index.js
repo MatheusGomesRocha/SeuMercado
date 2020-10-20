@@ -42,7 +42,7 @@ export default () => {
     useEffect(() => {
         setTimeout(() => {
             setLoading(false);
-        }, 1000)
+        }, 2000)
     }, [])
 
     const NoUserLogin = () => {

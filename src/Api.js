@@ -194,7 +194,7 @@ export default {
 
                     if (data.products) {
                         setArrayCart(data.products)
-                    }
+                    } 
                 }
             })
     },
@@ -300,21 +300,21 @@ export default {
 
     getCurrentAdress: (userId, setUserAdress) => {
         return firestore()
-        .collection('users')
-        .doc(userId)
-        .onSnapshot((result) => {
-            let data = result.data();
-            if(data.adress) {
-                setUserAdress(data.adress)
-            }
-        })
+            .collection('users')
+            .doc(userId)
+            .onSnapshot((result) => {
+                let data = result.data();
+                if (data.adress) {
+                    setUserAdress(data.adress)
+                }
+            })
     },
 
 
 
     // Add funcitons
 
-    setIntoCart: async (userId, productId, productName, productImg, productType, productPrice, productQtd, subtotal, navigation) => {
+    setIntoCart: async (userId, productId, productName, productImg, productPrice, productQtd, navigation) => {
 
         const res =
             await firestore()
@@ -325,7 +325,6 @@ export default {
                         id: productId,
                         name: productName,
                         img: productImg,
-                        type: productType,
                         quantidade: productQtd,
                         price: productPrice,
                     })
@@ -596,8 +595,25 @@ export default {
             })
     },
 
-    deleteProductFromCart: () => {
+    deleteProductFromCart: async (userId, id, img, name, price, qtd) => {
+        let res = await firestore()
+            .collection('cart')
+            .doc(userId)
+            .get()
 
+        let data = res.data();
+        if (data.products) {
+
+            firestore()
+                .collection('cart')
+                .doc(userId)
+                .update({
+                    products: firestore.FieldValue.arrayRemove({
+                        'id': id, 'img': img, 'name': name, 'price': price, 'quantidade': qtd
+                    })
+                })
+
+        }
     },
 
     deleteAdress: (id, userId, navigation) => {
@@ -669,7 +685,11 @@ export default {
                                 .collection('users')
                                 .doc(users[i])
                                 .update({
-                                    chats: firestore.FieldValue.arrayRemove({'chatId': chats[e].chatId, 'date': chats[e].date, 'lastMessage': chats[e].lastMessage, 'lastMessageUser': chats[e].lastMessageUser, 'title': chats[e].title, 'with': chats[e].with})
+                                    chats: firestore.FieldValue.arrayRemove({
+                                        'chatId': chats[e].chatId, 'date': chats[e].date,
+                                        'lastMessage': chats[e].lastMessage, 'lastMessageUser': chats[e].lastMessageUser,
+                                        'title': chats[e].title, 'with': chats[e].with
+                                    })
                                 })
 
                         }

@@ -63,7 +63,7 @@ export default () => {
         );
     }
 
-    const deleteChat = (id, target) => {
+    const deleteChat = (id) => {
         Api.deleteChat(id);
     }
 

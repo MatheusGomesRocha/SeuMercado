@@ -29,7 +29,7 @@ export const HeaderText = styled.Text`
 
 
 export const DefaultBtn = styled.TouchableHighlight`
-    background-color: #ea1d2c;
+    background-color: ${props=>props.bgColor};
     width: 100%;
     height: 60px;
     align-items: center;

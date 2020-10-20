@@ -149,14 +149,9 @@ export default (props) => {
             useNativeDriver: false,
         }).start();
     }, [])
-    
-    useEffect(() => {
-        setSubtotal(parseFloat(props.price*qtd).toFixed(2));
-    }, [qtd]);
-
 
     const setIntoCart = () => {
-        let json = Api.setIntoCart(userId, props.id, props.name, props.img, props.type, price, qtd, subtotal, navigation);
+        Api.setIntoCart(userId, props.id, props.name, props.img, price, qtd, navigation);
     }
     
     return (
