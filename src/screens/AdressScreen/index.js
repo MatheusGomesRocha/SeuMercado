@@ -39,13 +39,9 @@ export default () => {
     const userId = auth().currentUser.uid;
 
     useEffect(() => {
-        const getUserAdress = async () => {
 
-            const res = await Api.getUserAdress(userId);
-            setAdressList(res);
-        }
+            Api.getUserAdress(userId, setAdressList);
 
-        getUserAdress();
 
         setEffect(false)
     }, [effect])        // Pega a state effect como parâmetro para sempre que ela mudar, fazer um refresh e mostrar os dados atualizados

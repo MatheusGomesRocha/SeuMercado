@@ -278,24 +278,28 @@ export default {
             })
     },
 
-    getUserAdress: async (userId) => {
+    getUserAdress: async (userId, setAdressList) => {
         var list = [];
 
-        let results = await firestore().collection('adress').where('userId', '==', userId).get();
+        return firestore()
+        .collection('adress')
+        .where('userId', '==', userId)
+        .get()
+        .then(querySnapshot => {
+            querySnapshot.forEach(documentSnapshot => {
+                let data = documentSnapshot.data()
+                list.push({
+                    id: data.id,
+                    type: data.type,
+                    bairro: data.bairro,
+                    rua: data.rua,
+                    number: data.number,
+                    reference: data.reference,
+                })
 
-        results.forEach(result => {
-            let data = result.data();
-            list.push({
-                id: data.id,
-                type: data.type,
-                bairro: data.bairro,
-                rua: data.rua,
-                number: data.number,
-                reference: data.reference,
+                setAdressList(list)
             })
-        })
-
-        return list
+        });
     },
 
     getCurrentAdress: (userId, setUserAdress) => {
@@ -476,7 +480,7 @@ export default {
         let now = new Date();
         let minutes = now.getMinutes();
 
-        minutes = minutes < 0 ? '0' + minutes : minutes;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
 
         let hour = now.getHours() + ':' + minutes;
 
