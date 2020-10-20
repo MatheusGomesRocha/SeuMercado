@@ -144,12 +144,12 @@ export default {
         return list;
     },
 
-    getProducts: async () => {
+    getProducts: async (setProductArray) => {
         let list = [];
 
         let results = await firestore().collection('products').get();
 
-        results.forEach(result => {
+        return results.forEach(result => {
             let data = result.data();
             list.push({
                 id: data.id,
@@ -159,9 +159,10 @@ export default {
                 price: data.price,
                 img: data.img,
             })
+
+            setProductArray(list)
         })
 
-        return list
     },
 
     getProductsFiltered: async (type, setFilters) => {
@@ -297,8 +298,16 @@ export default {
         return list
     },
 
-    getCurrentAdress: () => {
-
+    getCurrentAdress: (userId, setUserAdress) => {
+        return firestore()
+        .collection('users')
+        .doc(userId)
+        .onSnapshot((result) => {
+            let data = result.data();
+            if(data.adress) {
+                setUserAdress(data.adress)
+            }
+        })
     },
 
 

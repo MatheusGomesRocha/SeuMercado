@@ -6,16 +6,18 @@ export const Container = styled.SafeAreaView`
 `;
 
 
-export const LoadingView = styled.View`
-    flex: 1;
+export const Flat = styled.FlatList``;
+export const HeaderBtn = styled.TouchableHighlight`
+    padding: 10px;
+    height: 70px;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
+`;
+export const HeaderText = styled.Text`
+    font-size: 16px;
 `;
 
 
-export const Flat = styled.FlatList`
-    height: 180px;
-`;
 export const FlatView = styled.View`
     height: 180px;
     align-items: center;
@@ -65,6 +67,8 @@ export const NoUserLoginBtn = styled.TouchableHighlight`
 export const NoUserLoginText = styled.Text`
     font-size: 16px;
 `;
+
+
 
 
 export const CommentsView = styled.View`

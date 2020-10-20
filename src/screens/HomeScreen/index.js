@@ -1,20 +1,21 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Swiper from 'react-native-swiper';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import ProductDefault from '../../components/ProductDefault';
-import {Animated, StatusBar, ActivityIndicator, StyleSheet} from 'react-native';
+import { Animated, StatusBar, StyleSheet } from 'react-native';
 import auth from '@react-native-firebase/auth';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import Api from '../../Api';
 import LoadingScreen from '../../components/LoadingComponent';
+import AngleRightIcon from '../../assets/svg/angle_right.svg';
 
 import {
     Container,
 
-    LoadingView,
-
     Flat,
+    HeaderBtn,
+    HeaderText,
+
     FlatView,
 
     ItemFilterBtn,
@@ -39,28 +40,29 @@ import {
 } from './style';
 
 let comments = [
-    {text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum. Vestibulum ac nisl erat. Proin ut ex ut purus consequat tincidunt. Donec elementum sem ligula, sed luctus ipsum dictum mollis. Nullam porta ipsum est. Quisque ultricies eros sit amet fringilla vehicula.'},
-    {text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum. Vestibulum ac nisl erat. Proin ut ex ut purus consequat tincidunt. Donec elementum sem ligula, sed luctus ipsum dictum mollis. Nullam porta ipsum est. Quisque ultricies eros sit amet fringilla vehicula.'},
-    {text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum. Vestibulum ac nisl erat. Proin ut ex ut purus consequat tincidunt. Donec elementum sem ligula, sed luctus ipsum dictum mollis. Nullam porta ipsum est. Quisque ultricies eros sit amet fringilla vehicula.'},
-    {text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum. Vestibulum ac nisl erat. Proin ut ex ut purus consequat tincidunt. Donec elementum sem ligula, sed luctus ipsum dictum mollis. Nullam porta ipsum est. Quisque ultricies eros sit amet fringilla vehicula.'},
-    {text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum. Vestibulum ac nisl erat. Proin ut ex ut purus consequat tincidunt. Donec elementum sem ligula, sed luctus ipsum dictum mollis. Nullam porta ipsum est. Quisque ultricies eros sit amet fringilla vehicula.'},
+    { text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum. Vestibulum ac nisl erat. Proin ut ex ut purus consequat tincidunt. Donec elementum sem ligula, sed luctus ipsum dictum mollis. Nullam porta ipsum est. Quisque ultricies eros sit amet fringilla vehicula.' },
+    { text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum. Vestibulum ac nisl erat. Proin ut ex ut purus consequat tincidunt. Donec elementum sem ligula, sed luctus ipsum dictum mollis. Nullam porta ipsum est. Quisque ultricies eros sit amet fringilla vehicula.' },
+    { text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum. Vestibulum ac nisl erat. Proin ut ex ut purus consequat tincidunt. Donec elementum sem ligula, sed luctus ipsum dictum mollis. Nullam porta ipsum est. Quisque ultricies eros sit amet fringilla vehicula.' },
+    { text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum. Vestibulum ac nisl erat. Proin ut ex ut purus consequat tincidunt. Donec elementum sem ligula, sed luctus ipsum dictum mollis. Nullam porta ipsum est. Quisque ultricies eros sit amet fringilla vehicula.' },
+    { text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus sapien at nulla semper, sed dignissim nisi bibendum. Vestibulum ac nisl erat. Proin ut ex ut purus consequat tincidunt. Donec elementum sem ligula, sed luctus ipsum dictum mollis. Nullam porta ipsum est. Quisque ultricies eros sit amet fringilla vehicula.' },
 ];
 
 export default () => {
     const [filterArray, setFilterArray] = useState([]);
     const [productArray, setProductArray] = useState([]);
+    const [userAdress, setUserAdress] = useState([]);
     const [loading, setLoading] = useState(true);
     const [bot, setBot] = useState(new Animated.Value(-50));
 
     const navigation = useNavigation();
-    const email = useSelector(state=>state.user.email);
+    const email = useSelector(state => state.user.email);
 
     useEffect(() => {
         setTimeout(() => {
             setLoading(false);
-        }, 1000)
+        }, 1500)
     }, [])
-    
+
     useEffect(() => {
         Animated.timing(bot, {
             toValue: 100,
@@ -69,46 +71,50 @@ export default () => {
         }).start();
     }, [])
 
-    useEffect(() => {
-            setFilterArray([]);
+    if (email) {
+        const userId = auth().currentUser.uid;
+        useEffect(() => {
+            setUserAdress([]);
 
-            Api.getFilters(setFilterArray);
+            Api.getCurrentAdress(userId, setUserAdress);
+        }, [])
+    }
+
+    useEffect(() => {
+        setFilterArray([]);
+
+        Api.getFilters(setFilterArray);
     }, [])
 
     useEffect(() => {
-        const getProducts = async () => {
-            setProductArray([]);
-            
-            let json = await Api.getProducts();
-            setProductArray(json)
-        }
+        setProductArray([]);
 
-        getProducts();
+        Api.getProducts(setProductArray);
     }, [])
 
     const goToFilter = (type, img) => {
-        navigation.navigate('filter', {type, img});
+        navigation.navigate('filter', { type, img });
     }
 
-    const FilterComponent = ({data}) => {
-        return(
+    const FilterComponent = ({ data }) => {
+        return (
             <ItemFilterBtn onPress={() => goToFilter(data.name, data.img)} >
-                <ImgFilter source={data.img && {uri: data.img}} />
-                <FilterText>{data.name}</FilterText> 
+                <ImgFilter source={data.img && { uri: data.img }} />
+                <FilterText>{data.name}</FilterText>
             </ItemFilterBtn>
         );
     }
-    
 
-    return(
+
+    return (
         <Container>
-	        <StatusBar backgroundColor="#fff" barStyle="dark-content"/>
+            <StatusBar backgroundColor="#fff" barStyle="dark-content" />
             {loading ?
                 <LoadingScreen />
-            :
+                :
 
                 <>
-                {/* <CommentsView>
+                    {/* <CommentsView>
                     <Swiper
                         showsPagination={false}
                         showsButtons={true}
@@ -147,21 +153,32 @@ export default () => {
                         
                     </Swiper>
                 </CommentsView> */}
- 
-            
+
+
+
+
                     <Flat
                         ListHeaderComponent={
                             <>
+                                {userAdress.map((item, k) => (
+                                    <HeaderBtn underlayColor="rgba(0, 0, 0, 0.1)" key={k} onPress={() => navigation.navigate('adress')}>
+                                        <>
+                                            <HeaderText>R.{item.rua}, {item.number}</HeaderText>
+                                            <AngleRightIcon width="12" height="12" fill="#ea1d2c" style={{ marginLeft: 10 }} />
+                                        </>
+                                    </HeaderBtn>
+                                ))}
+
                                 <FlatView>
                                     <Flat
                                         decelerationRate="fast"
                                         showsHorizontalScrollIndicator={false}
                                         horizontal={true}
                                         data={filterArray}
-                                        renderItem={({item}) => <FilterComponent data={item} />}
+                                        renderItem={({ item }) => <FilterComponent data={item} />}
                                         keyExtractor={(item) => item.id}
                                         contentContainerStyle={styles.Flat}
-                                    />  
+                                    />
                                 </FlatView>
                                 <PopView>
                                     <PopText>Mais populares</PopText>
@@ -169,20 +186,20 @@ export default () => {
                             </>
                         }
                         data={productArray}
-                        renderItem={({item}) => <ProductDefault home={true} data={item}/> }
+                        renderItem={({ item }) => <ProductDefault home={true} data={item} />}
                         keyExtractor={(item) => item.id}
                         contentContainerStyle={styles.Flat1}
-                    />  
-            
+                    />
+
                     {!email &&
-                        <Animated.View style={{bottom: bot}}>
-                            <NoUserLoginBtn onPress={() => navigation.navigate('login')} underlayColor="#dfdfdf"> 
+                        <Animated.View style={{ bottom: bot }}>
+                            <NoUserLoginBtn onPress={() => navigation.navigate('login')} underlayColor="#dfdfdf">
                                 <>
                                     <NoUserLoginText>Para fazer pedidos no SeuMercado</NoUserLoginText>
-                                    <NoUserLoginText style={{color: '#ea1d2c', fontWeight: 'bold'}}>Entrar ou cadastrar-se</NoUserLoginText>
+                                    <NoUserLoginText style={{ color: '#ea1d2c', fontWeight: 'bold' }}>Entrar ou cadastrar-se</NoUserLoginText>
                                 </>
-                            </NoUserLoginBtn>      
-                        </Animated.View>  
+                            </NoUserLoginBtn>
+                        </Animated.View>
                     }
 
                 </>
@@ -193,8 +210,8 @@ export default () => {
 
 const styles = StyleSheet.create({
     Flat: {
-      alignItems: 'center',
-      justifyContent: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
-  });
+});
 
