@@ -26,9 +26,10 @@ import {
 } from './style';
 
 export default () => {
-    const [userInfo, setUserInfo] = useState([]);
+    const [userAdress, setUserAdress] = useState([]);
     const [arrayCart, setArrayCart] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [userName, setUserName] = useState();
     const [id, setId] = useState();
 
     const userLogin = useSelector(state => state.user.email);
@@ -45,33 +46,23 @@ export default () => {
         })
     }
 
-
-
     if (userLogin) {
         const userId = auth().currentUser.uid;
 
         useEffect(() => {
-            const getProducts = () => {
                 setArrayCart([]);
 
-                let json = Api.getProductsCart(userId, setArrayCart);
-                setArrayCart(json)
+                Api.getProductsCart(userId, setArrayCart);
                 setId(userId);
-
-            }
-
-            getProducts();
         }, [])
 
         useEffect(() => {
-            const getUserLogin = async () => {
-                let json = await Api.getUserLogin(userId);
+            Api.getUserLogin(userId, setUserName);
+        }, []);
 
-                setUserInfo(json);
-            }
-
-            getUserLogin();
-        }, [])
+        useEffect(() => {
+            Api.getCurrentAdress(userId, setUserAdress)
+        })
     }
 
     useEffect(() => {
@@ -102,14 +93,6 @@ export default () => {
     const setUserOrder = async () => {
         const userId = auth().currentUser.uid;
 
-        var userName = '';
-        var userAdress = [];
-
-        userInfo.forEach(item => {
-            userName = item.name;
-            userAdress = item.adress;
-        })
-
         if (userAdress.length > 0) {
             Api.setUserOrder(userId, userAdress, userName, arrayCart, subtotal, quantidadeTotal, navigation);
 
@@ -128,7 +111,7 @@ export default () => {
                     {userLogin ?
                         <>
                             {/* Depois verifica se o usuário tem algum produto no carrinho */}
-                            {arrayCart ?
+                            {arrayCart && arrayCart.length >= 1 ?
                                 <>
                                     <FlatView>
                                         <Flat

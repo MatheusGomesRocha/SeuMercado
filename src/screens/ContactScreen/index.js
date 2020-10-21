@@ -25,20 +25,13 @@ export default () => {
     const navigation = useNavigation();
 
     useEffect(() => {
-        const getUsers = async () => {
-            setUsers([]);
+        Api.getUserLogin(userId, setUserLoginName);
+    }, [])
 
-            var json = await Api.getUsers(userId);
-            var userLogin = await Api.getUserLogin(userId);
+    useEffect(() => {
+        setUsers([]);
 
-            userLogin.forEach(item => {
-                setUserLoginName(item.name);
-            })
-
-            setUsers(json);
-        }
-
-        getUsers();
+        Api.getUsers(userId, setUsers);
     }, [])
 
     useEffect(() => {
@@ -49,7 +42,7 @@ export default () => {
         await Api.setNewChat(userId, userLoginName, targetId, targetName, setChatId);
 
 
-        if(chatId !== '') {
+        if (chatId !== '') {
             navigation.goBack();
         }
     }

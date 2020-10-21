@@ -6,6 +6,7 @@ export default {
 
     // Auths
 
+    // Cadastro
     signUp: (name, email, cpf, password, navigation, setEmail) => {
         let id = Math.floor(Math.random() * (999999999 - 1));
         let idString = id.toString();
@@ -79,6 +80,7 @@ export default {
 
     },
 
+    // Login
     login: async (email, password, navigation, setEmail) => {
         const res =
             auth()
@@ -110,80 +112,93 @@ export default {
 
     // Get Functions
 
-    getUsers: async (id) => {
+    // Pega todos os usuários (menos o logado) e manda para a ContactScreen
+    getUsers: async (id, setUsers) => {
         let list = [];
 
-        let results = await firestore().collection('users').get();
-
-        results.forEach(result => {
-            let data = result.data();
-            list.push({
-                id: data.id,
-                name: data.name,
+        return firestore()
+            .collection('users')
+            .get()
+            .then(querySnapshot => {
+                querySnapshot.forEach(documentSnapshot => {
+                    let data = documentSnapshot.data();
+                    if (data.id != id) {
+                        list.push({
+                            id: data.id,
+                            name: data.name,
+                        })
+                        setUsers(list);
+                    }
+                })
             })
-        })
 
-
-        return list;
     },
 
-    getUserLogin: async (id) => {
+    // Apenas para pegar o nome do usuário logado, Screens Cart e Contact
+    getUserLogin: (id, setUserLoginName) => {
         let list = [];
 
-        let results = await firestore().collection('users').where('id', '==', id).get();
+        return firestore()
+            .collection('users')
+            .doc(id)
+            .onSnapshot((result) => {
+                if (result.exists) {
+                    let data = result.data();
 
-        results.forEach(result => {
-            let data = result.data();
-            list.push({
-                id: data.id,
-                name: data.name,
-                adress: data.adress
+                    setUserLoginName(data.name)
+                }
             })
-        })
-
-        return list;
     },
 
+    // Pega todos os produtos, Screens Home e Search
     getProducts: async (setProductArray) => {
         let list = [];
 
-        let results = await firestore().collection('products').get();
+        return firestore()
+            .collection('products')
+            .get()
+            .then(querySnapshot => {
+                querySnapshot.forEach(documentSnapshot => {
+                    let data = documentSnapshot.data();
+                    list.push({
+                        id: data.id,
+                        name: data.name,
+                        type: data.type,
+                        description: data.description,
+                        price: data.price,
+                        img: data.img,
+                    })
+                    setProductArray(list)
 
-        return results.forEach(result => {
-            let data = result.data();
-            list.push({
-                id: data.id,
-                name: data.name,
-                type: data.type,
-                description: data.description,
-                price: data.price,
-                img: data.img,
+                })
             })
-
-            setProductArray(list)
-        })
-
     },
 
+    // Pega os produtos dependendo do que o usuário selecionou (filtrou), FilterScreen
     getProductsFiltered: async (type, setFilters) => {
         let list = [];
 
-        let results = await firestore().collection('products').where('type', '==', type).get();
-
-        return results.forEach(result => {
-            let data = result.data();
-            list.push({
-                id: data.id,
-                name: data.name,
-                type: data.type,
-                description: data.description,
-                price: data.price,
-                img: data.img,
+        return firestore()
+            .collection('products')
+            .where('type', '==', type)
+            .get()
+            .then(querySnapshot => {
+                querySnapshot.forEach(documentSnapshot => {
+                    let data = documentSnapshot.data();
+                    list.push({
+                        id: data.id,
+                        name: data.name,
+                        type: data.type,
+                        description: data.description,
+                        price: data.price,
+                        img: data.img,
+                    })
+                    setFilters(list)
+                })
             })
-            setFilters(list)
-        })
     },
 
+    // Pega os produtos que o usuário colocou no carrinho, CartScreen
     getProductsCart: (id, setArrayCart) => {
         firestore()
             .collection('cart')
@@ -199,53 +214,66 @@ export default {
             })
     },
 
+    // Pega todos os filtros criado pelo "admin", HomeScreen
     getFilters: async (setFilter) => {
         let list = [];
 
-        let results = await firestore().collection('types').orderBy('id', 'asc').get();
-
-        return results.forEach(result => {
-            let data = result.data();
-            list.push({
-                id: data.id,
-                name: data.name,
-                img: data.img,
+        return firestore()
+            .collection('types')
+            .orderBy('id', 'asc')
+            .get()
+            .then(querySnapshot => {
+                querySnapshot.forEach(documentSnapshot => {
+                    let data = documentSnapshot.data();
+                    list.push({
+                        id: data.id,
+                        name: data.name,
+                        img: data.img,
+                    })
+                    setFilter(list)
+                })
             })
-
-            setFilter(list)
-        })
     },
 
-    getUserOrders: async (id, status, setArray) => {          // Pega todos os pedidos do usuários
+    // Pega todos os pedidos do usuário, Screens OrderCurrent e OrderFinish
+    getUserOrders: async (id, status, setArray) => {          
         var list = [];
 
-        let results = await firestore().collection('orders').where('userId', '==', id).where('status', '==', status).get();
+        return firestore()
+            .collection('orders')
+            .where('userId', '==', id)
+            .where('status', '==', status)
+            .get()
+            .then(querySnapshot => {
+                querySnapshot.forEach(documentSnapshot => {
+                    let data = documentSnapshot.data();
+                    list.push({
+                        id: data.id,
+                        subtotal: data.subtotal,
+                        quantidadeTotal: data.quantidadeTotal,
+                        status: data.status,
+                    })
 
-        return results.forEach(result => {
-            let data = result.data();
-            list.push({
-                id: data.id,
-                subtotal: data.subtotal,
-                quantidadeTotal: data.quantidadeTotal,
-                status: data.status,
+                    setArray(list);
+                })
             })
-
-            setArray(list);
-        })
     },
 
-    getUserOrdersInfo: async (id, setArrayOrderInfo, setAdress, setSubtotal, setStatus) => {           // Pega os detalhes do pedido do usuário
+    // Pega os detalhes dos pedidos do usuário, DetailScreen
+    getUserOrdersInfo: (id, setArrayOrderInfo, setAdress, setSubtotal, setStatus) => {           // Pega os detalhes do pedido do usuário
+        return firestore()
+            .collection('orders')
+            .doc(id)
+            .onSnapshot((result) => {
+                if (result.exists) {
+                    let data = result.data()
 
-        let results = await firestore().collection('orders').where('id', '==', id).get();
-
-        return results.forEach(result => {
-            let data = result.data();
-
-            setStatus(data.status);
-            setSubtotal(data.subtotal)
-            setArrayOrderInfo(data.products);
-            setAdress(data.adress);
-        })
+                    setStatus(data.status);
+                    setSubtotal(data.subtotal)
+                    setArrayOrderInfo(data.products);
+                    setAdress(data.adress);
+                }
+            })
     },
 
     // Função que pega todos os chats criados pelo o usuário logado e mostra. setChatList é uma state da ChatScreen que passou como parâmetro para setar corretamente
@@ -264,7 +292,7 @@ export default {
             })
     },
 
-    // Função que pega o conteúdo do chat (a conversa) entre os dois usuários
+    // Função que pega o conteúdo do chat (a conversa) entre os dois usuários, ChatOpenScreen
     getContentChat: (chatId, setMessage, setUsers) => {
         return firestore()
             .collection('chats')
@@ -278,30 +306,32 @@ export default {
             })
     },
 
+    // Pega todos os endereços cadastrados pelo o usuário, AdressScreen
     getUserAdress: async (userId, setAdressList) => {
         var list = [];
 
         return firestore()
-        .collection('adress')
-        .where('userId', '==', userId)
-        .get()
-        .then(querySnapshot => {
-            querySnapshot.forEach(documentSnapshot => {
-                let data = documentSnapshot.data()
-                list.push({
-                    id: data.id,
-                    type: data.type,
-                    bairro: data.bairro,
-                    rua: data.rua,
-                    number: data.number,
-                    reference: data.reference,
-                })
+            .collection('adress')
+            .where('userId', '==', userId)
+            .get()
+            .then(querySnapshot => {
+                querySnapshot.forEach(documentSnapshot => {
+                    let data = documentSnapshot.data()
+                    list.push({
+                        id: data.id,
+                        type: data.type,
+                        bairro: data.bairro,
+                        rua: data.rua,
+                        number: data.number,
+                        reference: data.reference,
+                    })
 
-                setAdressList(list)
-            })
-        });
+                    setAdressList(list)
+                })
+            });
     },
 
+    // Pega o endereço que o usuário selecionou, Screens Home e Cart
     getCurrentAdress: (userId, setUserAdress) => {
         return firestore()
             .collection('users')
@@ -616,7 +646,6 @@ export default {
                         'id': id, 'img': img, 'name': name, 'price': price, 'quantidade': qtd
                     })
                 })
-
         }
     },
 
