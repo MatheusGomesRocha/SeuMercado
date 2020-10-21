@@ -3,6 +3,7 @@ import SendIcon from '../../assets/svg/send.svg';
 import { useRoute } from '@react-navigation/native';
 import Api from '../../Api';
 import auth from '@react-native-firebase/auth';
+import { Alert } from 'react-native';
 
 import {
     Container,
@@ -16,7 +17,7 @@ import {
     HeaderUsers,
 
     MessageView,
-    MessageContentView,
+    MessageBtn,
     MessageContentName,
     MessageContentText,
     MessageContentHour,
@@ -40,15 +41,16 @@ export default () => {
     const targetName = route.params.targetName;
     const chatId = route.params.chatId;
 
-
     const ArrayMessageUser = ({ data }) => {
 
         return (
             <MessageView align={data.author == userId ? 'flex-end' : 'flex-start'}>
-                <MessageContentView bgColor={data.author == userId ? '#ea1d2c' : '#333'}>
-                    <MessageContentText>{data.content}</MessageContentText>
-                    <MessageContentHour>{data.date}</MessageContentHour>
-                </MessageContentView>
+                <MessageBtn underlayColor="#AD101B" onLongPress={() => AlertMessage(data.messageId, data.author, data.content, data.date)} bgColor={data.author == userId ? '#ea1d2c' : '#333'}>
+                    <>
+                        <MessageContentText>{data.content}</MessageContentText>
+                        <MessageContentHour>{data.date}</MessageContentHour>
+                    </>
+                </MessageBtn>
 
             </MessageView>
         );
@@ -60,6 +62,22 @@ export default () => {
         Api.getContentChat(chatId, setMessage, setUsers);
 
     }, [chatId]);
+
+    const AlertMessage = (messageId, author, content, date) => {
+        Alert.alert(
+            "Excluir",
+            "Deseja excluir essa mensagem?",
+            [
+                { text: "Excluir", onPress: () => deleteMessage(messageId, author, content, date) },
+                { text: 'Cancel', style: 'cancel' }
+            ],
+            { cancelable: false }
+        );
+    }
+
+    const deleteMessage = (messageId, author, content, date) => {
+        Api.deleteMessage(chatId, messageId, author, content, date);
+    }
 
     const sendMessage = () => {
         if (content !== '') {
@@ -77,7 +95,7 @@ export default () => {
                     {/* <HeaderUsers>Aids, André, Gabriel, Gabriele, Você</HeaderUsers> */}
                 </ColumnView>
             </HeaderView>
- 
+
             <Flat
                 showsVerticalScrollIndicator={false}
                 data={message}

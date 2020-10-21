@@ -38,7 +38,7 @@ export const MessageView = styled.View`
     margin: 3px 5px 3px 5px;
     align-items: ${props=>props.align}
 `;
-export const MessageContentView = styled.View`
+export const MessageBtn = styled.TouchableHighlight`
     background-color: ${props=>props.bgColor};
     border-radius: 10px;
     padding: 3px;

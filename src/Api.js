@@ -236,7 +236,7 @@ export default {
     },
 
     // Pega todos os pedidos do usuário, Screens OrderCurrent e OrderFinish
-    getUserOrders: async (id, status, setArray) => {          
+    getUserOrders: async (id, status, setArray) => {
         var list = [];
 
         return firestore()
@@ -507,6 +507,9 @@ export default {
 
     // envia uma mensagem para a collection chats e simultâneamente faz um update na Collection dos usuários contendo a ultima mensagem enviada e o horário dela
     setMessage: async (chatId, userId, content, users) => {
+        let id = Math.floor(Math.random() * (999999999 - 1));
+        let idString = id.toString();
+
         let now = new Date();
         let minutes = now.getMinutes();
 
@@ -520,6 +523,7 @@ export default {
             .doc(chatId)
             .update({
                 messages: firestore.FieldValue.arrayUnion({
+                    messageId: idString,
                     author: userId,
                     content: content,
                     date: hour
@@ -619,6 +623,25 @@ export default {
 
 
     // Delete Functions
+
+    deleteMessage: async (chatId, messageId, author, content, date) => {
+        let res = await firestore()
+            .collection('chats')
+            .doc(chatId)
+            .get()
+
+        let data = res.data();
+        if (data.messages) {
+            firestore()
+                .collection('chats')
+                .doc(chatId)
+                .update({
+                    messages: firestore.FieldValue.arrayRemove({
+                        'messageId': messageId, 'author': author, 'content': content, 'date': date
+                    })
+                })
+        }
+    },
 
     deleteCart: (userId) => {
         firestore()
