@@ -4,11 +4,9 @@ import {
 } from './style';
 
 export default () => {
-    
-    return (
+    return(
         <Container>
-            
+
         </Container>
     );
-
 }

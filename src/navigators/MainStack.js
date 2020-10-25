@@ -12,6 +12,7 @@ import ChatOpenScreen from '../screens/ChatOpenScreen';
 import ContactScreen from '../screens/ContactScreen';
 import AdressScreen from '../screens/AdressScreen';
 import UserProfileScreen from '../screens/UserProfileScreen';
+import FavoriteScreen from '../screens/FavoriteScreen';
 
 const HomeStack = createStackNavigator();
 
@@ -30,6 +31,7 @@ export default () => {
             <HomeStack.Screen name="contacts" component={ContactScreen} options={{headerTintColor: '#000', title: 'Contatos', headerTitleAlign: 'center', headerStyle: {height: 50, elevation: 0}}}/>
             <HomeStack.Screen name="adress" component={AdressScreen} options={{headerTintColor: '#000', title: 'Endereços', headerTitleAlign: 'center', headerStyle: {height: 60, elevation: 0}}}/>
             <HomeStack.Screen name="userprofile" component={UserProfileScreen} options={{headerTintColor: '#000', title: 'Meu Perfil', headerTitleAlign: 'center', headerStyle: {height: 60, elevation: 0}}}/>
+            <HomeStack.Screen name="favorite" component={FavoriteScreen} options={{headerTintColor: '#000', title: 'Favoritos', headerTitleAlign: 'center', headerStyle: {height: 60, elevation: 0}}}/>
         </HomeStack.Navigator>
     );
 }

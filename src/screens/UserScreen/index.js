@@ -97,7 +97,7 @@ function UserScreen(props) {
                             </>
                         </DefaultBtn>
 
-                        <DefaultBtn>
+                        <DefaultBtn onPress={() => navigation.navigate('favorite')}>
                             <>
                                 <FavoriteIcon width="25" height="25" fill="#333" />
                                 <LeftView>
