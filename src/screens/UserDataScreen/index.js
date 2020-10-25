@@ -58,24 +58,13 @@ function UserDataScreen (props) {
     return (
         <Container>
             <FatherView>
-                <DefaultBtn>
+                <DefaultBtn onPress={() => navigation.navigate('userprofile')}>
                     <>
                         <LeftView>
                             <BtnText>Informações pessoais</BtnText>
                             <BtnSmallText>Nome e CPF</BtnSmallText>
                         </LeftView>
                         <AngleRightIcon width="15" height="15" />
-                    </>
-                </DefaultBtn>
-
-                <DefaultBtn>
-                    <>
-                        <LeftView>
-                            <BtnText>Dados para Contato</BtnText>
-                            <BtnSmallText>Email e telefone</BtnSmallText>
-                        </LeftView>
-                        <AngleRightIcon width="15" height="15" />
-
                     </>
                 </DefaultBtn>
 
