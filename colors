@@ -1,6 +1,6 @@
 default: #ea1d2c
 underlayDefault: #AD101B
-underlayTransparent: rgba(0, 0, 0, 0.4)
+underlayTransparent: rgba(0, 0, 0, 0.1)
 
 Organização:
 

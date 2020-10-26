@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Api from '../../Api';
 import auth from '@react-native-firebase/auth';
+import { Alert } from 'react-native';
 
 import {
     Container,
@@ -26,7 +27,7 @@ export default () => {
 
     const FavoriteArray = ({ data }) => {
         return (
-            <ItemBtn>
+            <ItemBtn underlayColor="rgba(0, 0, 0, 0.1)" onLongPress={() => alertFavorite(data.id, data.img, data.name, data.description, data.price)}>
                 <>
                     <ItemImg source={{ uri: data.img }} />
                     <ItemColumn>
@@ -37,6 +38,22 @@ export default () => {
                 </>
             </ItemBtn>
         );
+    }
+
+    const alertFavorite = (id, img, name, description, price) => {
+        Alert.alert(
+            "Excluir",
+            "Deseja excluir esse item dos favoritos?",
+            [
+                { text: "Excluir", onPress: () => deleteFavorite(id, img, name, description, price) },
+                { text: 'Cancel', style: 'cancel' }
+            ],
+            { cancelable: false }
+        );
+    }
+
+    const deleteFavorite = (id, img, name, description, price) => {
+        Api.deleteFavorite(userId, id, img, name, description, price);
     }
 
     return (
