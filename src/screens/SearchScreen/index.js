@@ -41,9 +41,7 @@ export default () => {
 
     useEffect(() => {
             setProductArray([]);
-            
             Api.getProducts(setProductArray);
-
     }, [])
 
     useEffect(() => {

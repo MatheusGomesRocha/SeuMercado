@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Api from '../../Api';
 import auth from '@react-native-firebase/auth';
 
@@ -9,6 +9,7 @@ import {
 
     ItemBtn,
     ItemImg,
+    ItemColumn,
     ItemTitle,
     ItemDescription,
     ItemPrice,
@@ -22,12 +23,28 @@ export default () => {
     useEffect(() => {
         Api.getFavorites(userId, setData)
     }, [])
+
+    const FavoriteArray = ({ data }) => {
+        return (
+            <ItemBtn>
+                <>
+                    <ItemImg source={{ uri: data.img }} />
+                    <ItemColumn>
+                        <ItemTitle>{data.name}</ItemTitle>
+                        <ItemDescription numberOfLines={2}>{data.description}</ItemDescription>
+                        <ItemPrice>R${parseFloat(data.price).toFixed(2)}</ItemPrice>
+                    </ItemColumn>
+                </>
+            </ItemBtn>
+        );
+    }
+
     return (
         <Container>
 
             <Flat
                 data={data}
-                renderItem={({ item }) => <OrderFinish data={item} />}
+                renderItem={({ item }) => <FavoriteArray data={item} />}
                 keyExtractor={(item) => item.id}
             />
         </Container>

@@ -1,9 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components/native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import SearchIcon from '../assets/svg/search.svg';
 import {useNavigation} from '@react-navigation/native';
-import Api from '../Api';
 import {useSelector} from 'react-redux';
 
 import {Alert} from 'react-native';
@@ -32,7 +29,7 @@ const ItemRow = styled.View`
 `;
 
 
-const Avatar = styled.Image`
+const Img = styled.Image`
     width: 80px;
     height: 80px;
     border-radius: 10px;
@@ -58,41 +55,10 @@ const Price = styled.Text`
     margin-top: 5px;
 `;
 
-
-const ItemQntd = styled.View`
-    justify-content: center;
-    align-items: center;
-    margin-right: 10px;
-`;
-const ItemBtnQntd = styled.TouchableOpacity``;
-const ItemQntdValue = styled.Text`
-    font-size: 18px;
-`;
-
-
-export default ({data}, props) => {
-    const [quantidade, setQuantidade] = useState(1);
-    const [userSearch, setUserSearch] = useState();
-    const [products, setProducts] = useState([]);
-    const [arraySearch, setArraySearch] = useState(products);
-
+export default ({data}) => {
     const navigation = useNavigation();
 
     const userLogin = useSelector(state=>state.user.email);
-
-    useEffect(() => {
-        if(filterData) {
-            setArraySearch(filterData)
-        }
-    }, [])
-
-    const filterData = products.filter((item) => {              // Array que será mostrado, pegando o valor digitado do usuário e filtrando para mostrar os que tem
-        if(userSearch) {
-            return item.name.indexOf(userSearch) >=0
-        } else {
-            return products;
-        }
-    }) 
 
     const GoToProduct = (id, name, img, description, price) => {
         if(userLogin) {
@@ -113,7 +79,7 @@ export default ({data}, props) => {
         <Div>
             <ItemBtn underlayColor="rgba(0, 0, 0, 0.1)" onPress={() => GoToProduct(data.id, data.name, data.img, data.description, data.price)}>
                 <ItemRow>
-                    <Avatar source={data.img && {uri:data.img}} />
+                    <Img source={data.img && {uri:data.img}} />
 
                     <ItemHeader>
                         <Name>{data.name}</Name>
