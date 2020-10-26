@@ -351,9 +351,22 @@ export default {
             })
     },
 
+    // Pega os produtos favoritados pelo o usuário
+    getFavorites: (userId, setData) => {
+        return firestore()
+        .collection('favorites')
+        .doc(userId)
+        .onSnapshot((result) => {
+            let data = result.data();
+            if(data.products) {
+                setData(data.products)
+            }
+        })
+    },
 
 
-    // Add funcitons
+
+    // ADD FUNCTIONS
 
     setIntoCart: async (userId, productId, productName, productImg, productPrice, productQtd, navigation) => {
 
@@ -787,8 +800,20 @@ export default {
     },
 
 
-
-
+    deleteFavorite: (userId, id, img, name, description, price) => {
+        firestore()
+            .collection('favorites')
+            .doc(userId)
+            .update({
+                products: firestore.FieldValue.arrayRemove({
+                    id: id,
+                    img: img,
+                    name: name,
+                    description: description,
+                    price: price
+                })
+            })
+    },
 
 
 

@@ -96,6 +96,7 @@ export default (props) => {
     const [favorited, setFavorited] = useState(false);
     const [bot, setBot] = useState(new Animated.Value(-200));
     const [qtd, setQtd] = useState(1);
+    const [itemFavorite, setItemFavorite] = useState([]);
 
     const scrollY = useRef(new Animated.Value(0)).current;
 
@@ -157,6 +158,16 @@ export default (props) => {
         }).start();
     }, [])
 
+    useEffect(() => {
+        itemFavorite.forEach(item => {
+            if (item.id == props.id) {
+                setFavorited(true)
+            } else {
+                setFavorited(false)
+            }
+        })
+    }, [itemFavorite])
+
     const setIntoCart = () => {
         Api.setIntoCart(userId, props.id, props.name, props.img, price, qtd, navigation);
     }
@@ -164,6 +175,16 @@ export default (props) => {
     const setFavorite = () => {
         Api.setIntoFavorite(userId, props.id, props.img, props.name, props.description, props.price)
     }
+
+    const deleteFavorite = () => {
+        Api.deleteFavorite(userId, props.id, props.img, props.name, props.description, props.price);
+    }
+
+    useEffect(() => {
+        Api.getFavorites(userId, setItemFavorite);
+    }, [])
+
+
 
     return (
         <Container>
@@ -189,13 +210,16 @@ export default (props) => {
             <Animated.View style={[styles.header, { transform: [{ translateY: headerTranslateY }] }]}>
                 <Animated.Image style={[styles.headerBackground, { opacity: imageOpacity, transform: [{ translateY: imageTranslateY }], },]} source={props.img && { uri: props.img }} />
                 <Animated.View style={[styles.overlay, { opacity: imageOpacity },]}></Animated.View>
-                <BtnFavorite onPress={setFavorite}>
-                    {favorited ?
+                {favorited ?
+                    <BtnFavorite onPress={deleteFavorite}>
+
                         <FavoriteFull width="35" height="35" fill="#ea1d2c" />
-                        :
+                    </BtnFavorite>
+                    :
+                    <BtnFavorite onPress={setFavorite}>
                         <FavoriteEmpty width="35" height="35" fill="#ea1d2c" />
-                    }
-                </BtnFavorite>
+                    </BtnFavorite>
+                }
             </Animated.View>
 
             <Animated.View style={[styles.topBar, { opacity: titleOpacity, transform: [{ translateY: titleTranslateY }], },]}>
