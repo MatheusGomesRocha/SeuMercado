@@ -40,6 +40,13 @@ export default {
                     setEmail(email);
 
                     firestore()
+                        .collection('favorites')
+                        .doc(user.uid)
+                        .set({
+                            products: []
+                        })
+
+                    firestore()
                         .collection('cart')
                         .doc(user.uid)
                         .set({
@@ -595,17 +602,17 @@ export default {
 
     setIntoFavorite: (userId, id, img, name, description, price) => {
         firestore()
-        .collection('favorites')
-        .doc(userId)
-        .update({
-            products: firestore.FieldValue.arrayUnion({
-                id: id, 
-                img: img, 
-                name: name, 
-                description: description, 
-                price: price
+            .collection('favorites')
+            .doc(userId)
+            .update({
+                products: firestore.FieldValue.arrayUnion({
+                    id: id,
+                    img: img,
+                    name: name,
+                    description: description,
+                    price: price
+                })
             })
-        })
     },
 
     // updateProfile: async (userId, name, email, password) => {
