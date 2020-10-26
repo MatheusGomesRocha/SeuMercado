@@ -1,18 +1,20 @@
-import React, {useState, useRef, useEffect } from 'react';
-import {useNavigation} from '@react-navigation/native';
+import React, { useState, useRef, useEffect } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components/native';
 import Api from '../Api';
 import auth from '@react-native-firebase/auth';
 import Less from '../assets/svg/less.svg';
 import Plus from '../assets/svg/plus.svg';
+import FavoriteFull from '../assets/svg/favorite_full.svg';
+import FavoriteEmpty from '../assets/svg/favorite_empty.svg';
 
 import {
-  SafeAreaView,
-  StyleSheet,
-  Image,
-  View,
-  Text,
-  Animated,
+    SafeAreaView,
+    StyleSheet,
+    Image,
+    View,
+    Text,
+    Animated,
 } from 'react-native';
 
 const Container = styled.SafeAreaView`
@@ -41,6 +43,11 @@ const ProductPrice = styled.Text`
     font-size: 18px;
     font-weight: bold;
     margin-top: 10px;
+`;
+const BtnFavorite = styled.TouchableOpacity`
+    position: absolute;
+    bottom: 15px;
+    right: 25px;
 `;
 
 
@@ -86,10 +93,10 @@ const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 export default (props) => {
     // States
     const [price, setPrice] = useState(props.price);
-    const [subtotal, setSubtotal] = useState();
+    const [favorite, setFavorite] = useState(false);
     const [bot, setBot] = useState(new Animated.Value(-200));
     const [qtd, setQtd] = useState(1);
-    
+
     const scrollY = useRef(new Animated.Value(0)).current;
 
     const userId = auth().currentUser.uid;
@@ -153,114 +160,121 @@ export default (props) => {
     const setIntoCart = () => {
         Api.setIntoCart(userId, props.id, props.name, props.img, price, qtd, navigation);
     }
-    
+
     return (
         <Container>
-            
+
             <Animated.ScrollView
                 contentContainerStyle={{ paddingTop: HEADER_MAX_HEIGHT - 32, alignItems: 'center' }}
                 scrollEventThrottle={16}
                 onScroll={Animated.event(
-                [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-                { useNativeDriver: true },
+                    [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+                    { useNativeDriver: true },
                 )}>
 
-            <InfosView>
-                <ProductName>{props.name}</ProductName>
-                <ProductDescription>{props.description}</ProductDescription>
-                <ProductPrice>R$ {parseFloat(props.price).toFixed(2)}</ProductPrice>
-                
-            </InfosView>
+                <InfosView>
+                    <ProductName>{props.name}</ProductName>
+                    <ProductDescription>{props.description}</ProductDescription>
+                    <ProductPrice>R$ {parseFloat(props.price).toFixed(2)}</ProductPrice>
+
+                </InfosView>
 
 
             </Animated.ScrollView>
 
             <Animated.View style={[styles.header, { transform: [{ translateY: headerTranslateY }] }]}>
-                <Animated.Image style={[styles.headerBackground, { opacity: imageOpacity, transform: [{ translateY: imageTranslateY }],},]} source={props.img && {uri:props.img}}/>
-                <Animated.View style={[styles.overlay, { opacity: imageOpacity},]}></Animated.View>
+                <Animated.Image style={[styles.headerBackground, { opacity: imageOpacity, transform: [{ translateY: imageTranslateY }], },]} source={props.img && { uri: props.img }} />
+                <Animated.View style={[styles.overlay, { opacity: imageOpacity },]}></Animated.View>
+                <BtnFavorite onPress={() => setFavorite(!favorite)}>
+                    {favorite ?
+                        <FavoriteFull width="35" height="35" fill="#ea1d2c" />
+                        :
+                        <FavoriteEmpty width="35" height="35" fill="#ea1d2c" />
+                    }
+                </BtnFavorite>
             </Animated.View>
 
-            <Animated.View style={[styles.topBar, {opacity: titleOpacity, transform: [ { translateY: titleTranslateY }],},]}>
+            <Animated.View style={[styles.topBar, { opacity: titleOpacity, transform: [{ translateY: titleTranslateY }], },]}>
                 <Title>{props.name}</Title>
             </Animated.View>
 
-            <Animated.View style={[styles.BottomView, {bottom: bot}]}>
+            <Animated.View style={[styles.BottomView, { bottom: bot }]}>
                 <QtdView>
 
                     <QtdBtn disabled={qtd == 1 ? true : false} onPress={() => setQtd(qtd - 1)}>
-                        <Less width="20" height="20" fill={qtd == 1 ? '#ccc' : '#ea1d2c'}/>
+                        <Less width="20" height="20" fill={qtd == 1 ? '#ccc' : '#ea1d2c'} />
                     </QtdBtn>
 
                     <QtdText>{qtd}</QtdText>
-                    
+
                     <QtdBtn onPress={() => setQtd(qtd + 1)}>
-                        <Plus width="20" height="20" fill="#ea1d2c"/>
+                        <Plus width="20" height="20" fill="#ea1d2c" />
                     </QtdBtn>
-                    
+
                 </QtdView>
 
-                <BtnAdd onPress={setIntoCart}>
+                <BtnAdd underlayColor="#AD101B" onPress={setIntoCart}>
                     <>
                         <BtnAddText>Adicionar</BtnAddText>
-                        <BtnAddText style={{fontWeight: 'bold'}}>R${parseFloat(price * qtd).toFixed(2)}</BtnAddText>
+                        <BtnAddText style={{ fontWeight: 'bold' }}>R${parseFloat(price * qtd).toFixed(2)}</BtnAddText>
                     </>
                 </BtnAdd>
             </Animated.View>
-            
+
         </Container>
     );
+}
+
+const styles = StyleSheet.create({
+
+    //  View pai que encobre a Imagem e o Overlay
+    header: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: '#ea1d2c',
+        overflow: 'hidden',
+        height: HEADER_MAX_HEIGHT,
+        marginBottom: 50,
+    },
+
+    // Imagem
+    headerBackground: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        width: null,
+        height: HEADER_MAX_HEIGHT,
+        resizeMode: 'stretch',
+    },
+
+    // Overlay por cima para escurecer a imagem
+    overlay: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    },
+
+    // Header
+    topBar: {
+        marginTop: 40,
+        height: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+    },
+
+    BottomView: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        height: 90,
+        borderTopWidth: 1,
+        borderTopColor: '#eee'
     }
-
-    const styles = StyleSheet.create({
-
-        //  View pai que encobre a Imagem e o Overlay
-        header: {
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            backgroundColor: '#ea1d2c',
-            overflow: 'hidden',
-            height: HEADER_MAX_HEIGHT,
-            marginBottom: 50,
-        },
-
-        // Imagem
-        headerBackground: {
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            width: null,
-            height: HEADER_MAX_HEIGHT,
-            resizeMode: 'stretch',
-        },
-
-        // Overlay por cima para escurecer a imagem
-        overlay: {
-            flex: 1,
-            backgroundColor: 'rgba(0, 0, 0, 0.3)',
-        },
-        
-        // Header
-        topBar: {
-            marginTop: 40,
-            height: 50,
-            alignItems: 'center',
-            justifyContent: 'center',
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-        },
-
-        BottomView: {
-            flexDirection: 'row', 
-            alignItems: 'center', 
-            justifyContent: 'space-around', 
-            height: 90,
-            borderTopWidth: 1,
-            borderTopColor: '#eee'
-        }
-    });
+});
 
