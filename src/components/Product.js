@@ -93,7 +93,7 @@ const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 export default (props) => {
     // States
     const [price, setPrice] = useState(props.price);
-    const [favorite, setFavorite] = useState(false);
+    const [favorited, setFavorited] = useState(false);
     const [bot, setBot] = useState(new Animated.Value(-200));
     const [qtd, setQtd] = useState(1);
 
@@ -161,6 +161,10 @@ export default (props) => {
         Api.setIntoCart(userId, props.id, props.name, props.img, price, qtd, navigation);
     }
 
+    const setFavorite = () => {
+        Api.setIntoFavorite(userId, props.id, props.img, props.name, props.description, props.price)
+    }
+
     return (
         <Container>
 
@@ -185,8 +189,8 @@ export default (props) => {
             <Animated.View style={[styles.header, { transform: [{ translateY: headerTranslateY }] }]}>
                 <Animated.Image style={[styles.headerBackground, { opacity: imageOpacity, transform: [{ translateY: imageTranslateY }], },]} source={props.img && { uri: props.img }} />
                 <Animated.View style={[styles.overlay, { opacity: imageOpacity },]}></Animated.View>
-                <BtnFavorite onPress={() => setFavorite(!favorite)}>
-                    {favorite ?
+                <BtnFavorite onPress={setFavorite}>
+                    {favorited ?
                         <FavoriteFull width="35" height="35" fill="#ea1d2c" />
                         :
                         <FavoriteEmpty width="35" height="35" fill="#ea1d2c" />

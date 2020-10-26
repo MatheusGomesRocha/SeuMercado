@@ -593,8 +593,19 @@ export default {
             })
     },
 
-    setFavorites: () => {
-
+    setIntoFavorite: (userId, id, img, name, description, price) => {
+        firestore()
+        .collection('favorites')
+        .doc(userId)
+        .update({
+            products: firestore.FieldValue.arrayUnion({
+                id: id, 
+                img: img, 
+                name: name, 
+                description: description, 
+                price: price
+            })
+        })
     },
 
     // updateProfile: async (userId, name, email, password) => {
